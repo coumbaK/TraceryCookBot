@@ -4,10 +4,12 @@
  * Each swatch has code for when it starts and each frame after
  */
 
+
+
 window.addEventListener("load", function () {
   console.log("LOADED")
    
- 
+   let activeTool = undefined
   // Create a P5 canvas element, JS-style
   // https://github.com/processing/p5.js/wiki/p5.js-overview#instantiation--namespace
   const s = (p) => {
@@ -25,12 +27,29 @@ window.addEventListener("load", function () {
     };
   };
   
+  function setBrush(brush) {
+    const DESC_EL = document.getElementById("brush-desc")
+  
+    activeTool = brush
+    console.log("Set active tool to ", brush.label, brush.description)
+  }
+  
   const CANVAS_EL = document.getElementById("canvas-holder")
   CANVAS_EL.style.width = CANVAS_WIDTH + 'px';
   CANVAS_EL.style.height = CANVAS_HEIGHT + 'px';
   
   let myp5 = new p5(s, CANVAS_EL);
-
+  
+  const BUTTON_HOLDER_EL = document.getElementById("buttons")
+  
+  setBrush(brushes[0])
+  
+  brushes.forEach(brush => {
+    let button = document.createElement("button")
+    button.innerHTML = brush.label
+    button.onClick = () => setBrush(brush)
+    BUTTON_HOLDER_EL.appendChild(button)
+  })
 });
 
 
