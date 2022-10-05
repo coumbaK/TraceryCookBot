@@ -47,8 +47,13 @@ window.addEventListener("load", function () {
   brushes.forEach(brush => {
     let button = document.createElement("button")
     button.innerHTML = brush.label
-    button.onClick = () => setBrush(brush)
+    
     BUTTON_HOLDER_EL.appendChild(button)
+    
+    button.addEventListener("click", () => {
+      setBrush(brush)
+    });
+
   })
 });
 

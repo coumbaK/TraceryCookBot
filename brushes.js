@@ -4,5 +4,7 @@ const CANVAS_HEIGHT = 400
 let brushes = [{
   label: "🖌",
   description: "basic paint brush",
-  
+  draw(p, t) {
+    
+  }
 }]
