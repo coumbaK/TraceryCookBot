@@ -61,13 +61,20 @@ h1, h2, h3 {
 	flex-direction: column;
 }
 
-canvas {
-	margin:  0px auto;
-	border:  2px solid rgba(0, 0, 0, .2);
-}
 
 #canvas-holder {
-	border:  2px solid cyan;
+  margin:  0px auto;
+	border:  2px solid white;
+  box-shadow: 1px 10px 14px rgba(0, 0, 0, .3);
 }
+
+#controls {
+  width: 300px;
+  height: 100px;
+  margin:  0px auto;
+	border:  2px solid white;
+  box-shadow: 1px 10px 14px rgba(0, 0, 0, .3);
+}
+
 
 

@@ -6,7 +6,7 @@
 
 window.addEventListener("load", function () {
   console.log("LOADED")
- 
+   
  
   // Create a P5 canvas element, JS-style
   // https://github.com/processing/p5.js/wiki/p5.js-overview#instantiation--namespace
@@ -26,6 +26,9 @@ window.addEventListener("load", function () {
   };
   
   const CANVAS_EL = document.getElementById("canvas-holder")
+  CANVAS_EL.style.width = CANVAS_WIDTH + 'px';
+  CANVAS_EL.style.height = CANVAS_HEIGHT + 'px';
+  
   let myp5 = new p5(s, CANVAS_EL);
 
 });
