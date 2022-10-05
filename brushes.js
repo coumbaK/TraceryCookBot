@@ -13,6 +13,8 @@ const START_BRUSH_INDEX = 0
 let brushes = [{
   label: "🖌",
   description: "basic paint brush",
+  
+  // Options: setup (when tool is selected), draw (every frame), 
   mouseDragged() {
     console.log("Drag...")
     let x = p.mouseX

@@ -37,8 +37,7 @@ window.addEventListener("load", function () {
 
   function setBrush(brush) {
     const DESC_EL = document.getElementById("brush-desc");
-    
-
+    DESC_EL.innerHTML = brush.label + " - " +  brush.description
     activeTool = brush;
     if (activeTool.setup) activeTool.setup();
     console.log("Set active tool to ", brush.label, brush.description);
@@ -54,15 +53,18 @@ window.addEventListener("load", function () {
 
   //   Set the initial brush and color values
   setBrush(brushes[START_BRUSH_INDEX]);
-  const COLOR0_EL = document.getElementById("color0")
-  const COLOR1_EL = document.getElementById("color1")
+  const COLOR0_EL = document.getElementById("color0");
+  const COLOR1_EL = document.getElementById("color1");
   COLOR0_EL.value = HSLToHex(...color0);
- COLOR1_EL.value = HSLToHex(...color1);
-   COLOR1_EL.addEventListener("change", function() {
-     console.log("Change color", this.value)
-     color1 = HexToHSL
-    });
-  
+  COLOR1_EL.value = HSLToHex(...color1);
+  COLOR0_EL.addEventListener("change", function () {
+    color0 = hexToHSL(this.value);
+    console.log("Change color0", this.value, color0);
+  });
+  COLOR1_EL.addEventListener("change", function () {
+    color1 = hexToHSL(this.value);
+    console.log("Change color1", this.value, color1);
+  });
 
   brushes.forEach((brush) => {
     let button = document.createElement("button");
