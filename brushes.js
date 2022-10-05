@@ -25,4 +25,19 @@ let brushes = [{
      p.fill(color0[0], color0[1], color0[2])
      p.circle(x, y, 100)
  }
-}]
+}, {
+  label: "😂",
+  description: "laughcry paint brush",
+  
+  // Options: setup (when tool is selected), draw (every frame), 
+  mouseDragged() {
+    console.log("Drag...")
+    let x = p.mouseX
+     let y = p.mouseY
+     console.log(x, y)
+     
+    
+     p.fill(color0[0], color0[1], color0[2])
+     p.text("😂", x, y)
+ }
+}, ]
