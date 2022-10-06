@@ -265,5 +265,65 @@ let brushes = [
 
       p.endShape();
     },
+  }, //======================================================
+  {
+    label: "🌱",
+    isActive: true,
+    description: "Growing brush",
+
+    setup() {
+      // Store all the poitns this brush has made
+      this.points = [];
+    },
+
+    mouseDragged() {
+      // Add a new point to the beginning of this list
+
+      let x = p.mouseX;
+      let y = p.mouseY;
+      let pt = [x, y];
+      pt.totalLifespan = 10 + Math.random()*10;
+      
+      // Try a longer lifespan 😉
+      pt.totalLifespan = 10 + Math.random()*100;
+      pt.lifespan = pt.totalLifespan
+      this.points.push(pt);
+
+      p.circle(x, y, 4);
+    },
+
+    draw() {
+      let radius = 5
+      let t = p.millis() * .001;
+      
+    
+      
+      // Each point keeps drawing itself, as long as it has a lifespan
+      this.points.forEach((pt, index) => {
+        //
+        pt.lifespan--;
+
+        if (pt.lifespan > 0) {
+        
+          let pctLife = pt.lifespan/pt.totalLifespan
+          let r = radius*.5
+          let theta = p.noise(index, t*.1)*100;
+          
+          // Grow in some direction
+          pt[0] += r * Math.cos(theta);
+          pt[1] += r * Math.sin(theta);
+          
+            
+          p.noStroke()
+           p.fill(color0[0], color0[1], color0[2]*.1, .1)
+          p.circle(...pt, (pctLife)*radius*2);
+         
+          p.fill(color0[0], color0[1], color0[2]*(1 - pctLife))
+          
+//           Get smaller at the end of your life
+          p.circle(...pt, (pctLife**.2)*radius);
+        }
+      });
+    },
   },
 ];
