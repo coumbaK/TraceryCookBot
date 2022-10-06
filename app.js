@@ -24,11 +24,13 @@ window.addEventListener("load", function () {
     };
 
     p.mousePressed = function () {
-      console.log("Drag");
+        if (activeTool.mousePressed) activeTool.mousePressed();
+    
     };
 
     p.mouseReleased = function () {
-      console.log("Release");
+        if (activeTool.mouseReleased) activeTool.mouseReleased();
+    
     };
 
     p.draw = function () {
@@ -80,7 +82,7 @@ window.addEventListener("load", function () {
     console.log("Change size", this.value, SLIDER0_EL);
   });
 
-  brushes.forEach((brush, index) => {
+  brushes.filter(b=>b.isActive).forEach((brush, index) => {
     let button = document.createElement("button");
     button.innerHTML = brush.label;
 

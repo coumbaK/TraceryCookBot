@@ -230,29 +230,37 @@ let brushes = [
   {
     label: "🧵",
     isActive: true,
-    description: "",
+    description: "A continuous brush using curves",
 
-    setup() {
+    mousePressed() {
       //       We need to store the points
       this.points = [];
+      // We can start storing a new set of points when the mouse is pressed
     },
 
-    draw() {
+    mouseDragged() {
       let x = p.mouseX;
       let y = p.mouseY;
       // Add a new point to the beginning of this list
       this.points.unshift([x, y]);
 
       p.noFill();
-         p.stroke(color0[0], color0[1], color0[2] + 50*Math.random());
-       p.beginShape();
+      p.stroke(color0[0], color0[1], color0[2] + 50 * Math.random(), 0.8);
+      p.beginShape();
 
       // Take every...10th? point
       // What happens if you change this
       this.points
         .filter((pt, index) => index % 10 == 0)
-        .forEach((pt) => {
-          p.curveVertex(...pt);
+        .forEach(([x, y]) => {
+          let dx = 0;
+          let dy = 0;
+
+          //         What happens if we offset the x and y we are drawing?
+          //   dx = Math.random()*10
+          // dy = Math.random()*10
+
+          p.curveVertex(x + dx, y + dy);
         });
 
       p.endShape();
