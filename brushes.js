@@ -23,6 +23,9 @@ let brushes = [
     // Options: setup (when tool is selected), draw (every frame),
     mouseDragged() {
       console.log("Drag...");
+      
+//       Here I am keeping track of both the current time, and how many times this brush has drawn
+      
       let t = p.millis()*.001 // Get the number of seconds
       this.drawCount  += 1
       let x = p.mouseX;
@@ -32,7 +35,7 @@ let brushes = [
 //       Change the brush by how many we have drawn
       // let r = brushSize*(50+ 100*p.noise( this.drawCount*.1))
     //       Change the brush by the current time
-      let r = brushSize*(50+ 100*p.noise(t*.1))
+      // let r = brushSize*(50+ 100*p.noise(t*10))
       
       
       console.log(x, y);
