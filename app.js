@@ -55,8 +55,12 @@ window.addEventListener("load", function () {
   setBrush(brushes[START_BRUSH_INDEX]);
   const COLOR0_EL = document.getElementById("color0");
   const COLOR1_EL = document.getElementById("color1");
+  const SLIDER0_EL = document.getElementById("size");
   COLOR0_EL.value = HSLToHex(...color0);
   COLOR1_EL.value = HSLToHex(...color1);
+  SLIDER0_EL.value = brushSize
+  
+//   Listen to the "change" events from the color pickers and sliders
   COLOR0_EL.addEventListener("change", function () {
     color0 = hexToHSL(this.value);
     console.log("Change color0", this.value, color0);
@@ -64,6 +68,10 @@ window.addEventListener("load", function () {
   COLOR1_EL.addEventListener("change", function () {
     color1 = hexToHSL(this.value);
     console.log("Change color1", this.value, color1);
+  });
+    SLIDER0_EL.addEventListener("change", function () {
+    
+    console.log("Change size", this.value, SLIDER0_EL);
   });
 
   brushes.forEach((brush) => {
