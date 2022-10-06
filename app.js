@@ -14,8 +14,9 @@ window.addEventListener("load", function () {
     p.setup = function () {
       p.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
       p.colorMode(p.HSL, 360, 100, 100);
-      p.ellipseMode(p.CENTER_RADIUS);
-      p.circle(0, 0, 100);
+      p.ellipseMode(p.RADIUS);
+      
+      startDrawing(p)
     };
 
     p.mouseDragged = function () {
