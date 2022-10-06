@@ -24,6 +24,10 @@ let brushes = [
     setup() {
       //       When the user clicks erase, what happens?
     },
+    
+    mouseDragged() {
+      //       When the user drags erase, what happens?
+    },
   },
 
   //======================================================
@@ -269,7 +273,7 @@ let brushes = [
   {
     label: "🌱",
     isActive: true,
-    description: "Growing brush",
+    description: "Growing brush, leaves behind a trail that .... moves each frame!",
 
     setup() {
       // Store all the poitns this brush has made
@@ -277,15 +281,18 @@ let brushes = [
     },
 
     mouseDragged() {
+      // Every time we move
       // Add a new point to the beginning of this list
-
       let x = p.mouseX;
       let y = p.mouseY;
       let pt = [x, y];
+      
+      // How long does this dot live?
       pt.totalLifespan = 10 + Math.random()*10;
       
       // Try a longer lifespan 😉
-      pt.totalLifespan = 10 + Math.random()*100;
+      // pt.totalLifespan = 10 + Math.random()*100;
+      
       pt.lifespan = pt.totalLifespan
       this.points.push(pt);
 
@@ -293,6 +300,7 @@ let brushes = [
     },
 
     draw() {
+      
       let radius = 5
       let t = p.millis() * .001;
       
@@ -318,7 +326,7 @@ let brushes = [
            p.fill(color0[0], color0[1], color0[2]*.1, .1)
           p.circle(...pt, (pctLife)*radius*2);
          
-          p.fill(color0[0], color0[1], color0[2]*(1 - pctLife))
+          p.fill(color0[0] + p.noise(index)*40, color0[1], color0[2]*(1 - pctLife))
           
 //           Get smaller at the end of your life
           p.circle(...pt, (pctLife**.2)*radius);
