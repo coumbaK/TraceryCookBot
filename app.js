@@ -35,15 +35,17 @@ window.addEventListener("load", function () {
     };
   };
 
-  function setBrush(brush) {
+  function setBrush(index) {
+    let brush = brushes[index];
     const DESC_EL = document.getElementById("brush-desc");
     DESC_EL.innerHTML = brush.label + " - " + brush.description;
     activeTool = brush;
     if (activeTool.setup) {
-      activeTool.setup()
+      activeTool.setup();
     }
-    
-    localStorage.setItem("brushIndex", )
+
+    //     Record the last active brush
+    localStorage.setItem("lastbrush", index);
     console.log("Set active tool to ", brush.label, brush.description);
   }
 
@@ -56,7 +58,7 @@ window.addEventListener("load", function () {
   const BUTTON_HOLDER_EL = document.getElementById("buttons");
 
   //   Set the initial brush and color values
-  setBrush(START_BRUSH_INDEX);
+  setBrush(localStorage.getItem("lastbrush") || 0);
   const COLOR0_EL = document.getElementById("color0");
   const COLOR1_EL = document.getElementById("color1");
   const SLIDER0_EL = document.getElementById("size");
@@ -84,7 +86,7 @@ window.addEventListener("load", function () {
     BUTTON_HOLDER_EL.appendChild(button);
 
     button.addEventListener("click", () => {
-      setBrush(brush);
+      setBrush(index);
     });
   });
 });

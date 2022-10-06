@@ -16,7 +16,7 @@ let brushes = [
   //======================================================
   // Example brushes
   {
-    label: "🖌",
+    label: "✏️",
     description:
       "A basic paint brush.  It uses the color0 and size properties set by the sliders.  It is a 'discrete' brush",
 
@@ -40,7 +40,7 @@ let brushes = [
   {
     label: "🖌",
     description:
-      "A basic paint brush.  It uses the color0, color1, and size properties set by the sliders",
+      "Complicated brush. It uses the color0, color1, and size properties set by the sliders",
 
     setup() {
       //       Count how many times we've drawn
@@ -57,16 +57,16 @@ let brushes = [
       this.drawCount += 1;
       let x = p.mouseX;
       let y = p.mouseY;
-      // let r = brushSize*100
+      
+//       Controllable brush size
+      let r = brushSize*100
 
       //       Change the brush by how many we have drawn
-      // let r = brushSize*(50+ 100*p.noise( this.drawCount*.1))
+      r *= (.5 + p.noise( this.drawCount*.1))
       //       Change the brush by the current time
-      // let r = brushSize*(50+ 100*p.noise(t*10))
-
-      console.log(x, y);
-
-      //       Remove the stroke and set the color to the current color
+      r *= (.5 + p.noise( t*10))
+      
+    //       Remove the stroke and set the color to the current color
 
       //       Shadow
       p.noStroke();
@@ -90,21 +90,37 @@ let brushes = [
   //======================================================
   
   {
-    label: "😂",
-    description: "laughcry paint brush",
+    label: "💕",
+    description: "laughcry scatter brush",
 
     // Options: setup (when tool is selected), draw (every frame),
     mouseDragged() {
+      let hearts = ["💙", "🧡", "💛", "💖", "💚", "💜"]
       console.log("Drag...");
       let x = p.mouseX;
       let y = p.mouseY;
       
       let size = 20
-      let count = 10
+      let count = 4
+      
+      // I often draw a shadow behind my brush, it helps it 
+      p.noStroke()
+      p.fill(0, 0, 0, .02)
+      p.circle(x, y, size*3)
+      p.circle(x, y, size*4)
+      
+      p.fill(1)
       
       for (var i = 0; i < count; i++) {
+        // Offset a polar
+        let r = size*Math.random()
+        let theta = Math.random()*Math.PI*2
         p.textSize(size)
-        p.text("😂", x, y);
+        let emoji = p.random(hearts)
+        
+        let x2 = x + r*Math.cos(theta)
+        let y2 = y + r*Math.sin(theta)
+        p.text(emoji, x2, y2);
       }
     },
   },
