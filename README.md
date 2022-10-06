@@ -1,4 +1,4 @@
-# A2: Animated GIFs
+# A3: Drawing Tools
 
 ## Your name
 Test McStudent
@@ -7,24 +7,39 @@ Test McStudent
 [my page](https://galaxykate-a1.glitch.me)
 
 
+## What do you want the user to feel when using these tools? What mood is this for? What is the user trying to do?
 
-## Describe each of the four GIFs 
---your answer here--
+--your answer here  --
 
-## What P5 method or technique did you enjoy using the most? What was interesting to you about it?
 
---your answer here--
 
-## Did you find any P5 functionality that wasn't covered in class?
- 
---your answer here--
-
-## How did you get your looping gif to loop smoothly? What was hard or easy about that techinque?
- 
+## Describe your eraser. What does it do? 
 --your answer here--
 
 
-## Link a few GIFs you found inspirational here
+## Describe your 1st tool. What does it do? How is it used?
+--your answer here  --
+-- you don't need to say "you click the button" but if there are any tricky or surprising ways this tool works, let the reader know!--
+-- you can also describe *how* it works, what techniques and P5 tools did you use?--
+
+## Describe your 2nd tool. What does it do? How is it used?
+--your answer here  --
+
+
+## Describe your 3rd tool. What does it do? How is it used?
+--your answer here  --
+
+
+## Describe your 4th tool. What does it do? How is it used?
+--your answer here  --
+
+
+## Which of your tools is continuous? What makes that different?
+
+--your answer here--
+
+
+## Which of your tools uses begin/endshape? What are you doing with that feature?
 
 --your answer here--
 
