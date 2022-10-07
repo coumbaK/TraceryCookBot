@@ -263,8 +263,8 @@ let brushes = [
           let dy = 0;
 
           //         What happens if we offset the x and y we are drawing?
-            dx = Math.random()*100
-          dy = Math.random()*10
+            // dx = Math.random()*100
+          // dy = Math.random()*10
 
           p.curveVertex(x + dx, y + dy);
         });
