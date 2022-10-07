@@ -44,6 +44,7 @@ let brushes = [
     // draw (every frame, even if the mouse isn't down),
     // mouseDragged (when the mouse is dragged)
     mouseDragged() {
+      console.log("Dragged")
       let x = p.mouseX;
       let y = p.mouseY;
       let r = brushSize * 5 + 1;
@@ -67,6 +68,7 @@ let brushes = [
     // each "frame" which is slightly different than
     // each time we drag the mouse
     draw() {
+      console.log("draw")
       let x = p.mouseX;
       let y = p.mouseY;
       let x1 = p.pmouseX;
@@ -105,12 +107,12 @@ let brushes = [
       let y = p.mouseY;
 
       //       Controllable brush size
-      let r = brushSize * 100;
+      let r = brushSize * 10 + 10;
 
       //       Change the brush by how many we have drawn
-      r *= 0.5 + p.noise(this.drawCount * 0.1);
+      // r *= 0.5 + p.noise(this.drawCount * 0.1);
       //       Change the brush by the current time
-      r *= 0.5 + p.noise(t * 10);
+      // r *= 0.5 + p.noise(t * 10);
 
       //       Shadow
       p.noStroke();
@@ -209,9 +211,9 @@ let brushes = [
       // I often draw a shadow behind my brush,
       // it helps it stand out from the background
       p.noStroke();
-      p.fill(0, 0, 0, 0.02);
-      p.circle(x, y, size * 3);
-      p.circle(x, y, size * 4);
+      p.fill(0, 0, 0, 0.01);
+      p.circle(x, y, size * 2);
+      p.circle(x, y, size * 1);
 
       // Draw some emoji
       p.fill(1);
@@ -261,8 +263,8 @@ let brushes = [
           let dy = 0;
 
           //         What happens if we offset the x and y we are drawing?
-          //   dx = Math.random()*10
-          // dy = Math.random()*10
+            dx = Math.random()*100
+          dy = Math.random()*10
 
           p.curveVertex(x + dx, y + dy);
         });

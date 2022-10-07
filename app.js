@@ -80,6 +80,7 @@ window.addEventListener("load", function () {
   });
   SLIDER0_EL.addEventListener("change", function () {
     console.log("Change size", this.value, SLIDER0_EL);
+    brushSize = this.value
   });
 
   brushes.filter(b=>b.isActive).forEach((brush, index) => {
