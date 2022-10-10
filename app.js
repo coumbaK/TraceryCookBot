@@ -8,6 +8,8 @@ const CANVAS_WIDTH = 400
 const CANVAS_HEIGHT = 300
 window.addEventListener("load", function () {
   console.log("LOADED");
+  
+  let ps = new ParticleSystem()
 
   let activeTool = undefined;
   // Create a P5 canvas element, JS-style
@@ -22,12 +24,22 @@ window.addEventListener("load", function () {
 
 
     p.draw = function () {
-      p.circle(0, 0, 100)
+      
+      p.push()
+      p.translate(p.width/2, p.height/2)
+      // p.circle(0, 0, 100)
+      ps.draw(p)
+      p.pop()
     };
   };
 
   
 
+  
+  
+  
+  
+  
   
   
   
