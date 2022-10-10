@@ -41,12 +41,31 @@ class Particle {
     
     let initialSpeed = 10
    this.v = polarCoord(initialSpeed, Math.random()*6.26)
+    // this.f = [0,10] // Kinda gravity
     
   }
   
   
   // How to update particle
    update(p, dt) {
+//      Reset forces
+     let gravity = 10
+     this.f = [0,gravity] //
+     // 
+     let boundaryForce = -1
+     addMultiple(this.f, boundaryForce, this.pos)
+     
+          
+//      wiggle force
+     let r = 100
+     let theta = 20*p.noise(dt*100)
+     addPolar(this.f, r, theta)
+     
+     addMultiple(this.pos, dt, this.v)
+     addMultiple(this.v, dt, this.f)
+
+     
+     
      
    }
   
@@ -61,12 +80,25 @@ class Particle {
     let m = 10
     p.stroke(0)
     p.line(this.pos[0], this.pos[1], this.pos[0] + this.v[0]*m, this.pos[1] + this.v[1]*m)
+    p.stroke(20, 100, 50)
+    p.line(this.pos[0], this.pos[1], this.pos[0] + this.f[0]*m, this.pos[1] + this.f[1]*m)
   }
   
 }
 
 
-function addMultiple(v, m, u)
+function addPolar(v, r, theta) {
+  // v = m*u (m is scalar)
+  v[0] += r*Math.cos(theta)
+  v[1] += r*Math.sin(theta)
+  
+}
+function addMultiple(v, m, u) {
+  // v = m*u (m is scalar)
+  v[0] += m*u[0]
+  v[1] += m*u[1]
+  
+}
 
 function polarCoord(r, theta) {
   // Returns a polar coord (array of 2 floats)

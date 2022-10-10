@@ -24,8 +24,9 @@ window.addEventListener("load", function () {
 
 
     p.draw = function () {
+      p.background(50)
       
-       ps.update(p, p.deltaTime)
+       ps.update(p, p.deltaTime*.001)
       
       p.push()
       p.translate(p.width/2, p.height/2)
