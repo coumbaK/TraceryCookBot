@@ -25,6 +25,8 @@ window.addEventListener("load", function () {
 
     p.draw = function () {
       
+       ps.update(p, p.deltaTime)
+      
       p.push()
       p.translate(p.width/2, p.height/2)
       // p.circle(0, 0, 100)
