@@ -26,7 +26,7 @@ function polarCoord(r, theta) {
 }
 
 Object.defineProperty(Array.prototype, 'drawArrow', {
-    value: function(p, v, {m=0, color=[0,0,0]} = {}) { 
+    value: function(p, v, {m=0, color=[0,0,0]} = {}, headSize=1) { 
       if (v == undefined || !Array.isArray(v))
         throw("No v passed, drawArrow(p, v, {settings}), v=" + v)
       let x = this[0]
@@ -47,9 +47,9 @@ Object.defineProperty(Array.prototype, 'drawArrow', {
       p.beginShape()
       p.rotate(v.angle())
       p.vertex(0, 0)
-      p.vertex(-10, 5)
-      p.vertex(0, 0)
-      p.vertex(-10, -5)
+      p.vertex(-10*headSize, 5*headSize)
+      p.vertex(-5*headSize, 0)
+      p.vertex(-10*headSize, -5*headSize)
       
       p.endShape()
       p.pop()

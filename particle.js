@@ -58,7 +58,7 @@ class Particle {
           
 //      wiggle force
      let r = 100
-     let theta = 20*p.noise(dt*100)
+     let theta = 20*p.noise(dt*1)
      addPolar(this.f, r, theta)
      
      addMultiple(this.pos, dt, this.v)
