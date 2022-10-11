@@ -13,11 +13,11 @@ function addPolar(v, r, theta) {
   v[1] += r*Math.sin(theta)
   
 }
+
 function addMultiple(v, m, u) {
   // v = m*u (m is scalar)
   v[0] += m*u[0]
   v[1] += m*u[1]
-  
 }
 
 function polarCoord(r, theta) {
@@ -53,6 +53,29 @@ Object.defineProperty(Array.prototype, 'drawArrow', {
       
       p.endShape()
       p.pop()
+    }
+});
+
+Object.defineProperty(Array.prototype, 'mult', {
+    value: function(m) { 
+      for (var i = 0; i < this.length; i++) {
+         this[i] *= m 
+      }
+      return this
+    }
+});
+
+Object.defineProperty(Array.prototype, 'add', {
+    value: function(x, y) { 
+      if (Array.isArray(x)) {
+         this[0] += x[0]
+          this[1] += x[1]
+      } else {
+        this[0] += x
+        this[1] += y
+      }
+       
+      return this
     }
 });
 
