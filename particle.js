@@ -1,4 +1,4 @@
-/* globals Car */
+/* globals polarCoord, addMultiple, addPolar */
 
 class ParticleSystem {
   constructor() {
@@ -41,7 +41,7 @@ class Particle {
     this.idNumber = particleCount++
     console.log("I made a particle!");
     let r = Math.random() ** 0.5 * 100;
-    this.drag = 1
+    this.drag = 0.01
 
     this.pos = polarCoord(r, Math.random() * 6.26);
 
