@@ -28,7 +28,6 @@ window.addEventListener("load", function () {
       
       const SPEED_EL = document.getElementById("speed-slider");
       const speedMult = SPEED_EL.value**2
-      console.log(speedMult)
       // at 0, speed is 0, at 50 i
       p.background(50);
       
