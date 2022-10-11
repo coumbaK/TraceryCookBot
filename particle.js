@@ -76,7 +76,7 @@ class Particle {
     p.noStroke()
     // p.circle(this.pos[0], this.pos[1], 10)
     p.circle(...this.pos, 3)
-    this.pos.drawArrow(p)
+    this.pos.drawArrow(p, this.v, {color:[100, 100, 50], m:1})
     // let m = 10
     // p.stroke(0)
     // p.line(this.pos[0], this.pos[1], this.pos[0] + this.v[0]*m, this.pos[1] + this.v[1]*m)
@@ -86,23 +86,4 @@ class Particle {
     p.text(this.pos.magnitude().toFixed(), ...this.pos)
   }
   
-}
-
-
-function addPolar(v, r, theta) {
-  // v = m*u (m is scalar)
-  v[0] += r*Math.cos(theta)
-  v[1] += r*Math.sin(theta)
-  
-}
-function addMultiple(v, m, u) {
-  // v = m*u (m is scalar)
-  v[0] += m*u[0]
-  v[1] += m*u[1]
-  
-}
-
-function polarCoord(r, theta) {
-  // Returns a polar coord (array of 2 floats)
-  return [r*Math.cos(theta), r*Math.sin(theta)]
 }
