@@ -76,12 +76,12 @@ class Particle {
     p.noStroke()
     // p.circle(this.pos[0], this.pos[1], 10)
     p.circle(...this.pos, 3)
-    
-    let m = 10
-    p.stroke(0)
-    p.line(this.pos[0], this.pos[1], this.pos[0] + this.v[0]*m, this.pos[1] + this.v[1]*m)
-    p.stroke(20, 100, 50)
-    p.line(this.pos[0], this.pos[1], this.pos[0] + this.f[0]*m, this.pos[1] + this.f[1]*m)
+    this.pos.drawArrow(p)
+    // let m = 10
+    // p.stroke(0)
+    // p.line(this.pos[0], this.pos[1], this.pos[0] + this.v[0]*m, this.pos[1] + this.v[1]*m)
+    // p.stroke(20, 100, 50)
+    // p.line(this.pos[0], this.pos[1], this.pos[0] + this.f[0]*m, this.pos[1] + this.f[1]*m)
   }
   
 }
