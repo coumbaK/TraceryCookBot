@@ -25,13 +25,19 @@ window.addEventListener("load", function () {
     };
 
     p.draw = function () {
+      
+      const SPEED_EL = document.getElementById("speed-slider");
+      const speedMult = SPEED_EL.value**2
+      console.log(speedMult)
+      // at 0, speed is 0, at 50 i
       p.background(50);
-
-      ps.update(p, p.deltaTime * 0.001);
+      
+      const elapsed = Math.min(.1, speedMult*p.deltaTime * 0.001)
+      ps.update(p, elapsed);
 
       p.push();
       p.translate(p.width / 2, p.height / 2);
-      // p.circle(0, 0, 100)
+      
       ps.draw(p);
       p.pop();
     };

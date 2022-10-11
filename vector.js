@@ -1,0 +1,4 @@
+/**
+* Vector utilities
+* Kate Compton
+*/
