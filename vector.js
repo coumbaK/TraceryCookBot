@@ -6,27 +6,56 @@
 */
 
 
-
-function addPolar(v, r, theta) {
-  // v = m*u (m is scalar)
-  v[0] += r*Math.cos(theta)
-  v[1] += r*Math.sin(theta)
+class Vector2D extends Array {
+  constructor(x=0, y=0) {
+    this.super(x, y)
+    return this
+  }
   
-}
-
-function addMultiple(v, m, u) {
-  // v = m*u (m is scalar)
-  v[0] += m*u[0]
-  v[1] += m*u[1]
-}
-
-function polarCoord(r, theta) {
-  // Returns a polar coord (array of 2 floats)
-  return [r*Math.cos(theta), r*Math.sin(theta)]
-}
-
-Object.defineProperty(Array.prototype, 'drawArrow', {
-    value: function(p, v, {m=0, color=[0,0,0]} = {}, headSize=1) { 
+  addPolar(r, theta) {
+    this[0] += r*Math.cos(theta)
+     this[1] += r*Math.sin(theta)
+    return this
+  }
+  
+ 
+   mult(m) {
+    this[0] *= m
+     this[1] *= m
+     return this
+  }
+  
+   div(m) {
+    this[0] /= m
+     this[1] /= m
+     return this
+  }
+  
+  add(x, y) { 
+      if (Array.isArray(x)) {
+         this[0] += x[0]
+          this[1] += x[1]
+      } else {
+        this[0] += x
+        this[1] += y
+      }
+       
+      return this
+    }
+  
+  get magnitude() {
+    return Math.sqrt(this[0]**2 + this[1]**2)
+  }
+  
+  get angle() {
+    return Math.atan2(this[1], this[0])
+  }
+  
+  
+  //======================
+  // Drawing things
+  
+  function(p, v, {m=0, color=[0,0,0]} = {}, headSize=1) { 
       if (v == undefined || !Array.isArray(v))
         throw("No v passed, drawArrow(p, v, {settings}), v=" + v)
       let x = this[0]
@@ -54,39 +83,18 @@ Object.defineProperty(Array.prototype, 'drawArrow', {
       p.endShape()
       p.pop()
     }
-});
+  //======================
+  // Drawing things
+  
+  toString() {
+    return `(${this[0].toFixed(2)}, ${this[1].toFixed(2)})`
+  }
+  
+  static calculate(n) {
+    return super.calculate(n) * super.calculate(n);
+  }
+}
 
-Object.defineProperty(Array.prototype, 'mult', {
-    value: function(m) { 
-      for (var i = 0; i < this.length; i++) {
-         this[i] *= m 
-      }
-      return this
-    }
-});
-
-Object.defineProperty(Array.prototype, 'add', {
-    value: function(x, y) { 
-      if (Array.isArray(x)) {
-         this[0] += x[0]
-          this[1] += x[1]
-      } else {
-        this[0] += x
-        this[1] += y
-      }
-       
-      return this
-    }
-});
-
-Object.defineProperty(Array.prototype, 'magnitude', {
-    value: function() { 
-      return Math.sqrt(this.reduce( (v0, v) => v0 + v**2, 0));
-    }
-});
-
-Object.defineProperty(Array.prototype, 'angle', {
-    value: function() { 
-      return Math.atan2(this[1], this[0])
-    }
-});
+Vector2D.prototype.polar = function(r, theta) {
+  return new Vector2D(r*Math.cos(theta), r*Math.sin(theta))
+}

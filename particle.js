@@ -45,11 +45,18 @@ class Particle {
     let r = Math.random() ** 0.5 * 100;
     this.drag = 0.01
 
-    this.pos = polarCoord(r, Math.random() * 6.26);
+    this.pos = Vector2D.polar(r, Math.random() * 6.26);
 
     let initialSpeed = 10;
     this.v = polarCoord(initialSpeed, Math.random() * 6.26);
+    
+    
     // this.f = [0,10] // Kinda gravity
+  }
+  
+  applyForceTowardsPoint(f, amt) {
+    let offset = []
+    this.force.addMultiple()
   }
 
   // How to update particle
@@ -59,11 +66,16 @@ class Particle {
     this.f = [0, gravity]; //
     
     // How far outside of the range is this particle?
+    let distanceFromCenter = this.pos.magnitude()
     let range = 100
     let outOfRange = Math.max(0, this.pos.magnitude() - range)
+    if (outOfRange) {
+      let boundaryForce = -1*this.pos.magnitude();
+        addMultiple(this.f, boundaryForce, this.pos);
+    }
+      
     
-    let boundaryForce = -1*boundaryForce.magnitude;
-    addMultiple(this.f, boundaryForce, this.pos);
+    
 
     //      wiggle force
     let r = 400;
