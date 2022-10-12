@@ -1,6 +1,6 @@
 
 
-/* globals polarCoord, addMultiple, addPolar */
+/* globals Vector2D */
 
 class ParticleSystem {
   constructor() {
@@ -48,42 +48,40 @@ class Particle {
     this.pos = Vector2D.polar(r, Math.random() * 6.26);
 
     let initialSpeed = 10;
-    this.v = polarCoord(initialSpeed, Math.random() * 6.26);
+    this.v = Vector2D.polar(initialSpeed, Math.random() * 6.26);
     
     
-    // this.f = [0,10] // Kinda gravity
+    this.f = new Vector2D()
   }
   
   applyForceTowardsPoint(f, amt) {
-    let offset = []
-    this.force.addMultiple()
+    let offset = Vector2D.sub(this.pos, center)
+    
+    this.f.addMultiple(strength, offset)
   }
 
   // How to update particle
   update(p, dt) {
     //      Reset forces
     let gravity = 10;
-    this.f = [0, gravity]; //
+     this.f.setTo(0, gravity)
     
     // How far outside of the range is this particle?
-    let distanceFromCenter = this.pos.magnitude()
+    let distanceFromCenter = this.pos.magnitude
     let range = 100
-    let outOfRange = Math.max(0, this.pos.magnitude() - range)
-    if (outOfRange) {
-      let boundaryForce = -1*this.pos.magnitude();
-        addMultiple(this.f, boundaryForce, this.pos);
-    }
-      
-    
+    let outOfRange = Math.max(0, distanceFromCenter - range)
+   
+    let center = new Vector2D(0,0)
+    this.applyForceTowardsPoint(center)
     
 
     //      wiggle force
     let r = 400;
     let theta = 20 * p.noise(dt * 1);
-    addPolar(this.f, r, theta);
+    this.f.addPolar(r, theta);
 
-    addMultiple(this.pos, dt, this.v);
-    addMultiple(this.v, dt, this.f);
+   this.pos.addMultiple(this.v, dt);
+    this.v.addMultiple(this.f, dt);
     
 //     Fake drag
     if (this.drag)
@@ -104,6 +102,6 @@ class Particle {
     // p.stroke(20, 100, 50)
     // p.line(this.pos[0], this.pos[1], this.pos[0] + this.f[0]*m, this.pos[1] + this.f[1]*m)
     p.fill(0);
-    p.text(this.pos.magnitude().toFixed(), ...this.pos);
+    p.text(this.pos.magnitude.toFixed(), ...this.pos);
   }
 }

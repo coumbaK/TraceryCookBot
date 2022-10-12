@@ -8,7 +8,7 @@
 
 class Vector2D extends Array {
   constructor(x=0, y=0) {
-    this.super(x, y)
+    super(x, y)
     return this
   }
   
@@ -43,6 +43,33 @@ class Vector2D extends Array {
       return this
     }
   
+  addMultiple(v, m=1) { 
+    if (!(v instanceof Vector2D))
+      throw("addMultiple needs a Vector2D")
+    this[0] += v[0]*m
+        this[1] += v[1]*m
+    return this
+  }
+  
+  addPolar(r, theta) { 
+    if (r === undefined)
+      throw("passed undefined r to addPolar")
+     if (theta === undefined)
+      throw("passed undefined theta to addPolar")
+    this[0] += r*Math.cos(theta)
+      this[1] += r*Math.sin(theta)
+  }
+  
+  setTo(x, y) {
+    if (Array.isArray(x)) {
+      this[0] = x[0]
+      this[1] = x[1]
+    } else {
+         this[0] = x
+   this[1] = y
+    }
+  }
+  
   get magnitude() {
     return Math.sqrt(this[0]**2 + this[1]**2)
   }
@@ -55,7 +82,7 @@ class Vector2D extends Array {
   //======================
   // Drawing things
   
-  function(p, v, {m=0, color=[0,0,0]} = {}, headSize=1) { 
+  drawArrow(p, v, {m=0, color=[0,0,0]} = {}, headSize=1) { 
       if (v == undefined || !Array.isArray(v))
         throw("No v passed, drawArrow(p, v, {settings}), v=" + v)
       let x = this[0]
@@ -65,7 +92,7 @@ class Vector2D extends Array {
       let x1 = x + m*vx
       let y1 = y + m*vy
       
-      let mag = v.magnitude()
+      let mag = v.magnitude
       p.stroke(...color)
       p.line(x, y, x1, y1)
       p.noStroke()
@@ -74,7 +101,7 @@ class Vector2D extends Array {
      p.push()
       p.translate(x1, y1)
       p.beginShape()
-      p.rotate(v.angle())
+      p.rotate(v.angle)
       p.vertex(0, 0)
       p.vertex(-10*headSize, 5*headSize)
       p.vertex(-5*headSize, 0)
@@ -90,11 +117,8 @@ class Vector2D extends Array {
     return `(${this[0].toFixed(2)}, ${this[1].toFixed(2)})`
   }
   
-  static calculate(n) {
-    return super.calculate(n) * super.calculate(n);
+  static polar(r, theta) {
+   return new Vector2D(r*Math.cos(theta), r*Math.sin(theta))
   }
 }
 
-Vector2D.prototype.polar = function(r, theta) {
-  return new Vector2D(r*Math.cos(theta), r*Math.sin(theta))
-}
