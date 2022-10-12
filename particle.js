@@ -53,6 +53,9 @@ class Particle {
     
     this.f = new Vector2D()
     
+    // You can add the forces ar
+    this.wiggleForce = new Vector2D()
+    
   }
   
   applyForceTowardsPoint(center, amt=1, {falloff=1, startRadius}={}) {
@@ -88,11 +91,12 @@ class Particle {
     let outOfRange = Math.max(0, distanceFromCenter - range)
    
     let center = new Vector2D(0,0)
-    this.applyForceTowardsPoint(center, -.10, {startRadius: 100, falloff: 2})
+    this.applyForceTowardsPoint(center, -10, {startRadius: 100, falloff: 1})
     
 
     //      wiggle force
-    let r = 400;
+    
+    let r = 600;
     let theta = 20 * p.noise(dt * 1);
     this.f.addPolar(r, theta);
 
