@@ -54,10 +54,10 @@ class Particle {
     this.f = new Vector2D()
   }
   
-  applyForceTowardsPoint(f, amt) {
+  applyForceTowardsPoint(center, amount, {falloff}={}) {
     let offset = Vector2D.sub(this.pos, center)
-    
-    this.f.addMultiple(strength, offset)
+    let strength = 1
+    this.f.addMultiple(offset, strength)
   }
 
   // How to update particle

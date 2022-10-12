@@ -8,7 +8,12 @@
 
 class Vector2D extends Array {
   constructor(x=0, y=0) {
-    super(x, y)
+    if (Array.isArray(x)) {
+      // Clone!
+      super(...x)
+    } else {
+      super(x, y)
+    }
     return this
   }
   
@@ -38,6 +43,18 @@ class Vector2D extends Array {
       } else {
         this[0] += x
         this[1] += y
+      }
+       
+      return this
+    }
+  
+  sub(x, y) { 
+      if (Array.isArray(x)) {
+         this[0] -= x[0]
+          this[1] -= x[1]
+      } else {
+        this[0] -= x
+        this[1] -= y
       }
        
       return this
@@ -120,5 +137,13 @@ class Vector2D extends Array {
   static polar(r, theta) {
    return new Vector2D(r*Math.cos(theta), r*Math.sin(theta))
   }
+  
+  static sub(u, v) {
+   return (new Vector2D(u)).sub(v)
+  }
+   static add(u, v) {
+   return (new Vector2D(u)).add(v)
+  }
+ 
 }
 
