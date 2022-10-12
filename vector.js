@@ -17,12 +17,6 @@ class Vector2D extends Array {
     return this
   }
   
-  addPolar(r, theta) {
-    this[0] += r*Math.cos(theta)
-     this[1] += r*Math.sin(theta)
-    return this
-  }
-  
  
    mult(m) {
     this[0] *= m
