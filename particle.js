@@ -8,7 +8,7 @@ class ParticleSystem {
 
     this.particles = [];
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 1; i++) {
       let pt = new Particle();
 
       this.particles.push(pt);
@@ -52,6 +52,7 @@ class Particle {
     
     
     this.f = new Vector2D()
+    
   }
   
   applyForceTowardsPoint(center, amt=1, {falloff=1, startRadius}={}) {
@@ -66,11 +67,13 @@ class Particle {
     if (startRadius !== undefined)
       x = Math.max(d - startRadius, 0)
 
-    if (d !== 0 and d )
+    if (d === 0 || isNaN(d))
+      return
     
-    let strength = (x**falloff)*amt/d
-    console.log(strength)
-    this.f.addMultiple(offset, strength)
+    let strength = amt*(x**falloff)
+    this.debugText = "str " + strength.toFixed(2) + " x=" + x
+    
+    this.f.addMultiple(offset, strength/d)
   }
 
   // How to update particle
@@ -85,7 +88,7 @@ class Particle {
     let outOfRange = Math.max(0, distanceFromCenter - range)
    
     let center = new Vector2D(0,0)
-    this.applyForceTowardsPoint(center, -1000, {startRadius: 200, falloff: 3})
+    this.applyForceTowardsPoint(center, -.10, {startRadius: 100, falloff: 2})
     
 
     //      wiggle force
@@ -99,6 +102,9 @@ class Particle {
 //     Fake drag
     if (this.drag)
       this.v.mult(1 - this.drag)
+    
+    // How fast is this particle allowed to go?
+    this.v.constrainMagnitude(0, 500)
   }
 
   // How to draw particle
@@ -115,6 +121,8 @@ class Particle {
     // p.stroke(20, 100, 50)
     // p.line(this.pos[0], this.pos[1], this.pos[0] + this.f[0]*m, this.pos[1] + this.f[1]*m)
     p.fill(0);
-    p.text(this.pos.magnitude.toFixed(), ...this.pos);
+    
+    p.text(this.debugText, this.pos[0], this.pos[1] - 10);
+     
   }
 }

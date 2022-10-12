@@ -6,7 +6,7 @@
 
 /* globals p5 */
 
-const SYSTEMS = [ParticleSystem, ParticleSystem, ParticleSystem];
+const SYSTEMS = [ParticleSystem];
 
 let p;
 const CANVAS_WIDTH = 400;

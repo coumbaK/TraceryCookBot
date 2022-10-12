@@ -87,6 +87,14 @@ class Vector2D extends Array {
     }
   }
   
+  constrainMagnitude(min, max) {
+    let m = this.magnitude
+    if (m == 0)
+      return this
+    let m2 = Math.min(max, Math.max(min, m))
+    this.mult(m2/m)
+  }
+  
   get magnitude() {
     return Math.sqrt(this[0]**2 + this[1]**2)
   }
