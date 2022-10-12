@@ -54,9 +54,22 @@ class Particle {
     this.f = new Vector2D()
   }
   
-  applyForceTowardsPoint(center, amount, {falloff}={}) {
+  applyForceTowardsPoint(center, amt=1, {falloff=1, startRadius}={}) {
     let offset = Vector2D.sub(this.pos, center)
-    let strength = 1
+    
+    // How much force should be applied?
+    // Take our current distance
+    let d = offset.magnitude
+    
+    let x = d
+    // Treat distances less than or greater than the thresholds as being *at* those thresholds
+    if (startRadius !== undefined)
+      x = Math.max(d - startRadius, 0)
+
+    if (d !== 0 and d )
+    
+    let strength = (x**falloff)*amt/d
+    console.log(strength)
     this.f.addMultiple(offset, strength)
   }
 
@@ -72,7 +85,7 @@ class Particle {
     let outOfRange = Math.max(0, distanceFromCenter - range)
    
     let center = new Vector2D(0,0)
-    this.applyForceTowardsPoint(center)
+    this.applyForceTowardsPoint(center, -1000, {startRadius: 200, falloff: 3})
     
 
     //      wiggle force
