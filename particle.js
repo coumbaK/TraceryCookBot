@@ -6,8 +6,8 @@ class ParticleSystem {
 
     this.particles = [];
 
-    for (var i = 0; i < 10; i++) {
-      let pt = new Particle();
+    for (var i = 0; i < 100; i++) {
+      let pt = new Particle(this);
 
       this.particles.push(pt);
     }
@@ -30,10 +30,6 @@ class ParticleSystem {
     p.noFill();
     p.circle(0, 0, 200);
 
-    // Maps, filters, for each
-    this.particles.forEach((pt, index) => {
-      pt.draw(p);
-    });
     
     
     
@@ -52,9 +48,14 @@ class ParticleSystem {
         
         let wind = this.getWindAt(x, y)
         
-        p.line(x, y, x + , y + windSpeed*Math.sin(windTheta))
+        p.line(x, y, x + wind[0], y + wind[1])
       }
     }
+    
+    // Maps, filters, for each
+    this.particles.forEach((pt, index) => {
+      pt.draw(p);
+    });
     
   }
   
@@ -68,12 +69,15 @@ class ParticleSystem {
 let particleCount = 0;
 
 class Particle {
-  constructor() {
+  constructor(ps) {
+    this.ps = ps
     this.idNumber = particleCount++;
     console.log("I made a particle!");
     let r = Math.random() ** 0.5 * 100;
     this.drag = 0.6;
 
+    
+    
     this.pos = Vector2D.polar(r, Math.random() * 6.26);
 
     let initialSpeed = 10;
@@ -118,7 +122,7 @@ class Particle {
     let center = new Vector2D(0, 0);
     
     // Apply a force to the cetner
-    this.boundaryForce = this.getForceTowardsPoint(center, -10, { startRadius: 100, falloff:1 });
+    this.boundaryForce = this.getForceTowardsPoint(center, -10, { startRadius: 200, falloff:1 });
 
     let mouseVector = new Vector2D(p.mouseX - p.width/2, p.mouseY - p.height/2)
     // let mouseVector = new Vector2D(p.mouseX , p.mouseY )
@@ -127,6 +131,8 @@ class Particle {
     // this.f.add(this.mouseForce)
     this.f.add(this.boundaryForce)
     
+    this.wind = this.ps.getWindAt(...this.pos)
+    this.f.add(this.wind)
     //      wiggle force
 
     // let r = 600;
@@ -152,8 +158,8 @@ class Particle {
     p.noStroke();
     // p.circle(this.pos[0], this.pos[1], 10)
     p.circle(...this.pos, 3);
-    this.pos.drawArrow(p, this.v, { color: [100, 100, 50], m: .1 });
-    this.pos.drawArrow(p, this.mouseForce, { color: [320, 100, 50], m: .1 });
+    // this.pos.drawArrow(p, this.v, { color: [100, 100, 50], m: .1 });
+    // this.pos.drawArrow(p, this.wind, { color: [320, 100, 50], m: 4 });
     
     // let m = 10
     // p.stroke(0)
