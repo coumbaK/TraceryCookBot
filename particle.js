@@ -1,3 +1,5 @@
+
+
 /* globals polarCoord, addMultiple, addPolar */
 
 class ParticleSystem {
@@ -55,12 +57,16 @@ class Particle {
     //      Reset forces
     let gravity = 10;
     this.f = [0, gravity]; //
-    //
-    let boundaryForce = -1;
+    
+    // How far outside of the range is this particle?
+    let range = 100
+    let outOfRange = Math.max(0, this.pos.magnitude() - range)
+    
+    let boundaryForce = -1*boundaryForce.magnitude;
     addMultiple(this.f, boundaryForce, this.pos);
 
     //      wiggle force
-    let r = 100;
+    let r = 400;
     let theta = 20 * p.noise(dt * 1);
     addPolar(this.f, r, theta);
 
