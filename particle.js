@@ -6,7 +6,7 @@ class ParticleSystem {
 
     this.particles = [];
 
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < 10; i++) {
       let pt = new Particle();
 
       this.particles.push(pt);
@@ -14,6 +14,9 @@ class ParticleSystem {
 
     console.log("I have", this.particles.length, "particles");
     console.log(this.particles);
+    
+    this.windScale = .01
+        
   }
 
   update(p, dt) {
@@ -31,6 +34,34 @@ class ParticleSystem {
     this.particles.forEach((pt, index) => {
       pt.draw(p);
     });
+    
+    
+    
+    let count = 30
+    for (var i = 0; i < count; i++) {
+      
+      for (var j = 0; j < count; j++) {
+        let x = i*10 - 140
+        let y = j*10 - 140
+        p.fill(0)
+        p.circle(x, y, 1)
+//         let windTheta = 10*p.noise(x*this.windScale, y*this.windScale)
+//         let windSpeed = 10
+        
+        p.stroke(0)
+        
+        let wind = this.getWindAt(x, y)
+        
+        p.line(x, y, x + , y + windSpeed*Math.sin(windTheta))
+      }
+    }
+    
+  }
+  
+  getWindAt(x, y) {
+    let windTheta = 10*p.noise(x*this.windScale, y*this.windScale)
+    let windSpeed = 10
+    return Vector2D.polar(windSpeed, windTheta)
   }
 }
 
@@ -41,7 +72,7 @@ class Particle {
     this.idNumber = particleCount++;
     console.log("I made a particle!");
     let r = Math.random() ** 0.5 * 100;
-    this.drag = 0.2;
+    this.drag = 0.6;
 
     this.pos = Vector2D.polar(r, Math.random() * 6.26);
 
@@ -70,7 +101,7 @@ class Particle {
     if (d === 0 || isNaN(d)) return;
 
     let strength = amt * x ** falloff;
-    this.debugText = "str " + strength.toFixed(2) + " x=" + x.toFixed(2);
+    // this.debugText = "str " + strength.toFixed(2) + " x=" + x.toFixed(2);
   
     return offset.mult(strength/d)
    
@@ -87,26 +118,31 @@ class Particle {
     let center = new Vector2D(0, 0);
     
     // Apply a force to the cetner
-    this.boundaryForce = this.getForceTowardsPoint(center, -1, { startRadius: 100, falloff:1 });
+    this.boundaryForce = this.getForceTowardsPoint(center, -10, { startRadius: 100, falloff:1 });
 
-    let mouseVector = new Vector2D(p.mouseX, p.mouseY)
-    this.mouseForce = this.getForceTowardsPoint(mouseVector, -10, { startRadius: 100, falloff:1 });
+    let mouseVector = new Vector2D(p.mouseX - p.width/2, p.mouseY - p.height/2)
+    // let mouseVector = new Vector2D(p.mouseX , p.mouseY )
+    this.mouseForce = this.getForceTowardsPoint(mouseVector, -100, { startRadius: 10, falloff:1.5 });
 
+    // this.f.add(this.mouseForce)
+    this.f.add(this.boundaryForce)
     
     //      wiggle force
 
-    let r = 600;
-    let theta = 20 * p.noise(dt * 1);
-    this.f.addPolar(r, theta);
+    // let r = 600;
+    // let theta = 20 * p.noise(dt * 1);
+    // this.f.addPolar(r, theta);
 
     this.pos.addMultiple(this.v, dt);
     this.v.addMultiple(this.f, dt);
 
+    
+    // How fast is this particle allowed to go?
+    this.v.constrainMagnitude(0, 500);
+    
     //     Fake drag
     if (this.drag) this.v.mult(1 - this.drag);
 
-    // How fast is this particle allowed to go?
-    this.v.constrainMagnitude(0, 500);
   }
 
   // How to draw particle
@@ -117,6 +153,8 @@ class Particle {
     // p.circle(this.pos[0], this.pos[1], 10)
     p.circle(...this.pos, 3);
     this.pos.drawArrow(p, this.v, { color: [100, 100, 50], m: .1 });
+    this.pos.drawArrow(p, this.mouseForce, { color: [320, 100, 50], m: .1 });
+    
     // let m = 10
     // p.stroke(0)
     // p.line(this.pos[0], this.pos[1], this.pos[0] + this.v[0]*m, this.pos[1] + this.v[1]*m)
