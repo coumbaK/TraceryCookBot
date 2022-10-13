@@ -21,12 +21,12 @@ class ParticleSystem {
       // Important! reset your forces each frame
     // unlike velocity and position, forces don't accumulate
       pt.f.setTo(0,0)
-      pt.calculateForces(p);
+      pt.calculateForces(p, dt);
     });
     
     // Update this particle's velocity and movement for dt seconds
     this.particles.forEach(pt => {
-      pt.move(dt);
+      pt.move(p, dt);
     });
   }
 
@@ -65,7 +65,7 @@ class Particle {
     
   }
   
-  move(dt) {
+  move(p, dt) {
      this.pos.addMultiple(this.v, dt)
      this.v.addMultiple(this.f, dt)
   }

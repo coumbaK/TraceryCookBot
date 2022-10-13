@@ -6,6 +6,14 @@
 */
 
 
+function wrapValue(x, min, max) {
+  let dx = max - min
+    
+    let x2 = (((x - min)%dx)+dx)%dx + min
+  
+    return x2
+}
+
 class Vector2D extends Array {
   constructor(x=0, y=0) {
     if (Array.isArray(x)) {
@@ -87,6 +95,14 @@ if (x0 === undefined || x1 === undefined || y0 === undefined || y1 === undefined
        this[0] = Math.random()*(x1 - x0) + x0
    this[1]= Math.random()*(y1 - y0) + y0
    
+  }
+  
+ wrapX(min, max) {
+   this[0] = wrapValue(this[0], min, max)
+  }
+  
+   wrapY(min, max) {
+   this[1] = wrapValue(this[1], min, max)
   }
   
   constrainMagnitude(min, max) {

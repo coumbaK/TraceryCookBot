@@ -24,17 +24,27 @@ class RainParticle extends Particle {
     
     // Put these particles somewhere randomly on screen
     this.pos.setToRandom(-p.width/2, p.width/2, -p.height/2, p.height/2) // Set to a random (x0,x1,y0,y1)
-    
+    this.v.setTo(0, 100)
   }  
   
   calculateForces(p, dt) {
+    
+    // Apply some drag
+    this.v.mult(.99)
+    
+    
     this.f.add(0, 10)
+    this.f.addPolar(10, 100*p.noise(this.idNumber))
     
   }
   
   move(p, dt) {
-    this.super(p, dt)
     
+    super.move(p, dt)
+    
+    
+    this.pos.wrapY(-p.height/2, p.height/2)
+    this.pos.wrapX(-p.width/2, p.width/2)
   }
   
   draw(p) {
