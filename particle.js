@@ -1,67 +1,38 @@
 /* globals Vector2D */
 
 class ParticleSystem {
-  constructor(particleClass=Particle, count=100) {
+  constructor(ParticleClass=Particle, count=100) {
    
     this.particles = [];
-
-    for (var i = 0; i < 100; i++) {
-      let pt = new Particle(this);
-
+  
+    for (var i = 0; i < count; i++) {
+      let pt = new ParticleClass(this);
       this.particles.push(pt);
     }
-
-    console.log("I have", this.particles.length, "particles");
-    console.log(this.particles);
-    
-    this.windScale = .01
-        
   }
-
+  
   update(p, dt) {
-    this.particles.forEach((pt, index) => {
-      pt.update(p, dt);
+    // Update all the particles in this system
+    
+    // Calculate this particle's forces
+    this.particles.forEach(pt => {
+      pt.calculateForces(p);
+    });
+    
+    // Update this particle's velocity and movement for dt seconds
+    this.particles.forEach(pt => {
+      pt.move(p, dt);
     });
   }
 
   draw(p) {
-    p.stroke(150, 100, 50);
-    p.noFill();
-    p.circle(0, 0, 200);
-
-    
-    
-    
-    let count = 30
-    for (var i = 0; i < count; i++) {
-      
-      for (var j = 0; j < count; j++) {
-        let x = i*10 - 140
-        let y = j*10 - 140
-        p.fill(0)
-        p.circle(x, y, 1)
-//         let windTheta = 10*p.noise(x*this.windScale, y*this.windScale)
-//         let windSpeed = 10
-        
-        p.stroke(0)
-        
-        let wind = this.getWindAt(x, y)
-        
-        p.line(x, y, x + wind[0], y + wind[1])
-      }
-    }
-    
-    // Maps, filters, for each
+   
+    // JS Arrays have some useful "do something for each element" methods:
+    // map, filter, forEach
     this.particles.forEach((pt, index) => {
       pt.draw(p);
     });
     
-  }
-  
-  getWindAt(x, y) {
-    let windTheta = 10*p.noise(x*this.windScale, y*this.windScale)
-    let windSpeed = 10
-    return Vector2D.polar(windSpeed, windTheta)
   }
 }
 
@@ -77,26 +48,10 @@ class Particle {
     
   }
 
-  getForceTowardsPoint(center, amt = 1, { falloff = 1, startRadius } = {}) {
-    let offset = Vector2D.sub(this.pos, center);
 
-    // How much force should be applied?
-    // Take our current distance
-    let d = offset.magnitude;
-
-    let x = d;
-    // Treat distances less than or greater than the thresholds as being *at* those thresholds
-    if (startRadius !== undefined) x = Math.max(d - startRadius, 0);
-
-    if (d === 0 || isNaN(d)) return;
-
-    let strength = amt * x ** falloff;
-    // this.debugText = "str " + strength.toFixed(2) + " x=" + x.toFixed(2);
   
-    return offset.mult(strength/d)
-   
-  }
-
+  
+  
   // How to update particle
   update(p, dt) {
     //      Reset forces

@@ -98,6 +98,28 @@ class Vector2D extends Array {
   }
   
   
+  getForceTowardsPoint(center, amt = 1, { falloff = 1, startRadius } = {}) {
+    let offset = Vector2D.sub(this, center);
+
+    // How much force should be applied?
+    // Take our current distance
+    let d = offset.magnitude;
+    
+    // Skip undefined situations where the points are at distance 0
+    if (d === 0 || isNaN(d)) return;
+
+    let x = d;
+    // Treat distances less than or greater than the thresholds as being *at* those thresholds
+    if (startRadius !== undefined) x = Math.max(d - startRadius, 0);
+
+
+    let strength = amt * x ** falloff;
+   
+    return offset.mult(strength/d)
+   
+  }
+
+  
   //======================
   // Drawing things
   
