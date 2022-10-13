@@ -81,6 +81,14 @@ class Vector2D extends Array {
     }
   }
   
+  setToRandom(x0, x1, y0, y1) {
+if (x0 === undefined || x1 === undefined || y0 === undefined || y1 === undefined )
+      throw(`passed undefined value to setToRandom ${arguments}`)
+       this[0] = Math.random()*(x1 - x0) + x0
+   this[1]= Math.random()*(y1 - y0) + y0
+   
+  }
+  
   constrainMagnitude(min, max) {
     let m = this.magnitude
     if (m == 0)

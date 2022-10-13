@@ -6,10 +6,10 @@ class ParticleSystem {
     this.particles = [];
   
     for (var i = 0; i < count; i++) {
-      let pt = new ParticleClass(this);
+      let pt = new ParticleClass(this, i);
       this.particles.push(pt);
     }
-    console.log(ParticleClass)
+    console.dir(ParticleClass)
     console.log(`Created ${count} ${ParticleClass.name}`)
   }
   
@@ -18,12 +18,15 @@ class ParticleSystem {
     
     // Calculate this particle's forces
     this.particles.forEach(pt => {
+      // Important! reset your forces each frame
+    // unlike velocity and position, forces don't accumulate
+      pt.f.setTo(0,0)
       pt.calculateForces(p);
     });
     
     // Update this particle's velocity and movement for dt seconds
     this.particles.forEach(pt => {
-      pt.move(p, dt);
+      pt.move(dt);
     });
   }
 
@@ -42,7 +45,7 @@ let particleCount = 0;
 
 class Particle {
   
-  constructor(ps) {
+  constructor(ps, index) {
     this.ps = ps
     this.idNumber = particleCount++;
     
@@ -58,9 +61,8 @@ class Particle {
   }
 
   calculateForces(p, dt) {
-    // Important! reset your forces each frame
-    // unlike velocity and position, forces don't accumulate
-    this.f.setTo(0,0)
+    
+    
   }
   
   move(dt) {
