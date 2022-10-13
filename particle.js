@@ -9,7 +9,8 @@ class ParticleSystem {
       let pt = new ParticleClass(this);
       this.particles.push(pt);
     }
-    console.log(`Created ${}`)
+    console.log(ParticleClass)
+    console.log(`Created ${count} ${ParticleClass.name}`)
   }
   
   update(p, dt) {
