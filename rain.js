@@ -1,8 +1,9 @@
-/* globals Vector2D */
+/* globals Vector2D, Particle, ParticleSystem */
 
-class ParticleSystem {
-  constructor(particleClass=Particle, count=100) {
-   
+class RainSystem {
+  constructor() {
+    console.log("I made a particlesystem");
+
     this.particles = [];
 
     for (var i = 0; i < 100; i++) {
@@ -65,9 +66,8 @@ class ParticleSystem {
   }
 }
 
-let particleCount = 0;
 
-class Particle {
+class RainParticle {
   constructor(ps) {
     this.ps = ps
     this.idNumber = particleCount++;
