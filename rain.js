@@ -28,13 +28,14 @@ class RainParticle extends Particle {
   }  
   
   calculateForces(p, dt) {
+    let t = p.millis()*.001
     
     // Apply some drag
     this.v.mult(.99)
     
     
-    this.f.add(0, 10)
-    this.f.addPolar(10, 100*p.noise(this.idNumber))
+    this.f.add(0, 40)
+    this.f.addPolar(100, 100*p.noise(t*.1))
     
   }
   
