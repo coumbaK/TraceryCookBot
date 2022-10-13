@@ -1,20 +1,10 @@
 /* globals Vector2D, Particle, ParticleSystem */
 
-class RainSystem {
+class RainSystem extends ParticleSystem{
   constructor() {
-    console.log("I made a particlesystem");
+     // Make rain particles
+   this(RainParticle, 100)
 
-    this.particles = [];
-
-    for (var i = 0; i < 100; i++) {
-      let pt = new Particle(this);
-
-      this.particles.push(pt);
-    }
-
-    console.log("I have", this.particles.length, "particles");
-    console.log(this.particles);
-    
     this.windScale = .01
         
   }
@@ -67,27 +57,10 @@ class RainSystem {
 }
 
 
-class RainParticle {
+class RainParticle extends Particle {
   constructor(ps) {
     this.ps = ps
-    this.idNumber = particleCount++;
-    console.log("I made a particle!");
-    let r = Math.random() ** 0.5 * 100;
-    this.drag = 0.6;
-
-    
-    
-    this.pos = Vector2D.polar(r, Math.random() * 6.26);
-
-    let initialSpeed = 10;
-    this.v = Vector2D.polar(initialSpeed, Math.random() * 6.26);
-
-    this.f = new Vector2D();
-
-    // You can add the forces ar
-    this.wiggleForce = new Vector2D();
-    
-    this.mouseForce = new Vector2D();
+   
   }
 
   getForceTowardsPoint(center, amt = 1, { falloff = 1, startRadius } = {}) {
