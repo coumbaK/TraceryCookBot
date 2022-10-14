@@ -26,8 +26,9 @@
     <script src="particle.js"></script>
     
     <!-- Your code in here -->
-  <script src="wind.js"></script>
-<script src="rocket.js"></script>
+  <script src="p_basic.js"></script>
+ <script src="p_wind.js"></script>
+<script src="p_rocket.js"></script>
 
     <!-- Sets up all the swatches -->
     <script src="app.js"></script>
@@ -43,6 +44,12 @@
     
      <div id="controls">
        <label>Speed</label><input id="speed-slider" type="range" default="1" step=".1" min="0" max="2">
+       <label>debug:</label><input type="checkbox" /> 
+       <div id="system-desc">-current system-</div>
+      <div class="row">
+        <div id="buttons"></div>
+       </div>
+       
     </div>
    
   </body>

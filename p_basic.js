@@ -7,10 +7,12 @@
  */
 
 class BasicSystem extends ParticleSystem {
+  
+  static label = "🟢"; .
+  
   constructor() {
     super(BasicParticle, 5);
-    
-    this.icon = "🟢"
+   
   }
 }
 

@@ -10,7 +10,7 @@ class RocketSystem extends ParticleSystem {
   constructor() {
     super(RocketParticle, 5);
     
-    this.icon = "🚀"
+    this.label = "🚀"
     this.windScale = 0.001;
   }
 }

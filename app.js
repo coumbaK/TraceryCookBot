@@ -7,7 +7,7 @@
 /* globals p5, ParticleSystem, WindSystem, RocketSystem, BasicSystem */
 
 // TODO: ADD YOUR SYSTEM HERE
-const SYSTEMS = [BasicSystem, RocketSystem];
+const SYSTEMS = [BasicSystem, WindSystem, RocketSystem];
 
 
 let p;
@@ -16,7 +16,7 @@ const CANVAS_HEIGHT = 300;
 
 window.addEventListener("load", function () {
   console.log("LOADED");
-  let systems;
+  let system;
   
   let activeTool = undefined;
   // Create a P5 canvas element, JS-style
@@ -34,19 +34,17 @@ window.addEventListener("load", function () {
     p.draw = function () {
       const SPEED_EL = document.getElementById("speed-slider");
       const speedMult = SPEED_EL.value ** 2;
-      // at 0, speed is 0, at 50 i
       
-      drawBackground(p)
+       const elapsed = Math.min(0.1, speedMult * p.deltaTime * 0.001);
+     
+      
+     system?.update(p, elapsed);
+      
 
-      if (systems) {
-        const elapsed = Math.min(0.1, speedMult * p.deltaTime * 0.001);
-        systems.forEach((ps) => ps.update(p, elapsed));
+      p.push();
+      p.translate(p.width / 2, p.height / 2);
 
-        p.push();
-        p.translate(p.width / 2, p.height / 2);
-
-        systems.forEach((ps) => ps.draw(p));
-      }
+      
 
       p.pop();
     };
@@ -62,42 +60,26 @@ window.addEventListener("load", function () {
   new p5(s, CANVAS_EL);
   //   Create all the particle systems
   console.log("p", p)
-  systems = SYSTEMS.map((pClass) => new pClass());
   
   
   function setSystem(index) {
-    
+    console.log("initialize", SYSTEMS[index].name)
+    system = new SYSTEMS[index]()
   }
-  setBrush(Math.max(localStorage.getItem("lastbrush"), brushes.length - 1) || 0);
-  const COLOR0_EL = document.getElementById("color0");
-  const COLOR1_EL = document.getElementById("color1");
-  const SLIDER0_EL = document.getElementById("size");
-  COLOR0_EL.value = HSLToHex(...color0);
-  COLOR1_EL.value = HSLToHex(...color1);
-  SLIDER0_EL.value = brushSize;
+  setSystem(Math.max(localStorage.getItem("lastsystem"), SYSTEMS.length - 1) || 0);
+ 
 
-  //   Listen to the "change" events from the color pickers and sliders
-  COLOR0_EL.addEventListener("change", function () {
-    color0 = hexToHSL(this.value);
-    console.log("Change color0", this.value, color0);
-  });
-  COLOR1_EL.addEventListener("change", function () {
-    color1 = hexToHSL(this.value);
-    console.log("Change color1", this.value, color1);
-  });
-  SLIDER0_EL.addEventListener("change", function () {
-    console.log("Change size", this.value, SLIDER0_EL);
-    brushSize = this.value
-  });
+  const BUTTON_HOLDER_EL = document.getElementById("buttons");
 
-  brushes.filter(b=>b.isActive).forEach((brush, index) => {
+  SYSTEMS
+    .forEach((system, index) => {
     let button = document.createElement("button");
-    button.innerHTML = brush.label;
+    button.innerHTML = system.label;
 
     BUTTON_HOLDER_EL.appendChild(button);
 
     button.addEventListener("click", () => {
-      setBrush(index);
+      setSystem(index);
     });
   });
 });
