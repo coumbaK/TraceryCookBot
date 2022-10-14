@@ -8,7 +8,7 @@
 class RocketSystem extends ParticleSystem {
   constructor() {
     // Make wind particles
-    super(RocketParticle, 100);
+    super(RocketParticle, 5);
     this.windScale = 0.001;
   }
 
@@ -32,14 +32,35 @@ class RocketParticle extends Particle {
     ); // Set to a random (x0,x1,y0,y1)
     this.v.setTo(0, 100);
 
-     this.thrusterStrength = .1
+     this.thrusterStrength = 1
     this.turnStrength = .1
     this.flameAnimation = .1
+    
+    this.thrustForce = new Vector2D()
+    this.turnForce = new Vector2D()
     this.trail = []
   }
 
   calculateForces(p, dt) {
+    let t = p.millis()*.001
+    // The ship's angle is the same as its velocity
+    //. True of rockets, may not be true of everything!
     
+    this.angle = this.v.angle
+    let angle = this.angle
+    
+    // Set the amount of turn and thruster force
+    this.turnStrength = 10*(p.noise(t*.2, this.idNumber) - .5)
+    this.thrusterStrength = 10*(p.noise(t*.2, this.idNumber) - .5)
+    
+    
+    let multiplier = 100
+    this.thrustForce.setToPolar(this.thrusterStrength * multiplier, this.angle)
+    this.turnForce.setToPolar(this.turnStrength * multiplier, this.angle + Math.PI/2)
+    this.f.add(this.turnForce)
+    this.f.add(this.thrustForce)
+    
+    this.v.mult(.98)
   }
 
   move(p, dt) {
@@ -54,8 +75,8 @@ class RocketParticle extends Particle {
   draw(p, drawDebug = false) {
     let t = p.millis() * 0.001;
 
-   p.noStroke()
-		p.fill(0, 0, 0, .4)
+   	p.stroke(0, 0, 100, 1)
+	p.fill(0, 0, 0, .4)
 		
 		this.trail.forEach(pt => p.circle(...pt, 3))
 
@@ -66,9 +87,10 @@ class RocketParticle extends Particle {
     // Rocket body
 		p.noStroke()
 		p.rectMode(p.CENTER)
-		p.fill(0, 0, 50)
+		p.stroke(0, 0, 100, 1)
+	p.fill(0, 0, 50)
 		p.rect(10, 0, 15, 10)
-		p.ellipse(30, 0, 45, 10)
+		p.ellipse(30, 0, 22, 5)
   
     // Fins
 		p.beginShape()
@@ -90,5 +112,10 @@ class RocketParticle extends Particle {
 // 		}
 
 		p.pop()
+    
+    // if (drawDebug) {
+      this.pos.drawArrow(p, this.thrustForce, { m: 0.2, color: [40, 100, 50] });
+      this.pos.drawArrow(p, this.turnForce, { m: 0.2, color: [190, 100, 50] });
+    // }
   }
 }

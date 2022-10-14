@@ -19,7 +19,7 @@ const CANVAS_HEIGHT = 300;
 
 window.addEventListener("load", function () {
   console.log("LOADED");
-
+  let systems;
   
   let activeTool = undefined;
   // Create a P5 canvas element, JS-style
@@ -41,13 +41,15 @@ window.addEventListener("load", function () {
       
       drawBackground(p)
 
-      const elapsed = Math.min(0.1, speedMult * p.deltaTime * 0.001);
-      systems.forEach((ps) => ps.update(p, elapsed));
+      if (systems) {
+        const elapsed = Math.min(0.1, speedMult * p.deltaTime * 0.001);
+        systems.forEach((ps) => ps.update(p, elapsed));
 
-      p.push();
-      p.translate(p.width / 2, p.height / 2);
+        p.push();
+        p.translate(p.width / 2, p.height / 2);
 
-      systems.forEach((ps) => ps.draw(p));
+        systems.forEach((ps) => ps.draw(p));
+      }
 
       p.pop();
     };
@@ -62,6 +64,6 @@ window.addEventListener("load", function () {
   new p5(s, CANVAS_EL);
   //   Create all the particle systems
   console.log("p", p)
-let systems = SYSTEMS.map((pClass) => new pClass());
+  systems = SYSTEMS.map((pClass) => new pClass());
 
 });
