@@ -50,11 +50,20 @@ class RocketParticle extends Particle {
     let angle = this.angle
     
     // Set the amount of turn and thruster force
-    this.turnStrength = 10*(p.noise(t*.2, this.idNumber) - .5)
-    this.thrusterStrength = 10*(p.noise(t*.2, this.idNumber) - .5)
+    this.turnStrength = p.noise(t*.2, this.idNumber) - .5
+    this.thrusterStrength = 2*p.noise(t*.4, this.idNumber)**4
+    
+    if (p.keyIsPressed) {
+      if (p.keyCode === p.RIGHT_ARROW)
+        this.turnStrength = .3
+       if (p.keyCode === p.LEFT_ARROW)
+        this.turnStrength = -.3
+      
+    }
+   
     
     
-    let multiplier = 100
+    let multiplier = 900
     this.thrustForce.setToPolar(this.thrusterStrength * multiplier, this.angle)
     this.turnForce.setToPolar(this.turnStrength * multiplier, this.angle + Math.PI/2)
     this.f.add(this.turnForce)
@@ -70,15 +79,19 @@ class RocketParticle extends Particle {
     // Then wrap around the screen
     this.pos.wrapY(-p.height / 2, p.height / 2);
     this.pos.wrapX(-p.width / 2, p.width / 2);
+    
+    // Every time we move, add to our trail
+    this.trail.push(this.pos.clone())
+    this.trail = this.trail.slice(-25)
   }
 
   draw(p, drawDebug = false) {
     let t = p.millis() * 0.001;
 
-   	p.stroke(0, 0, 100, 1)
-	p.fill(0, 0, 0, .4)
+   	p.noStroke()
+	p.fill(0, 0, 0, .1)
 		
-		this.trail.forEach(pt => p.circle(...pt, 3))
+		this.trail.filter((pt, index) => index%3 == 0).forEach((pt, index) => p.circle(...pt, 5 + -.1*index))
 
 		p.push()
 		p.translate(...this.pos)
@@ -100,16 +113,16 @@ class RocketParticle extends Particle {
 		p.vertex(0, -40*this.turnStrength)
 		p.endShape()
 
-// 		let cycle = this.flameAnimation
-// 		let flameCount = 7
-// 		p.scale(this.thrusterStrength, .6 + this.thrusterStrength*.4)
-// 		for (var i = 0; i < flameCount; i++) {
-// 			let pct = ((i + cycle*10)%flameCount)/flameCount
-// 			let r = (.3 + Math.sin(pct*Math.PI))*(1-pct)
-// 			p.fill(50 - pct*50, 100, 50)
-// 			p.noStroke()
-// 			p.ellipse(-pct*100, pct*3*Math.sin(i*3 + cycle), r*40, r*15)
-// 		}
+		let cycle = this.flameAnimation
+		let flameCount = 7
+		p.scale(this.thrusterStrength, .6 + this.thrusterStrength*.4)
+		for (var i = 0; i < flameCount; i++) {
+			let pct = ((i + cycle*10)%flameCount)/flameCount
+			let r = (.3 + Math.sin(pct*Math.PI))*(1-pct)
+			p.fill(50 - pct*50, 100, 50)
+			p.noStroke()
+			p.ellipse(-pct*100, pct*3*Math.sin(i*3 + cycle), r*20, r*8)
+		}
 
 		p.pop()
     

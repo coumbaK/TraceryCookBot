@@ -23,6 +23,11 @@ class Vector2D extends Array {
     }
     return this;
   }
+  
+  clone() {
+    return new Vector2D(this)
+  }
+
 
   mult(m) {
     this[0] *= m;
