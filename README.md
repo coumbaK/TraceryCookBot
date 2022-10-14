@@ -1,11 +1,48 @@
+# A3: Drawing Tools
 
-# README COMING SOON DONT FILL OUT YET
-particle stuff
+## Your name
+Test McStudent
+
+## Your Glitch link
+[my page](https://galaxykate-a1.glitch.me)
 
 
-* Copy "basic.js" (or one of the example systems)
-* Change the XSystem and XParticle class names to a new name
-* Add this new js file in `index.html`
-* Add this system's class name to the array at the top of app.js
+## Which systems 
 
-add this.draggable = true to make a particle draggable
+--your answer here  --
+
+
+## Describe your 1st system. What forces does it use? What is its emergent behavior?
+--your answer here  --
+-- If your work is at all close to the example code, be sure to describe how it is different --
+-- What techniques and P5 tools did you use? Help the TA/reviewer understand how it works --
+
+
+## Describe your 1st system. What forces does it use? What is its emergent behavior?
+--your answer here  --
+
+
+## Describe your 1st system. What forces does it use? What is its emergent behavior?
+--your answer here  --
+
+
+## Describe your 1st system. What forces does it use? What is its emergent behavior?
+-- your answer here  --
+
+
+## Which of your tools is continuous? What makes that different?
+
+--your answer here--
+
+
+## Which of your tools uses begin/endshape? What are you doing with that feature?
+
+--your answer here--
+
+## List any resources (code, images, etc) you've used, and where you got them from
+
+--your answer here--
+
+## List any help you got from classmates or websites, so that you can remember it for later
+
+--your answer here--
