@@ -55,7 +55,13 @@ window.addEventListener("load", function () {
   CANVAS_EL.style.width = CANVAS_WIDTH + "px";
   CANVAS_EL.style.height = CANVAS_HEIGHT + "px";
   DEBUG_DRAW_EL = document.getElementById("debug-draw");
- 
+  
+  DEBUG_DRAW_EL.addEventListener("change", () => {
+      localStorage.setItem("lastdebug", DEBUG_DRAW_EL.checked)
+    
+    });
+  console.log(localStorage.getItem("lastdebug") )
+ DEBUG_DRAW_EL.checked = JSON.parse(localStorage.getItem("lastdebug"))
   
 //   Create the p5 instance
   new p5(s, CANVAS_EL);
