@@ -41,17 +41,11 @@ class Edge {
   }
 
   draw(p) {
-    p.stroke(this.stretch + 100, 100, 50);
+    p.stroke(this.stretch + 100, 20, 50);
     p.strokeWeight(4);
     p.line(...this.pt0.pos, ...this.pt1.pos);
 
-    p.push();
-    p.stroke(0);
-    p.strokeWeight(1);
-    p.translate(...this.pt0.pos);
-    p.line(0, 0, ...this.edgeVector);
-
-    p.pop();
+ 
   }
 }
 
@@ -176,7 +170,8 @@ class SpringParticle extends Particle {
     p.circle(...this.pos, this.radius);
     p.fill(this.hue, 70, 60);
     p.circle(...this.pos, this.radius * 0.7);
-
+    
+    p.strokeWeight(1)
     if (drawDebug) {
       this.pos.drawArrow(p, this.attractionForce, {
         m: 0.4,
