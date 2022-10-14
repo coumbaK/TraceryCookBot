@@ -8,21 +8,24 @@
 
 class RocketSystem extends ParticleSystem {
   static label = "🚀"; // Ignore the Glitch parse error
-  
+
   constructor() {
     super(RocketParticle, 5);
-    
+
     this.windScale = 0.001;
   }
-  
+
   draw(p) {
-    
     // Draw a background
-    p.background(190, 40, 80)
+    p.background(190, 40, 80);
     // The "super-class" draws the particles
-    super.draw(p)
+    super.draw(p);
   }
 }
+
+//=========================================================================
+//=========================================================================
+//=========================================================================
 
 class RocketParticle extends Particle {
   constructor(ps, index) {
@@ -34,13 +37,19 @@ class RocketParticle extends Particle {
     // Put these particles somewhere randomly on screen
     this.pos.setToRandom(0, 0, p.width, p.height); // Set to a random (x0,x1,y0,y1)
     this.v.setTo(0, 100);
-
+    
+    // Store some values that we can use
+    // to *both* set forces, and draw 
+    // so that we visually represent the forces
     this.thrusterStrength = 1;
     this.turnStrength = 0.1;
     this.flameAnimation = 0.1;
-
+    
+    // Store forces so we can debug-draw them
     this.thrustForce = new Vector2D();
     this.turnForce = new Vector2D();
+    
+    // Store a trail of past-positions
     this.trail = [];
   }
 
@@ -88,14 +97,11 @@ class RocketParticle extends Particle {
   }
 
   draw(p, drawDebug = false) {
-    
     let t = p.millis() * 0.001;
-    
-   
+
     // Draw the trail
     p.noStroke();
     p.fill(0, 0, 0, 0.1);
-    
 
     // Draw every third trail poof
     this.trail
@@ -108,7 +114,7 @@ class RocketParticle extends Particle {
           5 + -0.1 * index
         );
       });
-    
+
     // Move to the rocket's location
     p.push();
     p.translate(...this.pos);
@@ -129,8 +135,7 @@ class RocketParticle extends Particle {
     p.fill(0, 0, 70);
     p.vertex(0, -40 * this.turnStrength);
     p.endShape();
-  
-    
+
     // Flamejet
     let cycle = this.flameAnimation;
     let flameCount = 7;
