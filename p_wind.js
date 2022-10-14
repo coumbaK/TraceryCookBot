@@ -6,10 +6,11 @@
  */
 
 class WindSystem extends ParticleSystem {
+  static label = "🍂"; // Ignore the Glitch parse error
+  
   constructor() {
     // Make wind particles
     super(WindParticle, 100);
-    this.label = "🍂"
     this.windScale = 0.001;
   }
 
@@ -29,12 +30,7 @@ class WindParticle extends Particle {
     this.hue = Math.random()*60
 
     // Put these particles somewhere randomly on screen
-    this.pos.setToRandom(
-      -p.width / 2,
-      p.width / 2,
-      -p.height / 2,
-      p.height / 2
-    ); // Set to a random (x0,x1,y0,y1)
+    this.pos.setToRandom(0, p.width, 0, p.height); // Set to a random (x0,x1,y0,y1)
     this.v.setTo(0, 100);
 
     // Store a wind force so we can visualize it

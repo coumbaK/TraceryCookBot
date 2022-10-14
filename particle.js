@@ -1,4 +1,4 @@
-/* globals Vector2D */
+/* globals Vector2D, DEBUG_DRAW_EL */
 
 class ParticleSystem {
   constructor(ParticleClass=Particle, count=100) {
@@ -31,6 +31,7 @@ class ParticleSystem {
   }
 
   draw(p) {
+    let debugDraw = DEBUG_DRAW_EL.checked
    
     // JS Arrays have some useful "do something for each element" methods:
     // map, filter, forEach

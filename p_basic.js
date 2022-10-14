@@ -8,7 +8,7 @@
 
 class BasicSystem extends ParticleSystem {
   
-  static label = "🟢"; .
+  static label = "🟢"; // Ignore the Glitch parse error
   
   constructor() {
     super(BasicParticle, 5);

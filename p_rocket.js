@@ -7,10 +7,11 @@
  */
 
 class RocketSystem extends ParticleSystem {
+  static label = "🚀"; // Ignore the Glitch parse error
+  
   constructor() {
     super(RocketParticle, 5);
     
-    this.label = "🚀"
     this.windScale = 0.001;
   }
 }
@@ -23,12 +24,7 @@ class RocketParticle extends Particle {
     this.hue = Math.random() * 60;
 
     // Put these particles somewhere randomly on screen
-    this.pos.setToRandom(
-      -p.width / 2,
-      p.width / 2,
-      -p.height / 2,
-      p.height / 2
-    ); // Set to a random (x0,x1,y0,y1)
+    this.pos.setToRandom(0, 0, p.width, p.height); // Set to a random (x0,x1,y0,y1)
     this.v.setTo(0, 100);
 
     this.thrusterStrength = 1;
@@ -75,8 +71,8 @@ class RocketParticle extends Particle {
     super.move(p, dt);
 
     // Then wrap around the screen
-    this.pos.wrapY(-p.height / 2, p.height / 2);
-    this.pos.wrapX(-p.width / 2, p.width / 2);
+    this.pos.wrapX(0, p.width);
+    this.pos.wrapY(0, p.height);
 
     // Every time we move, add to our trail
     this.trail.push(this.pos.clone());
@@ -84,6 +80,9 @@ class RocketParticle extends Particle {
   }
 
   draw(p, drawDebug = false) {
+    // Draw a background
+    p.background(190, 40, 80)
+    
     let t = p.millis() * 0.001;
 
     // Draw the trail
@@ -138,9 +137,9 @@ class RocketParticle extends Particle {
 
     p.pop();
 
-    // if (drawDebug) {
-    this.pos.drawArrow(p, this.thrustForce, { m: 0.2, color: [40, 100, 50] });
-    this.pos.drawArrow(p, this.turnForce, { m: 0.2, color: [190, 100, 50] });
-    // }
+    if (drawDebug) {
+      this.pos.drawArrow(p, this.thrustForce, { m: 0.2, color: [40, 100, 50] });
+      this.pos.drawArrow(p, this.turnForce, { m: 0.2, color: [190, 100, 50] });
+    }
   }
 }

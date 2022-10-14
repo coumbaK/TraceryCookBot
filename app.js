@@ -14,6 +14,8 @@ let p;
 const CANVAS_WIDTH = 400;
 const CANVAS_HEIGHT = 300;
 
+let DEBUG_DRAW_EL 
+
 window.addEventListener("load", function () {
   console.log("LOADED");
   let system;
@@ -42,9 +44,8 @@ window.addEventListener("load", function () {
       
 
       p.push();
-      p.translate(p.width / 2, p.height / 2);
-
       
+      system.draw(p)
 
       p.pop();
     };
@@ -53,7 +54,7 @@ window.addEventListener("load", function () {
   const CANVAS_EL = document.getElementById("canvas-holder");
   CANVAS_EL.style.width = CANVAS_WIDTH + "px";
   CANVAS_EL.style.height = CANVAS_HEIGHT + "px";
-  
+  DEBUG_DRAW_EL = document.getElementById("debug-draw");
  
   
 //   Create the p5 instance
@@ -62,11 +63,15 @@ window.addEventListener("load", function () {
   console.log("p", p)
   
   
-  function setSystem(index) {
+  function setSystem(systemClas) {
     console.log("initialize", SYSTEMS[index].name)
     system = new SYSTEMS[index]()
+    localStorage.setItem("lastsystem", index)
   }
-  setSystem(Math.max(localStorage.getItem("lastsystem"), SYSTEMS.length - 1) || 0);
+  
+  let saved = localStorage.getItem("lastsystem")
+  console.log("load last-loaded system", saved)
+  setSystem(SYSTEMS[0]);
  
 
   const BUTTON_HOLDER_EL = document.getElementById("buttons");
@@ -79,7 +84,7 @@ window.addEventListener("load", function () {
     BUTTON_HOLDER_EL.appendChild(button);
 
     button.addEventListener("click", () => {
-      setSystem(index);
+      setSystem(system);
     });
   });
 });
