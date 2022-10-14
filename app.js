@@ -7,7 +7,7 @@
 /* globals p5, ParticleSystem, WindSystem, RocketSystem, BasicSystem */
 
 // TODO: ADD YOUR SYSTEM HERE
-const SYSTEMS = [BasicSystem, WindSystem, RocketSystem, SpringSystem];
+const SYSTEMS = [BasicSystem, WindSystem, RocketSystem, SpringSystem, BoidSystem];
 
 
 let p;
