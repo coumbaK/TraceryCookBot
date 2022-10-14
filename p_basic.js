@@ -19,7 +19,7 @@ class BasicSystem extends ParticleSystem {
   
   draw(p) {
     // A little bit of trails!
-    p.background(0, 0, 50, .5)
+    p.background(0, 0, 50, 1)
     
     // The "super-class" draws the particles
      super.draw(p)
@@ -60,13 +60,13 @@ class BasicParticle extends Particle {
     // What forces do we want to apply to this particle?
    // We can attract it to the center
     let center = new Vector2D(p.width/2, p.height/2)
-    this.attractionForce = this.pos.getForceTowardsPoint(center, 1, { falloff:1 } )
+    // this.attractionForce = this.pos.getForceTowardsPoint(center, 1, { falloff:1 } )
     
     // We can also make it attracted to the mouse
     let mouse = new Vector2D(p.mouseX, p.mouseY)
-    // What happens if I change the falloff? 1 is linear, 2 is quadratic
-    this.attractionForce = this.pos.getForceTowardsPoint(mouse, 1, { falloff:1.2 } )
-    this.v.mult(.999)
+    // // What happens if I change the falloff? 1 is linear, 2 is quadratic
+    this.attractionForce = this.pos.getForceTowardsPoint(mouse, .1, { falloff:1.2 } )
+    // this.v.mult(.99)
     
     // Whatever force we use, we won't see anything unless it is 
     // added to the particle's main force, which gets added to the velocity
@@ -86,7 +86,7 @@ class BasicParticle extends Particle {
     p.circle(...this.pos, this.radius*.7)
     
     if (drawDebug) {
-      this.pos.drawArrow(p, this.attractionForce, {m: .1})
+      this.pos.drawArrow(p, this.attractionForce, {m: 1})
     }
     
   }
