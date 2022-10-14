@@ -9,6 +9,7 @@ class WindSystem extends ParticleSystem {
   constructor() {
     // Make wind particles
     super(WindParticle, 100);
+    this.icon = "🍂"
     this.windScale = 0.001;
   }
 
