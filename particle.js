@@ -61,7 +61,7 @@ class Particle {
   }
 
   calculateForces(p, dt) {
-    
+    // Calculate the force on these particles
     
   }
   
