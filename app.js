@@ -50,12 +50,23 @@ window.addEventListener("load", function () {
       p.pop();
     };
     
+        
+     p.mouseMoved = function () {
+        if (system.mouseMoved) system.mouseMoved(p);
+    
+    };
+    
        p.mouseDragged = function () {
       if (system.mouseDragged) system.mouseDragged(p);
     };
 
     p.mousePressed = function () {
         if (system.mousePressed) system.mousePressed(p);
+    
+    };
+    
+     p.mouseClicked = function () {
+        if (system.mouseClicked) system.mouseClicked(p);
     
     };
 

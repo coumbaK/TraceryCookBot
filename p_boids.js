@@ -33,8 +33,10 @@ class BoidSystem extends ParticleSystem {
   
   mousePressed(p) {
     super.mousePressed(p)
-    if (!held) {
-      
+    if (!this.held) {
+      let pt = new BoidParticle(this)
+      pt.pos.setTo(p.mouseX, p.mouseY)
+      this.particles.push(pt)
     }
   }
 
