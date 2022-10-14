@@ -76,6 +76,8 @@ class BoidParticle extends Particle {
     let center = new Vector2D(p.width/2, p.height/2)
     // Add a border force
     this.f.add(this.pos.getForceTowardsPoint(center, 1, {startRadius: 120, falloff: 1.2}))
+    
+    // Add boids force
   }
   
   // move(p, dt) {
