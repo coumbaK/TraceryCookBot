@@ -17,6 +17,10 @@ class WindSystem extends ParticleSystem {
 class WindParticle extends Particle {
   constructor(ps, index) {
     super(ps, index);
+    
+    
+    this.angle = Math.random()*200
+    this.hue = Math.random()*60
 
     // Put these particles somewhere randomly on screen
     this.pos.setToRandom(
@@ -50,7 +54,7 @@ class WindParticle extends Particle {
 
     // These use both their *idNumber* (each particle gets a unique number on "birth")
     // and the time.  Now they each have their own "journey"
-    windDir = 20 * p.noise(t * 0.1, this.idNumber);
+    // windDir = 20 * p.noise(t * 0.1, this.idNumber);
 
     // Set the wind from their positions
     // But if they have the same position, eventually
@@ -58,7 +62,10 @@ class WindParticle extends Particle {
     // windDir = 20*p.noise(windX, windY)
 
     // If we do *both*, they clump less!
-    // windDir = 20*p.noise(windX, windY, t*.1)
+    windDir = 20*p.noise(windX, windY, t*.1)
+    
+    // Spin with the wind!
+    this.angle += Math.sin(windDir)*.1
 
     this.windForce.setToPolar(100, windDir);
     this.f.add(this.windForce);
@@ -78,26 +85,35 @@ class WindParticle extends Particle {
     p.fill(100);
     p.circle(...this.pos, 1);
 
+    // FANCY DRAWING!
+    // Move to where this particle is
     p.push();
     p.translate(...this.pos);
-    p.rotate(this.v.angle);
+    
+    // Align with the current
+    p.rotate(this.v.angle + this.angle);
     p.fill(
-      10 + 70 * p.noise(this.idNumber),
-      100 + 30 * p.noise(this.idNumber + t + 50),
+      this.hue,
+      50 + 50 * p.noise(this.idNumber + t + 50),
       30 + 30 * p.noise(this.idNumber + t + 100)
     );
 
-    let leafWidth = 6 * p.noise(this.idNumber + t);
+    // Make a leaf shape
+    // If we make the width thin and thick, 
+    // the leaves look like they are spinning
+    // Change the multiplier on t to see them twirl *faster*
+    
+    p.scale(1, .5 + .5*Math.sin(this.idNumber + t*5) + .1)
+    
+    let leafWidth = 6
     let leafLength = 20
     p.beginShape();
-    p.vertex(0, 0);
-    p.vertex(0, 0);
-    p.curveVertex(leafWidth, -leafWidth);
-    p.vertex(20, 0);
-    p.curveVertex(leafWidth, leafWidth);
-    p.vertex(0, 0);
-    p.vertex(0, 0);
-    p.endShape();
+    p.vertex(-leafLength*.5, 0);
+    p.curveVertex(leafLength*-.1, -leafWidth);
+    p.vertex(leafLength*.5, 0);
+    p.curveVertex(leafLength*-.1, leafWidth);
+    p.vertex(-leafLength*.5, 0);
+    p.endShape(p.CLOSE);
     p.pop();
 
     if (drawDebug) {
