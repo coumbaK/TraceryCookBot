@@ -22,13 +22,9 @@ class BasicSystem extends ParticleSystem {
     
     p.background(0, 0, 50)
     
-    p.push()
-     p.translate(this.width/2, this.height/2)
-    
     // The "super-class" draws the particles
      super.draw(p)
-    
-    p.pop()
+   
   }
 }
 
@@ -39,27 +35,47 @@ class BasicSystem extends ParticleSystem {
 class BasicParticle extends Particle {
   constructor(ps, index) {
     super(ps, index);
+    
+    // Where should these particles start?
+    // Lets use a polar coordinate to start them in a spiral
+    
+    let r = 10 + index*2
+    let theta = index*.3
+    this.pos.setToPolar(r, theta).add(this.width)
+    
+    
+    // We can also store other information about a particle, like its size or color
+    this.hue = (index*10)%360
+    this.radius = 10
+    
+    // Here's a new Vector2D we can store a force in so we can visualize it later
+    this.attractionForce = new Vector2D()
 
   }
 
   calculateForces(p, dt) {
-    let t = p.millis() * 0.001;
-   
+    
+    // What forces do we want to apply to this particle?
+   // We can attract it to the center
+    let center = new Vector2D(0,0)
+    this.attractionForce = this.pos.getForceTowardsPoint(center, 1, { falloff:1 } )
+    
+    
+    let mouse = new Vector2D(p.mouseX, p.mouseY)
+    this.attractionForce = this.pos.getForceTowardsPoint(center, 1, { falloff:1 } )
+    
+    this.f.add(this.attractionForce)
 
-    this.v.mult(0.98);
   }
 
-  move(p, dt) {
-    // Call the original move function
-    super.move(p, dt);
-
-  }
 
   draw(p, drawDebug = false) {
   
     let t = p.millis() * 0.001;
-
-    p.circle(...this.pos, 30)
+    
+    p.noStroke()
+    p.fill(this.hue, 50, 50)
+    p.circle(...this.pos, this.radius)
     
   }
 }

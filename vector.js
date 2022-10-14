@@ -130,7 +130,7 @@ class Vector2D extends Array {
   }
 
   getForceTowardsPoint(center, amt = 1, { falloff = 1, startRadius } = {}) {
-    let offset = Vector2D.sub(this, center);
+    let offset = Vector2D.sub(center, this);
 
     // How much force should be applied?
     // Take our current distance
