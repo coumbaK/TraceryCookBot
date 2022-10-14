@@ -3,6 +3,7 @@
 /*
  * Local-frame physics
  * and trails!
+ * Would work great with a curve behind it instead.....
  */
 
 class RocketSystem extends ParticleSystem {
