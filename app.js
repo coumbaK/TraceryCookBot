@@ -7,7 +7,7 @@
 /* globals p5, ParticleSystem, WindSystem, RocketSystem, BasicSystem */
 
 // TODO: ADD YOUR SYSTEM HERE
-const SYSTEMS = [BasicSystem, WindSystem, RocketSystem];
+const SYSTEMS = [BasicSystem, WindSystem, RocketSystem, SpringSystem];
 
 
 let p;
@@ -59,8 +59,6 @@ window.addEventListener("load", function () {
   
 //   Create the p5 instance
   new p5(s, CANVAS_EL);
-  //   Create all the particle systems
-  console.log("p", p)
   
   
   function setSystem(systemClass) {

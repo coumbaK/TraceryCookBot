@@ -135,6 +135,10 @@ class Vector2D extends Array {
   get angle() {
     return Math.atan2(this[1], this[0]);
   }
+  
+  getDistanceto(v) {
+    return Math.sqrt((this[0]-v[0]) ** 2 + (this[1]-v[1]) ** 2);
+  }
 
   getForceTowardsPoint(center, amt = 1, { falloff = 1, startRadius } = {}) {
     let offset = Vector2D.sub(center, this);

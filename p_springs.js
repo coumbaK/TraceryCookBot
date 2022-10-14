@@ -4,6 +4,24 @@
  * Springs!
  */
 
+class Edge {
+  constructor(pt0, pt1, {strength=1, easing=0, length}={}) {
+    this.pt0 = pt0
+    this.pt1 = pt1
+    this.strength = 1
+    // Use the current length if there is no length specified
+    this.length = length === undefined? this.pt0.getDistanceto(this.pt1): length
+    
+  }
+  
+  addForces() {
+    let offset = Vector.sub(this.pt1, this.pt0)
+    let d = offset.magnitude
+    let stretch = d - length
+    this.pt0.springForce.add()
+  }
+}
+
 class SpringSystem extends ParticleSystem {
   
   static label = "🌀"; // Ignore the Glitch parse error
@@ -13,8 +31,16 @@ class SpringSystem extends ParticleSystem {
   constructor() {
     // Make what particle, and how many?
     // Try different numbers of particles
-    super(BasicParticle, 150);
-   
+    super(SpringParticle, 6);
+    
+    // We have particles, now we need to create edges 
+     for (var i =0; i < 3; i++) {
+      this.particles.forEach((pt, index) => {
+          let pt1 = this.particles[(index + 1)%this.particles.length]
+           let e = new Edge(pt, pt1)
+      })
+      
+     }
   }
   
   draw(p) {
@@ -23,6 +49,7 @@ class SpringSystem extends ParticleSystem {
     
     // The "super-class" draws the particles
      super.draw(p)
+    
    
   }
 }
@@ -31,19 +58,15 @@ class SpringSystem extends ParticleSystem {
 //=========================================================================
 //=========================================================================
 
-class BasicParticle extends Particle {
+class SpringParticle extends Particle {
   constructor(ps, index) {
     // ps: the particle system this particle belongs to
     // index: of all the particles in that system, this one's index
     super(ps, index);
     
     
-    // Where should these particles start?
-    // Lets use a polar coordinate to start them in a spiral
-    // (and move them to the center)
-    let r = 10 + index*2
-    let theta = index*.3
-    this.pos.setToPolar(r, theta).add(p.width/2, p.height/2)
+    
+    this.pos.setToRandom(0, 0, p.width, p.height)
     
     
     // We can also store other information about a particle, like its size or color
