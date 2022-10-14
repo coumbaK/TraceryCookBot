@@ -33,7 +33,7 @@ window.addEventListener("load", function () {
       const SPEED_EL = document.getElementById("speed-slider");
       const speedMult = SPEED_EL.value ** 2;
       // at 0, speed is 0, at 50 i
-      p.background(0, 0, 50, .1);
+      p.background(0, 0, 50, 1);
 
       const elapsed = Math.min(0.1, speedMult * p.deltaTime * 0.001);
       systems.forEach((ps) => ps.update(p, elapsed));
