@@ -77,7 +77,8 @@ class Vector2D extends Array {
     if (theta === undefined) throw "passed undefined theta to addPolar";
     this[0] += r * Math.cos(theta);
     this[1] += r * Math.sin(theta);
-  }
+   return this
+   }
 
   setTo(x, y) {
     if (Array.isArray(x)) {
@@ -87,11 +88,13 @@ class Vector2D extends Array {
       this[0] = x;
       this[1] = y;
     }
+    return this
   }
 
   setToPolar(r, theta) {
     this[0] = r * Math.cos(theta);
     this[1] = r * Math.sin(theta);
+    return this
   }
 
   setToRandom(x0, x1, y0, y1) {
@@ -104,14 +107,17 @@ class Vector2D extends Array {
       throw `passed undefined value to setToRandom ${arguments}`;
     this[0] = Math.random() * (x1 - x0) + x0;
     this[1] = Math.random() * (y1 - y0) + y0;
+    return this
   }
 
   wrapX(min, max) {
     this[0] = wrapValue(this[0], min, max);
+    return this
   }
 
   wrapY(min, max) {
     this[1] = wrapValue(this[1], min, max);
+    return this
   }
 
   constrainMagnitude(min, max) {
@@ -119,6 +125,7 @@ class Vector2D extends Array {
     if (m == 0) return this;
     let m2 = Math.min(max, Math.max(min, m));
     this.mult(m2 / m);
+    return this
   }
 
   get magnitude() {
@@ -178,6 +185,7 @@ class Vector2D extends Array {
 
     p.endShape();
     p.pop();
+    return this
   }
   //======================
   // Drawing things

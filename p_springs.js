@@ -1,13 +1,13 @@
 /* globals Vector2D, Particle, ParticleSystem, p */
 
 /*
- * Basic particles with an attraction force
+ * Springs!
  */
 
-class BasicSystem extends ParticleSystem {
+class SpringSystem extends ParticleSystem {
   
-  static label = "🟢"; // Ignore the Glitch parse error
-  static desc = "Basic particle motions"; // Ignore the Glitch parse error
+  static label = "🌀"; // Ignore the Glitch parse error
+  static desc = "Spring physics"; // Ignore the Glitch parse error
   
   
   constructor() {
