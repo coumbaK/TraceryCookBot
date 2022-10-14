@@ -49,6 +49,21 @@ window.addEventListener("load", function () {
 
       p.pop();
     };
+    
+       p.mouseDragged = function () {
+      if (system.mouseDragged) system.mouseDragged(p);
+    };
+
+    p.mousePressed = function () {
+        if (system.mousePressed) system.mousePressed(p);
+    
+    };
+
+    p.mouseReleased = function () {
+        if (system.mouseReleased) system.mouseReleased(p);
+    
+    };
+
   };
 
   const CANVAS_EL = document.getElementById("canvas-holder");

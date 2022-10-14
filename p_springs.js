@@ -8,47 +8,45 @@ class Edge {
   constructor(pt0, pt1, { strength = 1, easing = 0, length } = {}) {
     this.pt0 = pt0;
     this.pt1 = pt1;
-    this.strength =strength;
-    this.easing =easing;
-    this.edgeVector = new Vector2D()
+    this.strength = strength;
+    this.easing = easing;
+    this.edgeVector = new Vector2D();
     // Use the current length if there is no length specified
-    this.length = this.pt0.pos.getDistanceto(this.pt1.pos)
-    this.idealLength =
-      length === undefined ? this.length : length;
+    this.length = this.pt0.pos.getDistanceto(this.pt1.pos);
+    this.idealLength = length === undefined ? this.length : length;
   }
-  
+
   ease(dt) {
     if (this.easing !== 0) {
-//       Move both points closer
+      //       Move both points closer
       // this.pt0.
     }
   }
 
   applyForces() {
     this.edgeVector = Vector2D.sub(this.pt1.pos, this.pt0.pos);
-    this.length  = this.edgeVector.magnitude;
+    this.length = this.edgeVector.magnitude;
     if (this.length > 0) {
       // offset.div(d)
       this.stretch = this.length - this.idealLength;
-      let springAmt = this.stretch*this.strength
-      this.pt0.springForce.addMultiple(this.edgeVector, springAmt/this.length);
-      this.pt1.springForce.addMultiple(this.edgeVector, -springAmt/this.length);
-      
-      
+      let springAmt = (this.stretch * this.strength) / this.length;
+      this.pt0.springForce.addMultiple(this.edgeVector, springAmt);
+      this.pt1.springForce.addMultiple(this.edgeVector, -springAmt);
     }
   }
 
   draw(p) {
-    p.push()
-    p.stroke(0
-     p.strokeWeight(4);
-   p.translate(...this.pt0.pos)
-    p.line(0, 0, ...this.edgeVector)
-    console.log(this.edgeVector)
-    p.pop()
-    p.stroke( this.stretch + 100, 100, 50);
+    p.stroke(this.stretch + 100, 100, 50);
     p.strokeWeight(4);
     p.line(...this.pt0.pos, ...this.pt1.pos);
+
+    p.push();
+    p.stroke(0);
+    p.strokeWeight(1);
+    p.translate(...this.pt0.pos);
+    p.line(0, 0, ...this.edgeVector);
+
+    p.pop();
   }
 }
 
@@ -67,18 +65,22 @@ class SpringSystem extends ParticleSystem {
     for (var i = 0; i < 2; i++) {
       this.particles.forEach((pt, index) => {
         let pt1 = this.particles[(i + index + 1) % this.particles.length];
-        let e = new Edge(pt, pt1, {length: 100, strength: .001});
+        let e = new Edge(pt, pt1, { length: 100, strength: 0.1 });
         // Only make some of the edges
-        if (Math.random() < .9)
-          this.edges.push(e);
+        if (Math.random() < 0.6) this.edges.push(e);
       });
     }
   }
-  
+
   beforeMove(p, dt) {
     // Before we move the particles, do something....
     // ... like adding a spring force!
-     this.edges.forEach(e => e.applyForces())
+
+    // clear out the spring forces
+    this.particles.forEach((pt) => pt.springForce.mult(0));
+
+    // Add the forces for each edge
+    this.edges.forEach((e) => e.applyForces());
   }
 
   draw(p) {
@@ -88,6 +90,23 @@ class SpringSystem extends ParticleSystem {
     this.edges.forEach((e) => e.draw(p));
     // The "super-class" draws the particles
     super.draw(p);
+  }
+  
+  //---------------
+  // MOUSE INTERACTION
+  
+  mousePressed(p) {
+    let mouse = new Vector2D(p.mouseX, p.mouseY)
+    let closestDist = 10
+    let closest = undefined
+    console.log("click")
+//     Get the closest particle
+      this.particles.forEach(pt => {
+        let d = mouse.getDistanceTo(pt.pos) - (pt.radius||0)
+        if (d < range) {
+          closest
+        }
+      })
   }
 }
 
@@ -125,15 +144,14 @@ class SpringParticle extends Particle {
     // let mouse = new Vector2D(p.mouseX, p.mouseY)
     // // What happens if I change the falloff? 1 is linear, 2 is quadratic
     // this.attractionForce = this.pos.getForceTowardsPoint(mouse, 1, { falloff:1.2 } )
-   
 
     // Whatever force we use, we won't see anything unless it is
     // added to the particle's main force, which gets added to the velocity
     this.f.add(this.attractionForce);
     this.f.add(this.springForce);
-    
+
     // Spring forces add a lot of motion, drag can help
-     this.v.mult(.99)
+    this.v.mult(0.99);
     // Or you can constrain the maximum velocity
     // this.v.constrainMagnitude(0, 500)
   }
@@ -148,8 +166,14 @@ class SpringParticle extends Particle {
     p.circle(...this.pos, this.radius * 0.7);
 
     if (drawDebug) {
-      this.pos.drawArrow(p, this.attractionForce, { m: 0.1 , color: [200, 100, 50]});
-      this.pos.drawArrow(p, this.springForce, { m: 0.1, color: [280, 100, 50] });
+      this.pos.drawArrow(p, this.attractionForce, {
+        m: 0.4,
+        color: [200, 100, 50],
+      });
+      this.pos.drawArrow(p, this.springForce, {
+        m: 0.2,
+        color: [280, 100, 50],
+      });
     }
   }
 }
