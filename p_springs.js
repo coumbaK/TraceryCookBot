@@ -10,9 +10,11 @@ class Edge {
     this.pt1 = pt1;
     this.strength =strength;
     this.easing =easing;
+    this.edgeVector = new Vector2D()
     // Use the current length if there is no length specified
-    this.length =
-      length === undefined ? this.pt0.pos.getDistanceto(this.pt1.pos) : length;
+    this.length = this.pt0.pos.getDistanceto(this.pt1.pos)
+    this.idealLength =
+      length === undefined ? this.length : length;
   }
   
   ease(dt) {
@@ -23,21 +25,28 @@ class Edge {
   }
 
   applyForces() {
-    let offset = Vector2D.sub(this.pt1.pos, this.pt0.pos);
-    let d = offset.magnitude;
-    if (d > 0) {
-      offset.div(d)
-      this.stretch = d - length;
+    this.edgeVector = Vector2D.sub(this.pt1.pos, this.pt0.pos);
+    this.length  = this.edgeVector.magnitude;
+    if (this.length > 0) {
+      // offset.div(d)
+      this.stretch = this.length - this.idealLength;
       let springAmt = this.stretch*this.strength
-      this.pt0.springForce.addMultiple(offset, springAmt);
-      this.pt1.springForce.addMultiple(offset, -springAmt);
+      this.pt0.springForce.addMultiple(this.edgeVector, springAmt/this.length);
+      this.pt1.springForce.addMultiple(this.edgeVector, -springAmt/this.length);
       
       
     }
   }
 
   draw(p) {
-    p.stroke(0);
+    p.push()
+    p.stroke(0
+     p.strokeWeight(4);
+   p.translate(...this.pt0.pos)
+    p.line(0, 0, ...this.edgeVector)
+    console.log(this.edgeVector)
+    p.pop()
+    p.stroke( this.stretch + 100, 100, 50);
     p.strokeWeight(4);
     p.line(...this.pt0.pos, ...this.pt1.pos);
   }
@@ -54,11 +63,14 @@ class SpringSystem extends ParticleSystem {
 
     // We have particles, now we need to create edges
     this.edges = [];
+    // Make some number of edges for each point
     for (var i = 0; i < 2; i++) {
       this.particles.forEach((pt, index) => {
         let pt1 = this.particles[(i + index + 1) % this.particles.length];
-        let e = new Edge(pt, pt1, {length: 100});
-        this.edges.push(e);
+        let e = new Edge(pt, pt1, {length: 100, strength: .001});
+        // Only make some of the edges
+        if (Math.random() < .9)
+          this.edges.push(e);
       });
     }
   }
@@ -121,8 +133,9 @@ class SpringParticle extends Particle {
     this.f.add(this.springForce);
     
     // Spring forces add a lot of motion, drag can help
-     this.v.mult(.96)
-    this.v.constrainMagnitude(0, 500)
+     this.v.mult(.99)
+    // Or you can constrain the maximum velocity
+    // this.v.constrainMagnitude(0, 500)
   }
 
   draw(p, drawDebug = false) {
