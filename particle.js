@@ -24,7 +24,7 @@ class ParticleSystem {
       pt.calculateForces(p, dt);
     });
     
-    this.beforeMove?(p, dt);
+    this.beforeMove?.(p, dt);
       
     
     // Update this particle's velocity and movement for dt seconds

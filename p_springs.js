@@ -8,17 +8,32 @@ class Edge {
   constructor(pt0, pt1, { strength = 1, easing = 0, length } = {}) {
     this.pt0 = pt0;
     this.pt1 = pt1;
-    this.strength = 1;
+    this.strength =strength;
+    this.easing =easing;
     // Use the current length if there is no length specified
     this.length =
       length === undefined ? this.pt0.pos.getDistanceto(this.pt1.pos) : length;
   }
+  
+  ease(dt) {
+    if (this.easing !== 0) {
+//       Move both points closer
+      // this.pt0.
+    }
+  }
 
-  addForces() {
-    let offset = Vector.sub(this.pt1.pos, this.pt0.pos);
+  applyForces() {
+    let offset = Vector2D.sub(this.pt1.pos, this.pt0.pos);
     let d = offset.magnitude;
-    let stretch = d - length;
-    this.pt0.springForce.add();
+    if (d > 0) {
+      offset.div(d)
+      this.stretch = d - length;
+      let springAmt = this.stretch*this.strength
+      this.pt0.springForce.addMultiple(offset, springAmt);
+      this.pt1.springForce.addMultiple(offset, -springAmt);
+      
+      
+    }
   }
 
   draw(p) {
@@ -35,22 +50,28 @@ class SpringSystem extends ParticleSystem {
   constructor() {
     // Make what particle, and how many?
     // Try different numbers of particles
-    super(SpringParticle, 10);
+    super(SpringParticle, 5);
 
     // We have particles, now we need to create edges
     this.edges = [];
     for (var i = 0; i < 2; i++) {
       this.particles.forEach((pt, index) => {
         let pt1 = this.particles[(i + index + 1) % this.particles.length];
-        let e = new Edge(pt, pt1);
+        let e = new Edge(pt, pt1, {length: 100});
         this.edges.push(e);
       });
     }
   }
+  
+  beforeMove(p, dt) {
+    // Before we move the particles, do something....
+    // ... like adding a spring force!
+     this.edges.forEach(e => e.applyForces())
+  }
 
   draw(p) {
     // A little bit of trails!
-    p.background(0, 0, 50, 0.5);
+    p.background(0, 0, 50, 1);
 
     this.edges.forEach((e) => e.draw(p));
     // The "super-class" draws the particles
@@ -83,7 +104,7 @@ class SpringParticle extends Particle {
     // What forces do we want to apply to this particle?
     // We can attract it to the center
     let center = new Vector2D(p.width / 2, p.height / 2);
-    this.attractionForce = this.pos.getForceTowardsPoint(center, 0.05, {
+    this.attractionForce = this.pos.getForceTowardsPoint(center, 0.5, {
       falloff: 2,
       startRadius: 200,
     });
@@ -92,11 +113,16 @@ class SpringParticle extends Particle {
     // let mouse = new Vector2D(p.mouseX, p.mouseY)
     // // What happens if I change the falloff? 1 is linear, 2 is quadratic
     // this.attractionForce = this.pos.getForceTowardsPoint(mouse, 1, { falloff:1.2 } )
-    // this.v.mult(.999)
+   
 
     // Whatever force we use, we won't see anything unless it is
     // added to the particle's main force, which gets added to the velocity
     this.f.add(this.attractionForce);
+    this.f.add(this.springForce);
+    
+    // Spring forces add a lot of motion, drag can help
+     this.v.mult(.96)
+    this.v.constrainMagnitude(0, 500)
   }
 
   draw(p, drawDebug = false) {
@@ -109,7 +135,8 @@ class SpringParticle extends Particle {
     p.circle(...this.pos, this.radius * 0.7);
 
     if (drawDebug) {
-      this.pos.drawArrow(p, this.attractionForce, { m: 0.1 });
+      this.pos.drawArrow(p, this.attractionForce, { m: 0.1 , color: [200, 100, 50]});
+      this.pos.drawArrow(p, this.springForce, { m: 0.1, color: [280, 100, 50] });
     }
   }
 }
