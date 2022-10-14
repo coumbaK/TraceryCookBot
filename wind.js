@@ -1,5 +1,10 @@
 /* globals Vector2D, Particle, ParticleSystem, p */
 
+/*
+ * Wind-driven particles that respond to different kinds of wander forces
+ * Which looks the most like "leaves"?
+ */
+
 class WindSystem extends ParticleSystem {
   constructor() {
     // Make wind particles

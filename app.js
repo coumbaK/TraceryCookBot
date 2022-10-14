@@ -4,9 +4,14 @@
  * Each swatch has code for when it starts and each frame after
  */
 
-/* globals p5 */
+/* globals p5, ParticleSystem, WindSystem, RocketSystem */
 
-const SYSTEMS = [ParticleSystem, WindSystem];
+const SYSTEMS = [ParticleSystem, RocketSystem];
+
+function drawBackground(p) {
+  p.background(0, 0, 40, 1);
+} 
+
 
 let p;
 const CANVAS_WIDTH = 400;
@@ -33,7 +38,8 @@ window.addEventListener("load", function () {
       const SPEED_EL = document.getElementById("speed-slider");
       const speedMult = SPEED_EL.value ** 2;
       // at 0, speed is 0, at 50 i
-      p.background(0, 0, 50, 1);
+      
+      drawBackground(p)
 
       const elapsed = Math.min(0.1, speedMult * p.deltaTime * 0.001);
       systems.forEach((ps) => ps.update(p, elapsed));
