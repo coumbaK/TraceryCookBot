@@ -1,5 +1,7 @@
 /* globals Vector2D, DEBUG_DRAW_EL */
 
+
+
 class ParticleSystem {
   constructor(ParticleClass=Particle, count=100) {
    
@@ -11,6 +13,36 @@ class ParticleSystem {
     }
     console.dir(ParticleClass)
     console.log(`Created ${count} ${ParticleClass.name}`)
+  }
+  
+    //---------------
+  // MOUSE INTERACTION
+  
+  mousePressed(p) {
+    let mouse = new Vector2D(p.mouseX, p.mouseY)
+    let pt = this.getClosest(this.particles, mouse)
+    this.held = pt
+  }
+
+   mouseReleased(p) {
+   
+    this.held = undefined
+  }
+
+
+  getClosest(particles, v) {
+    let closestDist = 10
+    let closest = undefined
+   
+//     Get the closest particle
+      particles.forEach(pt => {
+        let d = v.getDistanceTo(pt.pos) - (pt.radius||0)
+        if (d < closestDist) {
+          closestDist = d
+          closest = pt
+        }
+      })
+    return closest
   }
   
   update(p, dt) {
@@ -30,6 +62,9 @@ class ParticleSystem {
     // Update this particle's velocity and movement for dt seconds
     this.particles.forEach(pt => {
       pt.move(p, dt);
+      
+      if ( this.held === pt )
+        pt.pos.setTo(p.mouseX, p.mouseY)
     });
   }
 

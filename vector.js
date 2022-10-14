@@ -136,7 +136,7 @@ class Vector2D extends Array {
     return Math.atan2(this[1], this[0]);
   }
   
-  getDistanceto(v) {
+  getDistanceTo(v) {
     return Math.sqrt((this[0]-v[0]) ** 2 + (this[1]-v[1]) ** 2);
   }
 

@@ -12,7 +12,7 @@ class Edge {
     this.easing = easing;
     this.edgeVector = new Vector2D();
     // Use the current length if there is no length specified
-    this.length = this.pt0.pos.getDistanceto(this.pt1.pos);
+    this.length = this.pt0.pos.getDistanceTo(this.pt1.pos);
     this.idealLength = length === undefined ? this.length : length;
   }
 
@@ -24,12 +24,17 @@ class Edge {
   }
 
   applyForces() {
+    
+    
     this.edgeVector = Vector2D.sub(this.pt1.pos, this.pt0.pos);
     this.length = this.edgeVector.magnitude;
     if (this.length > 0) {
-      // offset.div(d)
+      // how MUCH is this stretched?
       this.stretch = this.length - this.idealLength;
       let springAmt = (this.stretch * this.strength) / this.length;
+      
+      
+      // Apply the force to both ends of the spring equally
       this.pt0.springForce.addMultiple(this.edgeVector, springAmt);
       this.pt1.springForce.addMultiple(this.edgeVector, -springAmt);
     }
@@ -57,15 +62,26 @@ class SpringSystem extends ParticleSystem {
   constructor() {
     // Make what particle, and how many?
     // Try different numbers of particles
-    super(SpringParticle, 5);
+    super(SpringParticle, 7);
+    
+    
 
     // We have particles, now we need to create edges
+    // This creates a tangle of random edges.  
+    // You will want to create something more controlled, like maybe 
+    // a chain-of-particles or a ragdoll
+    
     this.edges = [];
     // Make some number of edges for each point
     for (var i = 0; i < 2; i++) {
       this.particles.forEach((pt, index) => {
+        
+        // Pick a new particle for this particle to make an edge with
         let pt1 = this.particles[(i + index + 1) % this.particles.length];
-        let e = new Edge(pt, pt1, { length: 100, strength: 0.1 });
+        
+        // Create a new edge
+        let e = new Edge(pt, pt1, { length: 100, strength: 2 });
+        
         // Only make some of the edges
         if (Math.random() < 0.6) this.edges.push(e);
       });
@@ -90,24 +106,18 @@ class SpringSystem extends ParticleSystem {
     this.edges.forEach((e) => e.draw(p));
     // The "super-class" draws the particles
     super.draw(p);
+    
+    
+    // Draw all of them as a curve
+    p.beginShape()
+    p.stroke(0, 0, 0, .2)
+    p.strokeWeight(4)
+   p.fill(100, 100, 100, .3)
+    this.particles.forEach(pt => p.curveVertex(...pt.pos))
+    p.endShape(p.CLOSE)
   }
   
-  //---------------
-  // MOUSE INTERACTION
-  
-  mousePressed(p) {
-    let mouse = new Vector2D(p.mouseX, p.mouseY)
-    let closestDist = 10
-    let closest = undefined
-    console.log("click")
-//     Get the closest particle
-      this.particles.forEach(pt => {
-        let d = mouse.getDistanceTo(pt.pos) - (pt.radius||0)
-        if (d < range) {
-          closest
-        }
-      })
-  }
+ 
 }
 
 //=========================================================================
@@ -119,6 +129,8 @@ class SpringParticle extends Particle {
     // ps: the particle system this particle belongs to
     // index: of all the particles in that system, this one's index
     super(ps, index);
+    
+    this.draggable = true
 
     this.pos.setToRandom(0, p.width, 0, p.height);
 
