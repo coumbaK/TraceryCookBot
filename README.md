@@ -1,4 +1,4 @@
-# A3: Drawing Tools
+# A4: Swarms!
 
 ## Your name
 Test McStudent
@@ -7,9 +7,10 @@ Test McStudent
 [my page](https://galaxykate-a1.glitch.me)
 
 
-## Which systems 
+## Which systems behaved like you expected? Which ones surprised you? In which ones did your initial idea evolve into something different?
 
 --your answer here  --
+-- Use this answer to remind yourself what you tried and what worked or didn't--
 
 
 ## Describe your 1st system. What forces does it use? What is its emergent behavior?
@@ -30,14 +31,22 @@ Test McStudent
 -- your answer here  --
 
 
-## Which of your tools is continuous? What makes that different?
+## Which system has one particle uses "particle-to-all-particles" forces (Boids style) or reads a map (Braitenberg-style). Explain how.
 
 --your answer here--
 
 
-## Which of your tools uses begin/endshape? What are you doing with that feature?
+## Which system has particles that leave a trail or creates new particles
 
 --your answer here--
+-- reminder that the background(0,0,0,.1) trick doesnt count for this --
+
+
+## Which system interacts with user behavior, and how?
+
+--your answer here--
+-- reminder that drag doesn't count for this --
+
 
 ## List any resources (code, images, etc) you've used, and where you got them from
 
