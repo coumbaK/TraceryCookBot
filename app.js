@@ -63,15 +63,19 @@ window.addEventListener("load", function () {
   console.log("p", p)
   
   
-  function setSystem(systemClas) {
-    console.log("initialize", SYSTEMS[index].name)
-    system = new SYSTEMS[index]()
-    localStorage.setItem("lastsystem", index)
+  function setSystem(systemClass) {
+    console.log("initialize", systemClass.name)
+    system = new systemClass()
+    localStorage.setItem("lastsystem", systemClass.name)
   }
   
-  let saved = localStorage.getItem("lastsystem")
-  console.log("load last-loaded system", saved)
-  setSystem(SYSTEMS[0]);
+  let savedName = localStorage.getItem("lastsystem")
+  console.log("load last-loaded system", savedName)
+  let savedClass = SYSTEMS.find(s => s.name === savedName)
+  if (savedClass)
+    setSystem(savedClass);
+  else 
+     setSystem(SYSTEMS[0]);
  
 
   const BUTTON_HOLDER_EL = document.getElementById("buttons");

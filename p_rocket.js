@@ -14,6 +14,14 @@ class RocketSystem extends ParticleSystem {
     
     this.windScale = 0.001;
   }
+  
+  draw(p) {
+    
+    // Draw a background
+    p.background(190, 40, 80)
+    // The "super-class" draws the particles
+    super.draw(p)
+  }
 }
 
 class RocketParticle extends Particle {
@@ -80,14 +88,14 @@ class RocketParticle extends Particle {
   }
 
   draw(p, drawDebug = false) {
-    // Draw a background
-    p.background(190, 40, 80)
     
     let t = p.millis() * 0.001;
-
+    
+   
     // Draw the trail
     p.noStroke();
     p.fill(0, 0, 0, 0.1);
+    
 
     // Draw every third trail poof
     this.trail

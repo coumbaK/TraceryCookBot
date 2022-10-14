@@ -36,7 +36,7 @@ class ParticleSystem {
     // JS Arrays have some useful "do something for each element" methods:
     // map, filter, forEach
     this.particles.forEach((pt, index) => {
-      pt.draw(p);
+      pt.draw(p, debugDraw);
     });
     
   }

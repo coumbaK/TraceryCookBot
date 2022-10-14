@@ -13,6 +13,14 @@ class WindSystem extends ParticleSystem {
     super(WindParticle, 100);
     this.windScale = 0.001;
   }
+  
+  draw(p) {
+    
+    p.background(0, 0, 50)
+    
+    // The "super-class" draws the particles
+    super.draw(p)
+  }
 
   getWindAt(x, y) {
     let windTheta = 10 * p.noise(x * this.windScale, y * this.windScale);
@@ -77,15 +85,18 @@ class WindParticle extends Particle {
     // Call the original move function
     super.move(p, dt);
 
-    this.pos.wrapY(-p.height / 2, p.height / 2);
-    this.pos.wrapX(-p.width / 2, p.width / 2);
+    this.pos.wrapX(0, p.width);
+    this.pos.wrapY(0, p.height);
+    
   }
 
   draw(p, drawDebug = false) {
     let t = p.millis() * 0.001;
-
+  
+    // Basic drawing
+    p.noStroke()
     p.fill(100);
-    p.circle(...this.pos, 1);
+    p.circle(...this.pos, 2);
 
     // FANCY DRAWING!
     // Move to where this particle is
