@@ -19,13 +19,17 @@ class BoidSystem extends ParticleSystem {
   
   beforeMove(p, dt) {
 //     Calculate the flock's center and average direction
-    
+    // Reset both
     this.flockCenter.mult(0)
     this.flockVelocity.mult(0)
+    
+    // Add up the velocity and position
     this.particles.forEach(pt => {
       this.flockCenter.add(pt.pos)
       this.flockVelocity.add(pt.v)
     })
+    // Divide by the number of boids to get the 
+    // overall flock data
     this.flockVelocity.div(this.particles.length)
     this.flockCenter.div(this.particles.length)
   }
