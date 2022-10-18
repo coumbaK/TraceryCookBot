@@ -86,7 +86,7 @@ class BoidParticle extends Particle {
     // Add a border force
     this.f.add(
       this.pos.getForceTowardsPoint(center, 1, {
-        startRadius: 120,
+        startRadius: 140,
         falloff: 1.2,
       })
     );
@@ -95,7 +95,7 @@ class BoidParticle extends Particle {
     
     // Cohesion
     // Move toward center
-    this.cohesionForce = this.pos.getForceTowardsPoint(this.ps.flockCenter, 2, {})
+    this.cohesionForce = this.pos.getForceTowardsPoint(this.ps.flockCenter, 1)
      
     // Separation
     // Push away from all other boids
@@ -103,11 +103,25 @@ class BoidParticle extends Particle {
     this.ps.particles.forEach(pt => {
       // Ignore any force on myself
       if (pt !== this) {
-        this.cohesionForce.add(
-          this.pos.getForceTowardsPoint(pt, -2, {startRadius: 10})
+        this.separationForce.add(
+          this.pos.getForceTowardsPoint(pt.pos, -2, {startRadius: 10})
         )
       }
     })
+    
+    // Alignment
+     this.alignmentForce = Vector2D.sub(this.ps.flockVelocity, this.v)
+    
+    // Apply "drag"
+    this.v.constrainMagnitude(10, 100)
+    
+    // this.separationForce.mult(.5)
+    // this.cohesionForce.mult(.5)
+    
+    // this.f.add(this.separationForce )
+    this.f.add(this.cohesionForce )
+    
+    // this.debugText = this.cohesionForce.toString()
   }
 
   // Wrap boids around the screen
@@ -138,7 +152,12 @@ class BoidParticle extends Particle {
     p.pop();
 
     if (drawDebug) {
-      this.
+      p.fill(0)
+      p.text(this.debugText, ...this.pos)
+       this.pos.drawArrow(p, this.separationForce, { m: .2, color: [30, 100, 50] });
+      this.pos.drawArrow(p, this.cohesionForce, { m: .2, color: [60, 100, 50] });
+      this.pos.drawArrow(p, this.alignmentForce, { m: .2, color: [160, 100, 50] });
+     
     }
   }
 }
