@@ -40,19 +40,34 @@ window.addEventListener("load", function () {
     
     Vue.component("slider", {
       template: `<div class="slider">
+      {{objKey}}
         <input 
+            ref="slider"
             type="range" min="0" max="1" step=".02"
             v-model="obj[objKey]"
+            @update="update"
+            
             />
-          <label>{{val.toFixed(2)}}</label>
+          <label>{{val}}</label>
       </div>`,
+      methods: {
+        update() {
+          console.log("update", this.$refs.slider.value)  
+        }
+      },
+      computed: {
+        val() {
+          console.log(this.obj, this.objKey)
+          return this.obj[this.objKey]
+        }
+      },
       props: ["objKey", "obj"]
     })
     new Vue({
       template: `<div id="controls">
         <div>
          
-          <slider v-for="(index,val) in v" :objKey="index" obj="val">
+          <slider v-for="(val, index) in v" :objKey="index" :obj="v" />
           
         </div>
       
@@ -60,7 +75,7 @@ window.addEventListener("load", function () {
       el: "#controls",
       data() {
         return {
-          v: randomVector(10),
+          v: randomVector(2),
         };
       },
     });
