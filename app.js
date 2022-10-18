@@ -62,6 +62,8 @@ window.addEventListener("load", function () {
   new Vue({
     template: `<div id="controls">
         <div>
+          <div>{{generatorName}}</div>
+          <div>{{generator.description}}</div>
           <select v-model="selectedIndex">
             <option v-for="(v,index) in population">{{index}}</option>
           </select>
@@ -74,7 +76,17 @@ window.addEventListener("load", function () {
         </div>
       
       </div>`,
+    
+    methods: {
+      repopulate() {
+        this.population = createPopulation(this.generator, this.populationSize)
+      }
+    },
+    
+    
     mounted() {
+      this.repopulate()
+      
       setInterval(() => {
         let t = p.millis() * 0.001;
         Vue.set(this.selected, 0, p.noise(t));
@@ -82,14 +94,20 @@ window.addEventListener("load", function () {
     },
 
     computed: {
+      generator() {
+        return this.generators[this.generatorName]
+      },
       selected() {
         return this.population[this.selectedIndex];
       },
     },
 
     data() {
+      
       return {
-        activeGenerator: GENERATORS.keys[]
+        populationSize: 5,
+        seed: Math.floor(Math.random()*1000000),
+        generatorName: Object.keys(GENERATORS)[0],
         generators: GENERATORS,
         selectedIndex: 0,
         population: population,
