@@ -22,8 +22,8 @@ const GENERATORS = {
       let aspectRatio = dna[1] + .6
       
       // How about a little bounce at least?
-      // let bounce = Math.abs(Math.sin(t*3))
-      // aspectRatio += -.2*bounce
+      let bounce = Math.abs(Math.sin(t*3))
+      aspectRatio += -.2*bounce
       
       let w = size*aspectRatio
       let h = size*(1/aspectRatio)
@@ -35,32 +35,32 @@ const GENERATORS = {
       p.stroke(hue, 100, brightness + 30)
        p.rect(-w/2, 0, w, -h)
       
-//       // eyes!
-//       let eyeWidth = w*.3
-//       let eyeHeight = h*.5
-//       let eyeSize = 10
+      // eyes!
+      let eyeWidth = w*.3
+      let eyeHeight = h*.5
+      let eyeSize = 10
       
-//       function drawEye() {
-//           p.fill(0)
-//       p.noStroke()
-//       p.ellipse(0, 0, eyeSize, eyeSize)
+      function drawEye() {
+          p.fill(0)
+      p.noStroke()
+      p.ellipse(0, 0, eyeSize, eyeSize)
       
-//        p.fill(100)
-//       p.noStroke()
-//       p.fill(hue, 100, brightness + 20)
-//       p.ellipse(0, -eyeSize*.4, eyeSize*.6, eyeSize*.6)
-//       }
+       p.fill(100)
+      p.noStroke()
+      p.fill(hue, 100, brightness + 20)
+      p.ellipse(0, -eyeSize*.4, eyeSize*.6, eyeSize*.6)
+      }
       
-//       // Only two eyes....?
-//       p.push()
-//       p.translate(eyeWidth, -eyeHeight)
-//       drawEye()
-//       p.pop()
+      // Only two eyes....?
+      p.push()
+      p.translate(eyeWidth, -eyeHeight)
+      drawEye()
+      p.pop()
       
-//        p.push()
-//       p.translate(-eyeWidth, -eyeHeight)
-//       drawEye()
-//       p.pop()
+       p.push()
+      p.translate(-eyeWidth, -eyeHeight)
+      drawEye()
+      p.pop()
     }
   }
   

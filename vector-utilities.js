@@ -32,6 +32,7 @@ function changeToCount(generator, population, count) {
     for (var i = 0; i < toRemove; i++) {
 //     Remove one
     population.splice(population.length - 1, 1)
+    
   }
  
   console.log("generator",population)

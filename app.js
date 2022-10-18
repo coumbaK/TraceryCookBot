@@ -34,6 +34,12 @@ window.addEventListener("load", function () {
           <div>{{generatorName}}</div>
           <div>{{generator.description}}</div>
           
+          <div>
+          <label>mutation</label>
+          <input type="range" v-model="mutation" min="0" max="1" step=".02" />
+          <label>{{mutation.toFixed(2)}}</label>
+          </div>
+          
           <input type="number" v-model="populationCount" />
           <select v-model="selectedIndex">
           
@@ -64,8 +70,8 @@ window.addEventListener("load", function () {
       randomize() {
         this.repopulate()
       },
-      repopulate() {
-        this.population = createPopulation(this.generator, this.populationCount);
+      repopulate(parent) {
+        this.population = createPopulation(this.generator, this.populationCount, parent, this.mutation);
         this.positions = getPositions(this.populationCount)
       },
     },
@@ -99,10 +105,17 @@ window.addEventListener("load", function () {
             // figure out the placement for these
             p.push()
             p.translate(...this.positions[index])
-            p.fill(0, 0, 0, .2)
+            if (index === this.selectedIndex) {
+              p.fill(0, 0, 0, .2)
+            } else {
+              p.fill(0, 0, 0, .06)
+            }
             p.noStroke()
             p.ellipse(0, 0, 40, 20)
             p.ellipse(0, 0, 30, 15)
+            
+            p.fill(0)
+            p.text(index, 0, 10)
             
             this.generator.draw(p, t, individual)
             p.pop()
@@ -110,20 +123,25 @@ window.addEventListener("load", function () {
           p.pop();
         };
         
+        p.doubleClicked = () => {
+          this.repopulate(this.selected)
+        }
+        
         p.mouseClicked = () => {
           let closestDist = 100
           let closestIndex = 0
 //           Get the closest position
           for (var i = 0; i < this.positions.length; i++) {
             let d = Math.abs(p.mouseX - this.positions[i][0])
+            // console.log(d)
             if (d < closestDist) {
               closestDist = d
-              closestIndex = closestIndex
+              closestIndex = i
             
             }
           }
           this.selectedIndex = closestIndex
-          console.log("Selected")
+          console.log("Clicked", this.selectedIndex)
         }
       };
 
@@ -145,6 +163,7 @@ window.addEventListener("load", function () {
 
     data() {
       return {
+        mutation: .1,
         positions: [],
         populationCount: 5,
         seed: Math.floor(Math.random() * 1000000),
@@ -164,10 +183,11 @@ function getPositions(count) {
   for (var i = 0; i < count; i++) {
 
     let pct = count==1?.5:i/(count - 1)
-    let x = CANVAS_WIDTH*.5 + (CANVAS_WIDTH - 100)*.9*(pct - .5)
-    let y = CANVAS_HEIGHT*(.8 + .1*(i%2))
+    let x = CANVAS_WIDTH*.5 + (CANVAS_WIDTH - 100)*.9*(pct - .5) 
+    let y = CANVAS_HEIGHT*(.8 + .1*(i%2))+ 10*Math.sin(i)
     positions.push([x, y])
 
   }
+  positions.sort((a,b) => a[1] - b[1])
   return positions
 }
