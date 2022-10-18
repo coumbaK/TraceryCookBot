@@ -53,6 +53,7 @@ window.addEventListener("load", function () {
       populationCount() {
         console.log("count change", this.populationCount)
          this.positions = getPositions(this.populationCount)
+        changeToCount(this.generator, this.population, this.populationCount)
       }
     },
     methods: {

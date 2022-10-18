@@ -17,3 +17,17 @@ function createPopulation(generator, count) {
   }
   return population
 }
+
+
+function changeToCount(generator, population, count) {
+ let dnaLength = generator.sliders.length
+ let toAdd = count - population.length
+ console.log("ADD", toAdd)
+   for (var i = 0; i < toAdd; i++) {
+//     Add one
+    population.push(randomVector(dnaLength) )
+  }
+  
+  console.log("generator",population)
+  
+}
