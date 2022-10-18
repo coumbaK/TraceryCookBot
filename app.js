@@ -4,7 +4,7 @@
  * Each swatch has code for when it starts and each frame after
  */
 
-/* globals Vue, p5,randomVector */
+/* globals Vue, p5,randomVector, GENERATORS */
 
 // TODO: ADD YOUR SYSTEM HERE
 
@@ -15,12 +15,11 @@ const CANVAS_HEIGHT = 300;
 window.addEventListener("load", function () {
   console.log("LOADED");
   let system;
-  
-  let population = []
-  for (var i = 0; i < 10; i++) {
-    population[i] = randomVector(2 + Math.floor(Math.random()*2))
-  }
 
+  let population = [];
+  for (var i = 0; i < 10; i++) {
+    population[i] = randomVector(2 + Math.floor(Math.random() * 2));
+  }
 
   let activeTool = undefined;
   // Create a P5 canvas element, JS-style
@@ -36,108 +35,66 @@ window.addEventListener("load", function () {
     };
 
     p.draw = function () {
-      let t = p.millis()*.001
+      let t = p.millis() * 0.001;
       // setVectorToWander(v, t)
-     
+
       p.background(180, 80, 80);
 
       p.push();
 
       p.pop();
     };
+  };
 
-       Vue.component("slider-controls", {
-         template: `<div class="slider-controls">
-            <slider v-for="(val, index) in v" :objKey="index" :obj="v" />
-         
-         </div>`,
-         props: {
-           v: {
-             isRequired:true,
-             type: Array
-           }
-         }
-       })
-    
-    Vue.component("slider", {
-      template: `<div class="slider">
-      {{objKey}}
-        <input 
-            ref="slider"
-            type="range" min="0" max="1" step=".02"
-            @input="update"
-            
-            />
-          <label>{{val.toFixed(2)}}</label>
-      </div>`,
-      methods: {
-        update() {
-          let v = this.$refs.slider.value
-          Vue.set( this.obj,this.objKey , parseFloat(v))
+  // Create P5
+  const CANVAS_EL = document.getElementById("canvas-holder");
+  CANVAS_EL.style.width = CANVAS_WIDTH + "px";
+  CANVAS_EL.style.height = CANVAS_HEIGHT + "px";
+  new p5(s, CANVAS_EL);
+
+  //------------------------------------------------------
+  //------------------------------------------------------
+  //------------------------------------------------------
+  //------------------------------------------------------
+  // VUE!!!
+  // Create a new vue interface
   
-        }
-      },
-      watch: {
-        val() {
-          this.$refs.slider.value = this.val
-        }
-      },
-      mounted() {
-        this.$refs.slider.value = this.val
-      },
-      computed: {
-        val() {
-          return this.obj[this.objKey]
-        }
-      },
-      props: {
-        "objKey": {
-          isRequired: true,
-        }, 
-        "obj": {
-          isRequired: true
-        }
-      }
-    })
-    new Vue({
-      template: `<div id="controls">
+  new Vue({
+    template: `<div id="controls">
         <div>
           <select v-model="selectedIndex">
             <option v-for="(v,index) in population">{{index}}</option>
+          </select>
+          
+          <select v-model="generatorName">
+            <option v-for="(data,name) in generators">{{name}}</option>
           </select>
          
           <slider-controls :v="selected" /> 
         </div>
       
       </div>`,
-      mounted() {
-        setInterval(() => {
-          let t = p.millis()*.001
-         Vue.set(this.selected, 0, p.noise(t))
-        }, 100)
-        
-      },
-      
-      computed: {
-        selected() {
-          return this.population[this.selectedIndex]
-        }
-      },
-      
-      data() {
-        return {
-          selectedIndex: 0,
-          population: population
-        };
-      },
-      el: "#controls",
-    });
-  };
+    mounted() {
+      setInterval(() => {
+        let t = p.millis() * 0.001;
+        Vue.set(this.selected, 0, p.noise(t));
+      }, 100);
+    },
 
-  const CANVAS_EL = document.getElementById("canvas-holder");
-  CANVAS_EL.style.width = CANVAS_WIDTH + "px";
-  CANVAS_EL.style.height = CANVAS_HEIGHT + "px";
-  new p5(s, CANVAS_EL);
+    computed: {
+      selected() {
+        return this.population[this.selectedIndex];
+      },
+    },
+
+    data() {
+      return {
+        activeGenerator: GENERATORS.keys[]
+        generators: GENERATORS,
+        selectedIndex: 0,
+        population: population,
+      };
+    },
+    el: "#controls",
+  });
 });
-//======================
-// Utilities
