@@ -102,7 +102,7 @@ window.addEventListener("load", function () {
     new Vue({
       template: `<div id="controls">
         <div>
-          <select >
+          <select v-model="selectedIndex">
             <option v-for="(v,index) in population">{{index}}</option>
           </select>
          
@@ -118,9 +118,15 @@ window.addEventListener("load", function () {
         
       },
       
+      computed: {
+        selected() {
+          return this.population[this.selectedIndex]
+        }
+      },
+      
       data() {
         return {
-          selected: population[0],
+          selectedIndex: 0,
           population: population
         };
       },
