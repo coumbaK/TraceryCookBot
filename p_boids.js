@@ -44,12 +44,14 @@ class BoidSystem extends ParticleSystem {
   }
 
   draw(p) {
-    // A little bit of trails!
-    p.background(0, 0, 50, 0.5);
+    p.background(0, 0, 50, 1);
 
     p.noFill();
     p.stroke(100, 0, 100, 0.4);
     p.circle(...this.flockCenter, 100);
+    // p.strokeWeight(5)
+      this.flockCenter.drawArrow(p, this.flockVelocity, { m: .5, color: [30, 0, 100] });
+     
 
     // The "super-class" draws the particles
     super.draw(p);
@@ -102,7 +104,7 @@ class BoidParticle extends Particle {
     
     // Cohesion
     // Move toward center
-    this.cohesionForce = this.pos.getForceTowardsPoint(this.ps.flockCenter, 1)
+    this.cohesionForce = this.pos.getForceTowardsPoint(this.ps.flockCenter, 1, {falloff: 1.2})
      
     // Separation
     // Push away from all other boids
@@ -126,20 +128,21 @@ class BoidParticle extends Particle {
     
     // A force to keep everyone moving forward
     let flyingStrength = p.noise(this.idNumber)
-    let turn = p.noise(this.idNumber, p)
-    this.propulsionForce.setToPolar(100 + 120*flyingStrength, this.angle)
+    let turn = p.noise(this.idNumber, t) - .5
+    this.propulsionForce.setToPolar(100 + 120*flyingStrength, 
+                                    this.angle + turn)
     
-    
+    // Chase the mouse?
     let mouse = new Vector2D(p.mouseX, p.mouseY)
-    this.attractionForce = this.pos.getForceTowardsPoint(mouse, 10)
-    if (this.attractionForce == undefined)
-      console.warn("???", mouse, this.pos)
+    this.attractionForce = this.pos.getForceTowardsPoint(mouse, 1, {falloff: 1.2})
     
     // Apply "drag"
+    this.v.mult(.97)
     this.v.constrainMagnitude(10, 300)
     
+    // Try different tunings
     this.separationForce.mult(.2)
-    this.cohesionForce.mult(.01)
+    this.cohesionForce.mult(.5)
     this.alignmentForce.mult(.1)
     
     this.f.add(this.separationForce )
