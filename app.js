@@ -18,8 +18,9 @@ window.addEventListener("load", function () {
   
   let population = []
   for (var i = 0; i < 10; i++) {
-    population[i] = randomVector(5 + Math.floor(Math.random()*10))
+    population[i] = randomVector(2 + Math.floor(Math.random()*2))
   }
+
 
   let activeTool = undefined;
   // Create a P5 canvas element, JS-style
@@ -37,7 +38,7 @@ window.addEventListener("load", function () {
     p.draw = function () {
       let t = p.millis()*.001
       // setVectorToWander(v, t)
-      Vue.set(v, 0, p.noise(t))
+     
       p.background(180, 80, 80);
 
       p.push();
@@ -50,7 +51,12 @@ window.addEventListener("load", function () {
             <slider v-for="(val, index) in v" :objKey="index" :obj="v" />
          
          </div>`,
-         props: "v"
+         props: {
+           v: {
+             isRequired:true,
+             type: Array
+           }
+         }
        })
     
     Vue.component("slider", {
@@ -68,11 +74,10 @@ window.addEventListener("load", function () {
         update() {
           let v = this.$refs.slider.value
           Vue.set( this.obj,this.objKey , parseFloat(v))
-         
-          console.log("input", this.obj[this.objKey])
+  
         }
       },
-      watched: {
+      watch: {
         val() {
           this.$refs.slider.value = this.val
         }
@@ -85,23 +90,41 @@ window.addEventListener("load", function () {
           return this.obj[this.objKey]
         }
       },
-      props: ["objKey", "obj"]
+      props: {
+        "objKey": {
+          isRequired: true,
+        }, 
+        "obj": {
+          isRequired: true
+        }
+      }
     })
     new Vue({
       template: `<div id="controls">
         <div>
+          <select >
+            <option v-for="(v,index) in population">{{index}}</option>
+          </select>
          
-          
+          <slider-controls :v="selected" /> 
         </div>
       
       </div>`,
-      el: "#controls",
+      mounted() {
+        setInterval(() => {
+          let t = p.millis()*.001
+         Vue.set(this.selected, 0, p.noise(t))
+        }, 100)
+        
+      },
+      
       data() {
         return {
           selected: population[0],
           population: population
         };
       },
+      el: "#controls",
     });
   };
 
