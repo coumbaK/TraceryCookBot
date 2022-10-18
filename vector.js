@@ -148,7 +148,7 @@ class Vector2D extends Array {
     let d = offset.magnitude;
 
     // Skip undefined situations where the points are at distance 0
-    if (d === 0 || isNaN(d)) return;
+    if (d === 0 || isNaN(d)) return new Vector2D(0,0);
 
     let x = d;
     // Treat distances less than or greater than the thresholds as being *at* those thresholds

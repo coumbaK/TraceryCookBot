@@ -76,18 +76,21 @@ class BoidParticle extends Particle {
     this.cohesionForce = new Vector2D()
     this.alignmentForce = new Vector2D()
     this.separationForce = new Vector2D()
+    
+    // A few forces to keep the boid interesting
     this.propulsionForce = new Vector2D()
-    
-    
     this.attractionForce = new Vector2D()
   }
 
   calculateForces(p, dt) {
+    let t = p.millis()*.001 // Get the time
+    
+    // My angle is whichever way I'm going
     this.angle = this.v.angle;
-    let center = new Vector2D(p.width / 2, p.height / 2);
     
     
     // Add a border force
+    let center = new Vector2D(p.width / 2, p.height / 2);
     this.f.add(
       this.pos.getForceTowardsPoint(center, 1, {
         startRadius: 140,
@@ -122,22 +125,28 @@ class BoidParticle extends Particle {
      this.alignmentForce = Vector2D.sub(this.ps.flockVelocity, this.v)
     
     // A force to keep everyone moving forward
-    this.propulsionForce.setToPolar(100, this.angle)
+    let flyingStrength = p.noise(this.idNumber)
+    let turn = p.noise(this.idNumber, p)
+    this.propulsionForce.setToPolar(100 + 120*flyingStrength, this.angle)
     
     
-    this.attractionForce = new Vector2D()
+    let mouse = new Vector2D(p.mouseX, p.mouseY)
+    this.attractionForce = this.pos.getForceTowardsPoint(mouse, 10)
+    if (this.attractionForce == undefined)
+      console.warn("???", mouse, this.pos)
     
     // Apply "drag"
-    this.v.constrainMagnitude(10, 100)
+    this.v.constrainMagnitude(10, 300)
     
     this.separationForce.mult(.2)
-    this.cohesionForce.mult(.5)
-    this.alignmentForce.mult(2)
+    this.cohesionForce.mult(.01)
+    this.alignmentForce.mult(.1)
     
     this.f.add(this.separationForce )
     this.f.add(this.alignmentForce )
     this.f.add(this.cohesionForce )
     this.f.add(this.propulsionForce )
+    this.f.add(this.attractionForce )
     
     // this.debugText = this.cohesionForce.toString()
   }
@@ -175,6 +184,7 @@ class BoidParticle extends Particle {
        this.pos.drawArrow(p, this.separationForce, { m: .2, color: [30, 100, 50] });
       this.pos.drawArrow(p, this.cohesionForce, { m: .2, color: [60, 100, 50] });
       this.pos.drawArrow(p, this.alignmentForce, { m: .2, color: [160, 100, 50] });
+      this.pos.drawArrow(p, this.attractionForce, { m: .2, color: [220, 100, 50] });
      
     }
   }
