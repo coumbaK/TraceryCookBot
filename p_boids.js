@@ -76,6 +76,10 @@ class BoidParticle extends Particle {
     this.cohesionForce = new Vector2D()
     this.alignmentForce = new Vector2D()
     this.separationForce = new Vector2D()
+    this.propulsionForce = new Vector2D()
+    
+    
+    this.attractionForce = new Vector2D()
   }
 
   calculateForces(p, dt) {
@@ -103,23 +107,37 @@ class BoidParticle extends Particle {
     this.ps.particles.forEach(pt => {
       // Ignore any force on myself
       if (pt !== this) {
-        this.separationForce.add(
-          this.pos.getForceTowardsPoint(pt.pos, -2, {startRadius: 10})
-        )
+        // Get the current distance and (normalized) 
+        // offset vector to this particle
+        let d = this.pos.getDistanceTo(pt.pos)
+        let offset = Vector2D.sub(this.pos, pt.pos).div(d)
+        let range = 100
+        if (d < range) {
+          this.separationForce.addMultiple(offset, range - d)
+        }
       }
     })
     
     // Alignment
      this.alignmentForce = Vector2D.sub(this.ps.flockVelocity, this.v)
     
+    // A force to keep everyone moving forward
+    this.propulsionForce.setToPolar(100, this.angle)
+    
+    
+    this.attractionForce = new Vector2D()
+    
     // Apply "drag"
     this.v.constrainMagnitude(10, 100)
     
-    // this.separationForce.mult(.5)
-    // this.cohesionForce.mult(.5)
+    this.separationForce.mult(.2)
+    this.cohesionForce.mult(.5)
+    this.alignmentForce.mult(2)
     
-    // this.f.add(this.separationForce )
+    this.f.add(this.separationForce )
+    this.f.add(this.alignmentForce )
     this.f.add(this.cohesionForce )
+    this.f.add(this.propulsionForce )
     
     // this.debugText = this.cohesionForce.toString()
   }
