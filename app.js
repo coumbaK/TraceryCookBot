@@ -15,6 +15,11 @@ const CANVAS_HEIGHT = 300;
 window.addEventListener("load", function () {
   console.log("LOADED");
   let system;
+  
+  let population = []
+  for (var i = 0; i < 10; i++) {
+    population[i] = randomVector(5 + Math.floor(Math.random()*10))
+  }
 
   let activeTool = undefined;
   // Create a P5 canvas element, JS-style
@@ -30,6 +35,9 @@ window.addEventListener("load", function () {
     };
 
     p.draw = function () {
+      let t = p.millis()*.001
+      // setVectorToWander(v, t)
+      Vue.set(v, 0, p.noise(t))
       p.background(180, 80, 80);
 
       p.push();
@@ -37,6 +45,13 @@ window.addEventListener("load", function () {
       p.pop();
     };
 
+       Vue.component("slider-controls", {
+         template: `<div class="slider-controls">
+            <slider v-for="(val, index) in v" :objKey="index" :obj="v" />
+         
+         </div>`,
+         props: "v"
+       })
     
     Vue.component("slider", {
       template: `<div class="slider">
@@ -44,20 +59,29 @@ window.addEventListener("load", function () {
         <input 
             ref="slider"
             type="range" min="0" max="1" step=".02"
-            v-model="obj[objKey]"
-            @update="update"
+            @input="update"
             
             />
-          <label>{{val}}</label>
+          <label>{{val.toFixed(2)}}</label>
       </div>`,
       methods: {
         update() {
-          console.log("update", this.$refs.slider.value)  
+          let v = this.$refs.slider.value
+          Vue.set( this.obj,this.objKey , parseFloat(v))
+         
+          console.log("input", this.obj[this.objKey])
         }
+      },
+      watched: {
+        val() {
+          this.$refs.slider.value = this.val
+        }
+      },
+      mounted() {
+        this.$refs.slider.value = this.val
       },
       computed: {
         val() {
-          console.log(this.obj, this.objKey)
           return this.obj[this.objKey]
         }
       },
@@ -67,7 +91,6 @@ window.addEventListener("load", function () {
       template: `<div id="controls">
         <div>
          
-          <slider v-for="(val, index) in v" :objKey="index" :obj="v" />
           
         </div>
       
@@ -75,7 +98,8 @@ window.addEventListener("load", function () {
       el: "#controls",
       data() {
         return {
-          v: randomVector(2),
+          selected: population[0],
+          population: population
         };
       },
     });
