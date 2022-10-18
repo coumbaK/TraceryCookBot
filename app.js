@@ -43,8 +43,12 @@ window.addEventListener("load", function () {
           <select v-model="generatorName">
             <option v-for="(data,name) in generators">{{name}}</option>
           </select>
+          
+          <button @click="randomize">🎲</button>
          
           <slider-controls :v="selected" /> 
+          
+          
         </div>
       
       </div>`,
@@ -57,6 +61,9 @@ window.addEventListener("load", function () {
       }
     },
     methods: {
+      randomize() {
+        this.repopulate()
+      },
       repopulate() {
         this.population = createPopulation(this.generator, this.populationCount);
         this.positions = getPositions(this.populationCount)
@@ -92,13 +99,32 @@ window.addEventListener("load", function () {
             // figure out the placement for these
             p.push()
             p.translate(...this.positions[index])
-            p.ellipse(0, 0, 60, 40)
+            p.fill(0, 0, 0, .2)
+            p.noStroke()
+            p.ellipse(0, 0, 40, 20)
+            p.ellipse(0, 0, 30, 15)
             
             this.generator.draw(p, t, individual)
             p.pop()
           })
           p.pop();
         };
+        
+        p.mouseClicked = () => {
+          let closestDist = 100
+          let closestIndex = 0
+//           Get the closest position
+          for (var i = 0; i < this.positions.length; i++) {
+            let d = Math.abs(p.mouseX - this.positions[i][0])
+            if (d < closestDist) {
+              closestDist = d
+              closestIndex = closestIndex
+            
+            }
+          }
+          this.selectedIndex = closestIndex
+          console.log("Selected")
+        }
       };
 
       // Create P5
