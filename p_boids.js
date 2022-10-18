@@ -12,45 +12,44 @@ class BoidSystem extends ParticleSystem {
     // Make what particle, and how many?
     // Try different numbers of particles
     super(BoidParticle, 40);
-    
-    this.flockCenter = new Vector2D()
-    this.flockVelocity = new Vector2D()
+
+    this.flockCenter = new Vector2D();
+    this.flockVelocity = new Vector2D();
   }
-  
+
   beforeMove(p, dt) {
-//     Calculate the flock's center and average direction
+    // Calculate the flock's center and average direction
     // Reset both
-    this.flockCenter.mult(0)
-    this.flockVelocity.mult(0)
-    
+    this.flockCenter.mult(0);
+    this.flockVelocity.mult(0);
+
     // Add up the velocity and position
-    this.particles.forEach(pt => {
-      this.flockCenter.add(pt.pos)
-      this.flockVelocity.add(pt.v)
-    })
-    // Divide by the number of boids to get the 
+    this.particles.forEach((pt) => {
+      this.flockCenter.add(pt.pos);
+      this.flockVelocity.add(pt.v);
+    });
+    // Divide by the number of boids to get the
     // overall flock data
-    this.flockVelocity.div(this.particles.length)
-    this.flockCenter.div(this.particles.length)
+    this.flockVelocity.div(this.particles.length);
+    this.flockCenter.div(this.particles.length);
   }
-  
-  
+
   mousePressed(p) {
-    super.mousePressed(p)
+    super.mousePressed(p);
     if (!this.held) {
-      let pt = new BoidParticle(this)
-      pt.pos.setTo(p.mouseX, p.mouseY)
-      this.particles.push(pt)
+      let pt = new BoidParticle(this);
+      pt.pos.setTo(p.mouseX, p.mouseY);
+      this.particles.push(pt);
     }
   }
 
   draw(p) {
     // A little bit of trails!
     p.background(0, 0, 50, 0.5);
-     
-    p.noFill()
-    p.stroke(100, 0, 100, .4)
-    p.circle(...this.flockCenter, 100)
+
+    p.noFill();
+    p.stroke(100, 0, 100, 0.4);
+    p.circle(...this.flockCenter, 100);
 
     // The "super-class" draws the particles
     super.draw(p);
@@ -66,24 +65,53 @@ class BoidParticle extends Particle {
     // ps: the particle system this particle belongs to
     // index: of all the particles in that system, this one's index
     super(ps, index);
-    
-    this.draggable = true
+
+    this.draggable = true;
 
     this.pos.setToRandom(0, p.width, 0, p.height);
-    this.radius = 10
-    this.angle = Math.random()*100
-    this.v.setToPolar(10, this.angle)
+    this.radius = 10;
+    this.angle = Math.random() * 100;
+    this.v.setToPolar(10, this.angle);
+    
+    this.cohesionForce = new Vector2D()
+    this.alignmentForce = new Vector2D()
+    this.separationForce = new Vector2D()
   }
 
   calculateForces(p, dt) {
-     this.angle = this.v.angle
-    let center = new Vector2D(p.width/2, p.height/2)
-    // Add a border force
-    this.f.add(this.pos.getForceTowardsPoint(center, 1, {startRadius: 120, falloff: 1.2}))
+    this.angle = this.v.angle;
+    let center = new Vector2D(p.width / 2, p.height / 2);
     
+    
+    // Add a border force
+    this.f.add(
+      this.pos.getForceTowardsPoint(center, 1, {
+        startRadius: 120,
+        falloff: 1.2,
+      })
+    );
+
     // Add boids force
+    
+    // Cohesion
+    // Move toward center
+    this.cohesionForce = this.pos.getForceTowardsPoint(this.ps.flockCenter, 2, {})
+     
+    // Separation
+    // Push away from all other boids
+    this.separationForce.mult(0)
+    this.ps.particles.forEach(pt => {
+      // Ignore any force on myself
+      if (pt !== this) {
+        this.cohesionForce.add(
+          this.pos.getForceTowardsPoint(pt, -2, {startRadius: 10})
+        )
+      }
+    })
   }
-  
+
+  // Wrap boids around the screen
+  // Can affect flocking moves
   // move(p, dt) {
   //   super.move(p, dt)
   //    this.pos.wrapX(0, p.width);
@@ -91,29 +119,26 @@ class BoidParticle extends Particle {
   // }
 
   draw(p, drawDebug = false) {
-    
     let t = p.millis() * 0.001;
-  
+
     p.noStroke();
-    p.fill(100)
-    p.push()
-    p.translate(...this.pos)
-    p.rotate(this.angle)
-    
-    p.beginShape()
-    p.vertex(this.radius, 0)
-    p.vertex(-this.radius, -this.radius)
-     p.vertex(0, 0)
-    p.vertex(-this.radius, this.radius)
-    
-    
-    p.endShape()
-    
-    p.pop()
-    
-    
+    p.fill(100);
+    p.push();
+    p.translate(...this.pos);
+    p.rotate(this.angle);
+
+    p.beginShape();
+    p.vertex(this.radius, 0);
+    p.vertex(-this.radius, -this.radius);
+    p.vertex(0, 0);
+    p.vertex(-this.radius, this.radius);
+
+    p.endShape();
+
+    p.pop();
+
     if (drawDebug) {
-      
+      this.
     }
   }
 }
