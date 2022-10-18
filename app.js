@@ -67,8 +67,8 @@ window.addEventListener("load", function () {
       this.repopulate();
 
       setInterval(() => {
-        let t = p.millis() * 0.001;
-        Vue.set(this.selected, 0, p.noise(t));
+        // let t = p.millis() * 0.001;
+        // Vue.set(this.selected, 0, p.noise(t));
       }, 100);
 
       // Create a P5 canvas element, JS-style
@@ -93,6 +93,8 @@ window.addEventListener("load", function () {
             p.push()
             p.translate(...this.positions[index])
             p.ellipse(0, 0, 60, 40)
+            
+            this.generator.draw(p, t, individual)
             p.pop()
           })
           p.pop();

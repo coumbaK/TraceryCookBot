@@ -28,6 +28,12 @@ function changeToCount(generator, population, count) {
     population.push(randomVector(dnaLength) )
   }
   
+  let toRemove = population.length - count
+    for (var i = 0; i < toRemove; i++) {
+//     Remove one
+    population.splice(population.length - 1, 1)
+  }
+ 
   console.log("generator",population)
   
 }
