@@ -33,3 +33,19 @@ Vue.component("slider", {
   },
 });
 
+      function drawEye(p, {x, y, eyeSize, outerColor = [0,0,0], innerColor = [0,0,100], blink}) {
+          p.push()
+        p.translate(x, y)
+        p.scale(1, blink)
+          p.fill(...outerColor)
+      p.noStroke()
+      p.ellipse(0, 0, eyeSize, eyeSize)
+      
+       // p.fill(100)
+      p.noStroke()
+      p.fill(...innerColor)
+      p.ellipse(0, -eyeSize*.4, eyeSize*.6, eyeSize*.6)
+        
+        p.pop()
+      }
+      
