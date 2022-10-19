@@ -56,8 +56,11 @@ window.addEventListener("load", function () {
             Seed:<input v-model="seed" />
 
           </div>
+          
+           <button @click="toggleRandomWalk" :class="{active:randomWalk}">〰</button>
+           
          
-          <slider-controls :v="selected" :labels="generator.labels" /> 
+          <slider-controls :v="selected" :labels="generator.sliders" :disabled="randomWalk" /> 
           
           
         </div>
@@ -73,6 +76,9 @@ window.addEventListener("load", function () {
       },
     },
     methods: {
+      toggleRandomWalk() {
+        this.randomWalk = !this.randomWalk
+      },
       randomize() {
         this.seed = Math.floor(Math.random() * 1000000);
         this.repopulate();
@@ -107,8 +113,10 @@ window.addEventListener("load", function () {
         );
       }
       setInterval(() => {
-        // let t = p.millis() * 0.001;
-        // Vue.set(this.selected, 0, p.noise(t));
+        let t = p.millis() * 0.001;
+        if (this.randomWalk) {
+          this.population.forEach((v,index) => setToNoise(p, v, t, index))
+        }
       }, 100);
 
       // Create a P5 canvas element, JS-style
@@ -191,6 +199,7 @@ window.addEventListener("load", function () {
 
     data() {
       return {
+        randomWalk: false,
         mutation: 0.1,
         positions: [],
         populationCount: localStorage.getItem("populationCount") || 5,

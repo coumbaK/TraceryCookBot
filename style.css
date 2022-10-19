@@ -31,7 +31,9 @@ h1, h2, h3 {
 	font-family: 'Baloo 2', cursive;
 }
 
-
+button.active {
+  background-color: hsla(100, 50%, 90%, 1);
+}
 
 #canvas-holder {
   position: relative;

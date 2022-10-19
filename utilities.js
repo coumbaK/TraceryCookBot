@@ -1,17 +1,20 @@
 Vue.component("slider-controls", {
   template: `<div class="slider-controls">
-    {{labels}}
+    
             <slider 
-            
+              :disabled = "disabled"
               v-for="(val, index) in v" 
-             
+              :label="labels?.[index]"
               :objKey="index" :obj="v" 
               
             />
          
          </div>`,
   props: {
-    labels: {},
+    labels: {
+      default: [],
+    },
+    disabled: {},
     v: {
       isRequired: true,
       type: Array,
@@ -20,18 +23,23 @@ Vue.component("slider-controls", {
 });
 
 Vue.component("slider", {
-  template: `<div class="slider">
-      {{objKey}}
-        <input 
+  template: `<tr class="slider">
+      <td><label>{{label}}</label></td>
+       <td> <input 
             v-model.number="obj[objKey]"
             ref="slider"
             type="range" min="0" max="1" step=".02"
-            
+            :disabled="disabled"
             />
+            </td>
+            <td>
           <label>{{obj[objKey].toFixed(2)}}</label>
-      </div>`,
+          </td>
+      </tr>`,
 
   props: {
+    disabled:{},
+    label: {},
     objKey: {
       isRequired: true,
     },
