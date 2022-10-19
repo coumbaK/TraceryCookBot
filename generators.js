@@ -1,5 +1,28 @@
 const GENERATORS = {
   
+  circle: {
+    description:
+      "circle makes circles.",
+    sliders: ["size", "aspectRatio", "angle", "hue", "brightness"],
+
+    setup(p) {},
+    
+    drawBackground(p) {
+      p.background(0, 50, 50)
+    },
+
+    draw(p, t, dna) {
+      let x = 0;
+      let y = 0;
+      
+      // How to access DNA
+      let size = dna[0] // 0-1
+      size = size*30 + 10
+      p.fill(100)
+      p.circle(0, 0, size)
+    }
+  },
+
 
   rectangle: {
     description:
