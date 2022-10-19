@@ -28,7 +28,9 @@ const GENERATORS = {
       // How about a little bounce at least?
       let bounce = Math.abs(Math.sin(t*3))
       aspectRatio += .2 + -.5*bounce
-      y -= 20*Math.abs(Math.sin(t*3 + .2))
+      let stickiness = .3
+      let jumpHeight = 60
+      y -= Math.max(0, jumpHeight*(Math.abs(Math.sin(t*3 + .2)) - stickiness))
       angle = p.lerp(0, angle, bounce)
       
      
@@ -55,27 +57,31 @@ const GENERATORS = {
       let eyeHeight = h*.5
       let eyeSize = 10
       
-//       function drawEye() {
-//           p.fill(0)
-//       p.noStroke()
-//       p.ellipse(0, 0, eyeSize, eyeSize)
+      function drawEye() {
+        
+          p.fill(0)
+      p.noStroke()
+      p.ellipse(0, 0, eyeSize, eyeSize)
       
-//        p.fill(100)
-//       p.noStroke()
-//       p.fill(hue, 100, brightness + 20)
-//       p.ellipse(0, -eyeSize*.4, eyeSize*.6, eyeSize*.6)
-//       }
+       p.fill(100)
+      p.noStroke()
+      p.fill(hue, 100, brightness + 20)
+      p.ellipse(0, -eyeSize*.4, eyeSize*.6, eyeSize*.6)
+      }
       
-//       // Only two eyes....?
-//       p.push()
-//       p.translate(eyeWidth, -eyeHeight)
-//       drawEye()
-//       p.pop()
+      // Only two eyes....?
+      p.push()
+      p.translate(eyeWidth, -eyeHeight)
+      p.scale(1, bounce)
+      drawEye()
+      p.pop()
       
-//        p.push()
-//       p.translate(-eyeWidth, -eyeHeight)
-//       drawEye()
-//       p.pop()
+       p.push()
+      
+      p.translate(-eyeWidth, -eyeHeight)
+      p.scale(1, bounce)
+      drawEye()
+      p.pop()
       
       
       p.pop()
