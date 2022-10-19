@@ -13,7 +13,7 @@ let sound = {
   fft: new p5.FFT(),
   song: undefined,
   spectrum: [],
-}
+};
 
 const CANVAS_WIDTH = 400;
 const CANVAS_HEIGHT = 300;
@@ -71,7 +71,6 @@ window.addEventListener("load", function () {
             <button v-for="landmark, name  in generator.landmarks" @click="loadLandmark(landmark)">{{name}}</button>
           </span>
           </div>
-           SPECTRUM {{sound.spectrum}}
           <slider-controls :v="selected" :labels="generator.sliders" :disabled="randomWalk" /> 
           
           
@@ -130,13 +129,6 @@ window.addEventListener("load", function () {
           p.mouseY < p.height
         );
       }
-      setInterval(() => {
-        p.noiseDetail(2, 0.2);
-        let t = p.millis() * 0.001;
-        if (this.randomWalk) {
-          this.population.forEach((v, index) => setToNoise(p, v, t, index));
-        }
-      }, 100);
 
       // Create a P5 canvas element, JS-style
       // https://github.com/processing/p5.js/wiki/p5.js-overview#instantiation--namespace
@@ -158,29 +150,37 @@ window.addEventListener("load", function () {
         p.draw = () => {
           let t = p.millis() * 0.001;
           // setVectorToWander(v, t)
-          
-          // Update the sound 
+
+          // Update the sound
           if (sound.song.isPlaying()) {
             sound.spectrum = sound.fft.analyze();
           }
-          
+
           p.background(180, 80, 80);
-        
+
           p.push();
-          
+
           // DRAW MUSIC
-          if (sound.spectrum) {
-            console.log(sound.spectrum)
+          if (sound.spectrum && sound.song.isPlaying()) {
+            // console.log(sound.spectrum);
             // p.circle(0, .height, 100)
+            
+            // Visualize the spectrum
             for (var i = 0; i < sound.spectrum.length; i++) {
-              let x= i*5
-              let y = (sound.spectrum[i]/100)**.5
+              let x = i * 5;
+              let y = (sound.spectrum[i] / 180) ** 5; // make it...spikier?
               // console.log(y)
-              p.fill(0)
-              p.rect(x, p.height, 4, -y)
+              p.fill(0);
+              p.rect(x, p.height, 4, -y * 20);
+              
             }
+            
+            this.population.forEach((v, index) => setToSpectrum(sound.spectrum, v, index));
+          } else if (this.randomWalk) {
+            p.noiseDetail(2, 0.2);
+            this.population.forEach((v, index) => setToNoise(p, v, t, index));
           }
-          
+
           // DRAW THE POPULATION
           this.population.forEach((individual, index) => {
             // figure out the placement for these
@@ -263,11 +263,9 @@ window.addEventListener("load", function () {
 
   function playSong() {
     console.log(sound.song);
-    if (sound.song.isPlaying())
-      sound.song.pause();
-    else
-      sound.song.play();
-    
+    if (sound.song.isPlaying()) sound.song.pause();
+    else sound.song.play();
+
     //   var dancer = new Dancer();
 
     //   var a = new Audio();
