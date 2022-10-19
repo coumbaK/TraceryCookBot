@@ -156,7 +156,10 @@ window.addEventListener("load", function () {
             sound.spectrum = sound.fft.analyze();
           }
 
-          p.background(180, 80, 80);
+          // Draw a background
+          if (this.generator.drawBackground)
+            this.generator.drawBackground(p, t);
+          else p.background(180, 80, 80);
 
           p.push();
 
@@ -164,7 +167,7 @@ window.addEventListener("load", function () {
           if (sound.spectrum && sound.song.isPlaying()) {
             // console.log(sound.spectrum);
             // p.circle(0, .height, 100)
-            
+
             // Visualize the spectrum
             for (var i = 0; i < sound.spectrum.length; i++) {
               let x = i * 5;
@@ -172,10 +175,11 @@ window.addEventListener("load", function () {
               // console.log(y)
               p.fill(0);
               p.rect(x, p.height, 4, -y * 20);
-              
             }
-            
-            this.population.forEach((v, index) => setToSpectrum(sound.spectrum, v, index));
+
+            this.population.forEach((v, index) =>
+              setToSpectrum(sound.spectrum, v, index)
+            );
           } else if (this.randomWalk) {
             p.noiseDetail(2, 0.2);
             this.population.forEach((v, index) => setToNoise(p, v, t, index));
