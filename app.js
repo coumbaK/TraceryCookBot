@@ -59,6 +59,7 @@ window.addEventListener("load", function () {
           
            <button @click="toggleRandomWalk" :class="{active:randomWalk}">〰</button>
            
+           <input :value="selected.map(s => s.toFixed(2))" /> 
          
           <slider-controls :v="selected" :labels="generator.sliders" :disabled="randomWalk" /> 
           
@@ -153,7 +154,7 @@ window.addEventListener("load", function () {
             p.fill(0);
             p.text(index, 0, 10);
 
-            this.generator.draw(p, t, individual);
+            this.generator.draw(p, t, individual, index);
             p.pop();
           });
           p.pop();

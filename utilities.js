@@ -1,5 +1,7 @@
 Vue.component("slider-controls", {
-  template: `<div class="slider-controls">
+  template: `
+  
+  <div class="slider-controls">
     
             <slider 
               :disabled = "disabled"
