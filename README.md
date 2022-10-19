@@ -28,34 +28,38 @@ Test McStudent
 
 --your answer here  --
 
-## Diduou
+## What was hard or easy about making this generator? How did your plans change?
 
 --your answer here  --
 
-## Describe your 1st system. What forces does it use? What is its emergent behavior?
+## **Generator 2:** what does this generate?
+
+--your answer here  --
+
+## What are the most important and interesting qualities of this kind of thing?
+
+--your answer here  --
+
+## List your 5+ sliders. Describe what each one controls, and why that is relevant to this
+
 --your answer here  --
 
 
-## Describe your 1st system. What forces does it use? What is its emergent behavior?
--- your answer here  --
+## List your 5+ landmarks. How are they different from each other?
 
+--your answer here  --
 
-## Which system has one particle uses "particle-to-all-particles" forces (Boids style) or reads a map (Braitenberg-style). Explain how.
+## For a generator of this type of thing, what kinds of things *can't* it generate?
 
---your answer here--
+--your answer here  --
 
+## What was hard or easy about making this generator? How did your plans change?
 
-## Which system has particles that leave a trail or creates new particles
+--your answer here  --
 
---your answer here--
--- reminder that the background(0,0,0,.1) trick doesnt count for this --
+## Which generator has a more interesting possibility space?
 
-
-## Which system interacts with user behavior, and how?
-
---your answer here--
--- reminder that drag doesn't count for this --
-
+--your answer here  -
 
 ## List any resources (code, images, etc) you've used, and where you got them from
 
