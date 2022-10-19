@@ -15,6 +15,7 @@ function createPopulation(generator, count, parent, mutation) {
     if (parent) {
 //       clone the parent
       population[i] = parent.slice(0)
+      mutate(population[i], mutation)
     } else {
        population[i] = randomVector(dnaLength)
     }
@@ -22,6 +23,17 @@ function createPopulation(generator, count, parent, mutation) {
    
   }
   return population
+}
+
+
+function mutate(dna, mutation) {
+  for (var i = 0; i < dna.length; i++) {
+    dna[i] += (Math.random()-.5)*mutation
+    // Regress to .5 a bit
+    
+    dna[i] = Math.max(0, Math.min(1, dna[i]))
+    dna[i] = p.lerp(dna[i], .5, .1)
+  }
 }
 
 
