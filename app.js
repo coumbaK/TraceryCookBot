@@ -9,7 +9,12 @@
 // TODO: ADD YOUR SYSTEM HERE
 
 let p;
-let song
+let sound = {
+  fft: new p5.FFT(),
+  song: undefined,
+  spectrum: [],
+}
+
 const CANVAS_WIDTH = 400;
 const CANVAS_HEIGHT = 300;
 
@@ -66,7 +71,7 @@ window.addEventListener("load", function () {
             <button v-for="landmark, name  in generator.landmarks" @click="loadLandmark(landmark)">{{name}}</button>
           </span>
           </div>
-         
+           SPECTRUM {{sound.spectrum}}
           <slider-controls :v="selected" :labels="generator.sliders" :disabled="randomWalk" /> 
           
           
@@ -139,7 +144,7 @@ window.addEventListener("load", function () {
         p = p0;
 
         (p.preload = () => {
-          song = p.loadSound(
+          sound.song = p.loadSound(
             "https://cdn.glitch.global/18feb58c-b4a9-4621-8002-9554790280e4/351717__monkeyman535__cool-chill-beat-loop.mp3?v=1666150235274"
           );
           console.log("song loadded");
@@ -153,10 +158,30 @@ window.addEventListener("load", function () {
         p.draw = () => {
           let t = p.millis() * 0.001;
           // setVectorToWander(v, t)
-
+          
+          // Update the sound 
+          if (sound.song.isPlaying()) {
+            sound.spectrum = sound.fft.analyze();
+          }
+          
           p.background(180, 80, 80);
-
+        
           p.push();
+          
+          // DRAW MUSIC
+          if (sound.spectrum) {
+            console.log(sound.spectrum)
+            // p.circle(0, .height, 100)
+            for (var i = 0; i < sound.spectrum.length; i++) {
+              let x= i*5
+              let y = (sound.spectrum[i]/100)**.5
+              // console.log(y)
+              p.fill(0)
+              p.rect(x, p.height, 4, -y)
+            }
+          }
+          
+          // DRAW THE POPULATION
           this.population.forEach((individual, index) => {
             // figure out the placement for these
             p.push();
@@ -220,6 +245,7 @@ window.addEventListener("load", function () {
 
     data() {
       return {
+        sound: sound,
         randomWalk: false,
         mutation: 0.1,
         positions: [],
@@ -236,10 +262,12 @@ window.addEventListener("load", function () {
   });
 
   function playSong() {
-    console.log(song);
-    if (isPlaying())
-      song.pause();
-    song.play();
+    console.log(sound.song);
+    if (sound.song.isPlaying())
+      sound.song.pause();
+    else
+      sound.song.play();
+    
     //   var dancer = new Dancer();
 
     //   var a = new Audio();
