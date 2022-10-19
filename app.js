@@ -36,10 +36,12 @@ window.addEventListener("load", function () {
           
           <div>
           <label>mutation</label>
-          <input type="range" v-model="mutation" min="0" max="1" step=".02" />
+          <input type="range" v-model.number ="mutation" min="0" max="1" step=".02" />
           <label>{{mutation.toFixed(2)}}</label>
           </div>
           
+          
+          Seed:<input v-model="seed" />
           <input type="number" v-model="populationCount" />
           <select v-model="selectedIndex">
           
@@ -68,9 +70,11 @@ window.addEventListener("load", function () {
     },
     methods: {
       randomize() {
+        this.seed = Math.floor(Math.random() * 1000000)
         this.repopulate()
       },
       repopulate(parent) {
+        Math.seedrandom(this.seed);
         this.population = createPopulation(this.generator, this.populationCount, parent, this.mutation);
         this.positions = getPositions(this.populationCount)
       },
@@ -78,6 +82,7 @@ window.addEventListener("load", function () {
 
     mounted() {
       this.repopulate();
+      localStorage.setItem("seed", this.seed)
 
       setInterval(() => {
         // let t = p.millis() * 0.001;
@@ -166,7 +171,7 @@ window.addEventListener("load", function () {
         mutation: .1,
         positions: [],
         populationCount: 5,
-        seed: Math.floor(Math.random() * 1000000),
+        seed: localStorage.getItem("seed") || Math.floor(Math.random() * 1000000),
         generatorName: Object.keys(GENERATORS)[0],
         generators: GENERATORS,
         selectedIndex: 0,

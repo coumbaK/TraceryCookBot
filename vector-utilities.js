@@ -4,7 +4,7 @@ function randomVector(n) {
   return Array.from({ length: n }, () => Math.random());
 }
 
-function createPopulation(generator, count) {
+function createPopulation(generator, count, parent, mutation) {
   let population = []
   
   // How big is this "dna"?
@@ -12,8 +12,14 @@ function createPopulation(generator, count) {
   // worms have 20,000, and you have 40,000 (twice as many as a worm, impressive!)
   let dnaLength = generator.sliders.length
   for (var i = 0; i < count; i++) {
+    if (parent) {
+//       clone the parent
+      population[i] = parent.slice(0)
+    } else {
+       population[i] = randomVector(dnaLength)
+    }
     
-    population[i] = randomVector(dnaLength)
+   
   }
   return population
 }
