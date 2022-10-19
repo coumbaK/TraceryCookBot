@@ -32,7 +32,7 @@ function setToSpectrum(spectrum, dna, offset) {
     // // Which range does this dna take?
     let index = (i + offset)%spectrum.length
     // index = 0
-    let val = (spectrum[index]/240)**5
+    let val = (spectrum[index]/250)**5
     dna[i] = p.lerp(dna[i],val , .1)
   }
 }

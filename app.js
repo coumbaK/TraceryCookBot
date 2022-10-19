@@ -85,6 +85,12 @@ window.addEventListener("load", function () {
         changeToCount(this.generator, this.population, this.populationCount);
         localStorage.setItem("populationCount", this.populationCount);
       },
+      
+       generator() {
+        console.log("generator change");
+      
+        this.repopulate()
+      },
     },
     methods: {
       playSong() {
