@@ -31,7 +31,11 @@ window.addEventListener("load", function () {
   new Vue({
     template: `<div id="controls">
         <div>
-          <div>{{generatorName}}</div>
+          <div>
+            <select v-model="generatorName">
+              <option v-for="(data,name) in generators">{{name}}</option>
+            </select>
+          </div>
           <div>{{generator.description}}</div>
           
           <div>
@@ -43,23 +47,24 @@ window.addEventListener("load", function () {
           
           <input type="number" v-model="populationCount" width="3"  min="1" />
           
-          <select v-model="selectedIndex">
-            <option v-for="(v,index) in population">{{index}}</option>
-          </select>
+        
+         
           
-          <select v-model="generatorName">
-            <option v-for="(data,name) in generators">{{name}}</option>
-          </select>
-          
-          <div>
-            <button @click="randomize">🎲</button>
+          <span>
             Seed:<input v-model="seed" />
-
-          </div>
+            <button @click="randomize">🎲</button>
+            
+          </span>
           
            <button @click="toggleRandomWalk" :class="{active:randomWalk}">〰</button>
            
+          
            <input :value="selected.map(s => s.toFixed(2))" /> 
+            <span v-if="generator.landmarks">
+          
+            <button v-for="landmark, name  in generator.landmarks" @click="loadLandmark(landmark)">{{name}}</button>
+          </span>
+          </div>
          
           <slider-controls :v="selected" :labels="generator.sliders" :disabled="randomWalk" /> 
           
@@ -77,6 +82,10 @@ window.addEventListener("load", function () {
       },
     },
     methods: {
+      
+      loadLandmark(landmark) {
+        setToVector(this.selected, landmark)
+      },
       toggleRandomWalk() {
         this.randomWalk = !this.randomWalk
       },
@@ -102,6 +111,9 @@ window.addEventListener("load", function () {
     },
 
     mounted() {
+      
+      this.dancer = this.playSong();
+      
       this.repopulate();
       localStorage.setItem("seed", this.seed);
 
@@ -227,4 +239,13 @@ function getPositions(count) {
   }
   positions.sort((a, b) => a[1] - b[1]);
   return positions;
+}
+
+
+function playSong() {
+  var a = new Audio();
+  a.src = 'somesong.mp3';
+  dancer.load( a );
+  return dancer
+
 }

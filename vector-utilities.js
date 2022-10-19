@@ -43,6 +43,12 @@ function mutate(dna, mutation) {
   }
 }
 
+function setToVector(dna, v) {
+  for (var i = 0; i < dna.length; i++) {
+   dna[i] = v[i] 
+  }
+}
+
 
 function changeToCount(generator, population, count) {
  let dnaLength = generator.sliders.length
