@@ -7,21 +7,30 @@ Test McStudent
 [my page](https://galaxykate-a1.glitch.me)
 
 
-## Which systems behaved like you expected? Which ones surprised you? In which ones did your initial idea evolve into something different?
+## **Generator 1:** what does this generate?
 
 --your answer here  --
--- Use this answer to remind yourself what you tried and what worked or didn't--
 
+## What are the most important and interesting qualities of this kind of thing?
 
-## Describe your 1st system. What forces does it use? What is its emergent behavior?
---your answer here  --
--- If your work is at all close to the example code, be sure to describe how it is different --
--- What techniques and P5 tools did you use? Help the TA/reviewer understand how it works --
-
-
-## Describe your 1st system. What forces does it use? What is its emergent behavior?
 --your answer here  --
 
+## List your 5+ sliders. Describe what each one controls, and why that is relevant to this
+
+--your answer here  --
+
+
+## List your 5+ landmarks. How are they different from each other?
+
+--your answer here  --
+
+## For a generator of this type of thing, what kinds of things *can't* it generate?
+
+--your answer here  --
+
+## Diduou
+
+--your answer here  --
 
 ## Describe your 1st system. What forces does it use? What is its emergent behavior?
 --your answer here  --

@@ -4,7 +4,10 @@ const GENERATORS = {
     description:
       "circle makes circles.",
     sliders: ["size", "aspectRatio", "angle", "hue", "brightness"],
-
+    landmarks: {
+      golfball: [0.04,0.38,0.80,0.06,0.64],
+      basketball: [0.27,0.74,0.04,0.64,0.35],
+    },
     setup(p) {},
     
     drawBackground(p) {
