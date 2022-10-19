@@ -9,6 +9,7 @@
 // TODO: ADD YOUR SYSTEM HERE
 
 let p;
+let song
 const CANVAS_WIDTH = 400;
 const CANVAS_HEIGHT = 300;
 
@@ -48,7 +49,7 @@ window.addEventListener("load", function () {
           <input type="number" v-model="populationCount" width="3"  min="1" />
           
         
-         
+         <button @click="playSong">🎵</button>
           
           <span>
             Seed:<input v-model="seed" />
@@ -78,16 +79,18 @@ window.addEventListener("load", function () {
         console.log("count change", this.populationCount);
         this.positions = getPositions(this.populationCount);
         changeToCount(this.generator, this.population, this.populationCount);
-        localStorage.setItem("populationCount", this.populationCount)
+        localStorage.setItem("populationCount", this.populationCount);
       },
     },
     methods: {
-      
+      playSong() {
+        this.dancer = playSong();
+      },
       loadLandmark(landmark) {
-        setToVector(this.selected, landmark)
+        setToVector(this.selected, landmark);
       },
       toggleRandomWalk() {
-        this.randomWalk = !this.randomWalk
+        this.randomWalk = !this.randomWalk;
       },
       randomize() {
         this.seed = Math.floor(Math.random() * 1000000);
@@ -111,9 +114,6 @@ window.addEventListener("load", function () {
     },
 
     mounted() {
-      
-      this.dancer = this.playSong();
-      
       this.repopulate();
       localStorage.setItem("seed", this.seed);
 
@@ -129,7 +129,7 @@ window.addEventListener("load", function () {
         p.noiseDetail(2, 0.2);
         let t = p.millis() * 0.001;
         if (this.randomWalk) {
-          this.population.forEach((v,index) => setToNoise(p, v, t, index))
+          this.population.forEach((v, index) => setToNoise(p, v, t, index));
         }
       }, 100);
 
@@ -137,11 +137,18 @@ window.addEventListener("load", function () {
       // https://github.com/processing/p5.js/wiki/p5.js-overview#instantiation--namespace
       const s = (p0) => {
         p = p0;
-        p.setup = () => {
-          p.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-          p.colorMode(p.HSL, 360, 100, 100);
-          p.ellipseMode(p.RADIUS);
-        };
+
+        (p.preload = () => {
+          song = p.loadSound(
+            "https://cdn.glitch.global/18feb58c-b4a9-4621-8002-9554790280e4/351717__monkeyman535__cool-chill-beat-loop.mp3?v=1666150235274"
+          );
+          console.log("song loadded");
+        }),
+          (p.setup = () => {
+            p.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+            p.colorMode(p.HSL, 360, 100, 100);
+            p.ellipseMode(p.RADIUS);
+          });
 
         p.draw = () => {
           let t = p.millis() * 0.001;
@@ -227,6 +234,21 @@ window.addEventListener("load", function () {
     },
     el: "#controls",
   });
+
+  function playSong() {
+    console.log(song);
+    if (isPlaying())
+      song.pause();
+    song.play();
+    //   var dancer = new Dancer();
+
+    //   var a = new Audio();
+    //   a.crossOrigin = "anonymous";
+
+    //   a.src = 'https://cdn.glitch.global/18feb58c-b4a9-4621-8002-9554790280e4/351717__monkeyman535__cool-chill-beat-loop.mp3?v=1666150235274';
+    //   dancer.load( a );
+    // return dancer
+  }
 });
 
 function getPositions(count) {
@@ -239,13 +261,4 @@ function getPositions(count) {
   }
   positions.sort((a, b) => a[1] - b[1]);
   return positions;
-}
-
-
-function playSong() {
-  var a = new Audio();
-  a.src = 'somesong.mp3';
-  dancer.load( a );
-  return dancer
-
 }
