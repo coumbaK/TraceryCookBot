@@ -63,27 +63,35 @@ window.addEventListener("load", function () {
 
     watch: {
       populationCount() {
-        console.log("count change", this.populationCount)
-         this.positions = getPositions(this.populationCount)
-        changeToCount(this.generator, this.population, this.populationCount)
-      }
+        console.log("count change", this.populationCount);
+        this.positions = getPositions(this.populationCount);
+        changeToCount(this.generator, this.population, this.populationCount);
+      },
     },
     methods: {
       randomize() {
-        this.seed = Math.floor(Math.random() * 1000000)
-        this.repopulate()
+        this.seed = Math.floor(Math.random() * 1000000);
+        this.repopulate();
       },
       repopulate(parent) {
         Math.seedrandom(this.seed);
-        this.population = createPopulation(this.generator, this.populationCount, parent, this.mutation);
-        this.positions = getPositions(this.populationCount)
+        this.population = createPopulation(
+          this.generator,
+          this.populationCount,
+          parent,
+          this.mutation
+        );
+        this.positions = getPositions(this.populationCount);
       },
     },
 
     mounted() {
       this.repopulate();
-      localStorage.setItem("seed", this.seed)
+      localStorage.setItem("seed", this.seed);
 
+      function onscreen() {
+        return p.mouseX > 0 && p.mouseX < p.width && p.mouseY > 0 && p.mouseY < p.height
+      }
       setInterval(() => {
         // let t = p.millis() * 0.001;
         // Vue.set(this.selected, 0, p.noise(t));
@@ -108,46 +116,47 @@ window.addEventListener("load", function () {
           p.push();
           this.population.forEach((individual, index) => {
             // figure out the placement for these
-            p.push()
-            p.translate(...this.positions[index])
+            p.push();
+            p.translate(...this.positions[index]);
             if (index === this.selectedIndex) {
-              p.fill(0, 0, 0, .2)
+              p.fill(0, 0, 0, 0.2);
             } else {
-              p.fill(0, 0, 0, .06)
+              p.fill(0, 0, 0, 0.06);
             }
-            p.noStroke()
-            p.ellipse(0, 0, 40, 20)
-            p.ellipse(0, 0, 30, 15)
-            
-            p.fill(0)
-            p.text(index, 0, 10)
-            
-            this.generator.draw(p, t, individual)
-            p.pop()
-          })
+            p.noStroke();
+            p.ellipse(0, 0, 40, 20);
+            p.ellipse(0, 0, 30, 15);
+
+            p.fill(0);
+            p.text(index, 0, 10);
+
+            this.generator.draw(p, t, individual);
+            p.pop();
+          });
           p.pop();
         };
-        
+
         p.doubleClicked = () => {
-          this.repopulate(this.selected)
-        }
-        
+          if (onscreen()) this.repopulate(this.selected);
+        };
+
         p.mouseClicked = () => {
-          let closestDist = 100
-          let closestIndex = 0
-//           Get the closest position
-          for (var i = 0; i < this.positions.length; i++) {
-            let d = Math.abs(p.mouseX - this.positions[i][0])
-            // console.log(d)
-            if (d < closestDist) {
-              closestDist = d
-              closestIndex = i
-            
+          if (onscreen()) {
+            let closestDist = 100;
+            let closestIndex = 0;
+            //           Get the closest position
+            for (var i = 0; i < this.positions.length; i++) {
+              let d = Math.abs(p.mouseX - this.positions[i][0]);
+              // console.log(d)
+              if (d < closestDist) {
+                closestDist = d;
+                closestIndex = i;
+              }
             }
+            this.selectedIndex = closestIndex;
+            console.log("Clicked", this.selectedIndex);
           }
-          this.selectedIndex = closestIndex
-          console.log("Clicked", this.selectedIndex)
-        }
+        };
       };
 
       // Create P5
@@ -168,10 +177,11 @@ window.addEventListener("load", function () {
 
     data() {
       return {
-        mutation: .1,
+        mutation: 0.1,
         positions: [],
         populationCount: 5,
-        seed: localStorage.getItem("seed") || Math.floor(Math.random() * 1000000),
+        seed:
+          localStorage.getItem("seed") || Math.floor(Math.random() * 1000000),
         generatorName: Object.keys(GENERATORS)[0],
         generators: GENERATORS,
         selectedIndex: 0,
@@ -182,17 +192,14 @@ window.addEventListener("load", function () {
   });
 });
 
-
 function getPositions(count) {
-  let positions = []
+  let positions = [];
   for (var i = 0; i < count; i++) {
-
-    let pct = count==1?.5:i/(count - 1)
-    let x = CANVAS_WIDTH*.5 + (CANVAS_WIDTH - 100)*.9*(pct - .5) 
-    let y = CANVAS_HEIGHT*(.8 + .1*(i%2))+ 10*Math.sin(i)
-    positions.push([x, y])
-
+    let pct = count == 1 ? 0.5 : i / (count - 1);
+    let x = CANVAS_WIDTH * 0.5 + (CANVAS_WIDTH - 100) * 0.9 * (pct - 0.5);
+    let y = CANVAS_HEIGHT * (0.8 + 0.1 * (i % 2)) + 10 * Math.sin(i);
+    positions.push([x, y]);
   }
-  positions.sort((a,b) => a[1] - b[1])
-  return positions
+  positions.sort((a, b) => a[1] - b[1]);
+  return positions;
 }
