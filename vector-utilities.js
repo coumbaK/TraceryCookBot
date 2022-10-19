@@ -27,6 +27,12 @@ function createPopulation(generator, count, parent, mutation) {
 }
 
 
+function setToNoise(p, dna, t, offset) {
+  for (var i = 0; i < dna.length; i++) {
+    dna[i] = p.noise(t + i, offset + i*100)
+  }
+}
+
 function mutate(dna, mutation) {
   for (var i = 0; i < dna.length; i++) {
     dna[i] += (Math.random()-.5)*mutation

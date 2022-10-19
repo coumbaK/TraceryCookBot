@@ -113,6 +113,7 @@ window.addEventListener("load", function () {
         );
       }
       setInterval(() => {
+        p.noiseDetail(2, 0.2);
         let t = p.millis() * 0.001;
         if (this.randomWalk) {
           this.population.forEach((v,index) => setToNoise(p, v, t, index))
