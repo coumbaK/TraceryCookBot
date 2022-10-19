@@ -1,24 +1,8 @@
 const GENERATORS = {
   rectangle: {
     description:
-      "A very basic and boring generator satisfying the requirements",
-    sliders: [
-      {
-        label: "aspectRatio",
-      },
-      {
-        label: "size",
-      },
-      {
-        label: "rotation",
-      },
-      {
-        label: "hue",
-      },
-      {
-        label: "brightness",
-      },
-    ],
+      "A very basic and boring generator satisfying the requirements. Control various properties of a rectangle.",
+    sliders: ["size", "aspectRatio", "angle", "hue", "brightness"],
 
     setup(p) {},
 

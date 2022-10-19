@@ -1,9 +1,17 @@
 Vue.component("slider-controls", {
   template: `<div class="slider-controls">
-            <slider v-for="(val, index) in v" :objKey="index" :obj="v" />
+    {{labels}}
+            <slider 
+            
+              v-for="(val, index) in v" 
+             
+              :objKey="index" :obj="v" 
+              
+            />
          
          </div>`,
   props: {
+    labels: {},
     v: {
       isRequired: true,
       type: Array,
@@ -22,7 +30,7 @@ Vue.component("slider", {
             />
           <label>{{obj[objKey].toFixed(2)}}</label>
       </div>`,
- 
+
   props: {
     objKey: {
       isRequired: true,
@@ -33,19 +41,21 @@ Vue.component("slider", {
   },
 });
 
-      function drawEye(p, {x, y, eyeSize, outerColor = [0,0,0], innerColor = [0,0,100], blink}) {
-          p.push()
-        p.translate(x, y)
-        p.scale(1, blink)
-          p.fill(...outerColor)
-      p.noStroke()
-      p.ellipse(0, 0, eyeSize, eyeSize)
-      
-       // p.fill(100)
-      p.noStroke()
-      p.fill(...innerColor)
-      p.ellipse(0, -eyeSize*.4, eyeSize*.6, eyeSize*.6)
-        
-        p.pop()
-      }
-      
+function drawEye(
+  p,
+  { x, y, eyeSize, outerColor = [0, 0, 0], innerColor = [0, 0, 100], blink }
+) {
+  p.push();
+  p.translate(x, y);
+  p.scale(1, blink);
+  p.fill(...outerColor);
+  p.noStroke();
+  p.ellipse(0, 0, eyeSize, eyeSize);
+
+  // p.fill(100)
+  p.noStroke();
+  p.fill(...innerColor);
+  p.ellipse(0, -eyeSize * 0.4, eyeSize * 0.6, eyeSize * 0.6);
+
+  p.pop();
+}

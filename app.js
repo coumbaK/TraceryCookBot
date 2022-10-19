@@ -35,16 +35,15 @@ window.addEventListener("load", function () {
           <div>{{generator.description}}</div>
           
           <div>
-          <label>mutation</label>
-          <input type="range" v-model.number ="mutation" min="0" max="1" step=".02" />
-          <label>{{mutation.toFixed(2)}}</label>
+            <label>mutation</label>
+            <input type="range" v-model.number ="mutation" min="0" max="1" step=".02" size="6" />
+
+            <label>{{mutation.toFixed(2)}}</label>
           </div>
           
+          <input type="number" v-model="populationCount" width="3"  min="1" />
           
-          Seed:<input v-model="seed" />
-          <input type="number" v-model="populationCount" />
           <select v-model="selectedIndex">
-          
             <option v-for="(v,index) in population">{{index}}</option>
           </select>
           
@@ -52,9 +51,13 @@ window.addEventListener("load", function () {
             <option v-for="(data,name) in generators">{{name}}</option>
           </select>
           
-          <button @click="randomize">🎲</button>
+          <div>
+            <button @click="randomize">🎲</button>
+            Seed:<input v-model="seed" />
+
+          </div>
          
-          <slider-controls :v="selected" /> 
+          <slider-controls :v="selected" :labels="generator.labels" /> 
           
           
         </div>
@@ -66,6 +69,7 @@ window.addEventListener("load", function () {
         console.log("count change", this.populationCount);
         this.positions = getPositions(this.populationCount);
         changeToCount(this.generator, this.population, this.populationCount);
+        localStorage.setItem("populationCount", this.populationCount)
       },
     },
     methods: {
@@ -74,7 +78,12 @@ window.addEventListener("load", function () {
         this.repopulate();
       },
       repopulate(parent) {
-        Math.seedrandom(this.seed);
+        if (parent) {
+          Math.seedrandom(Date.now());
+        } else {
+          // Create based on the set seed
+          Math.seedrandom(this.seed);
+        }
         this.population = createPopulation(
           this.generator,
           this.populationCount,
@@ -90,7 +99,12 @@ window.addEventListener("load", function () {
       localStorage.setItem("seed", this.seed);
 
       function onscreen() {
-        return p.mouseX > 0 && p.mouseX < p.width && p.mouseY > 0 && p.mouseY < p.height
+        return (
+          p.mouseX > 0 &&
+          p.mouseX < p.width &&
+          p.mouseY > 0 &&
+          p.mouseY < p.height
+        );
       }
       setInterval(() => {
         // let t = p.millis() * 0.001;
@@ -179,12 +193,12 @@ window.addEventListener("load", function () {
       return {
         mutation: 0.1,
         positions: [],
-        populationCount: 5,
+        populationCount: localStorage.getItem("populationCount") || 5,
         seed:
           localStorage.getItem("seed") || Math.floor(Math.random() * 1000000),
         generatorName: Object.keys(GENERATORS)[0],
         generators: GENERATORS,
-        selectedIndex: 0,
+        selectedIndex: localStorage.getItem("generatorIndex") || 0,
         population: population,
       };
     },

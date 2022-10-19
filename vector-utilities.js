@@ -5,6 +5,7 @@ function randomVector(n) {
 }
 
 function createPopulation(generator, count, parent, mutation) {
+  console.log("Create population", count, parent, mutation)
   let population = []
   
   // How big is this "dna"?
