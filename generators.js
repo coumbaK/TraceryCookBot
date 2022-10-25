@@ -38,27 +38,42 @@ const GENERATORS = {
 
     draw(p, t, dna) {
       const SUBIMAGE_SIZE = 128;
+      let hue = 140 * p.noise(t * 0.2) + dna[4] * 400;
 
       function drawMoons({ behind }) {
         let yScale = 0.3;
-        let moonCount = 10;
+        let moonCount = Math.floor(dna[4]*10);
         // Parametric equation for an ellipse
 
         let r = 70;
+        
+        
 
         function drawMoon(index) {
-          let theta = t * 1 + index;
-          let moonOrbit = r * (1 + 0.9 * Math.sin(index));
+          let moonSpeed = p.noise(index) + 1
+          let moonHue = hue
+          let theta = t * moonSpeed + index;
+          let moonOrbit = r * (1 + 0.3 * Math.sin(index));
           let x = moonOrbit * Math.cos(theta);
           let y = moonOrbit * Math.sin(theta) * yScale;
-          p.fill(100);
-          // Only draw the circle if we are on the
+          
+          
+         // Only draw the circle if we are on the
           // correct half of the cycle for this side
-          if (behind === y < 0) p.circle(x, y, 10);
+          if (behind === y < 0) {
+           p.noStroke()
+          p.fill(moonHue, 100, 50);
+           p.circle(x, y, 10);
+             p.fill(moonHue, 100, 70);
+           p.circle(x - 2, y - 2, 7);
+          }
 
+
+          p.noFill()
+          p.stroke(100, 0, 100, .2)
           //         Draw the front or back half of the arc
-          if (behind) p.arc(0, 0, r, r * yScale, Math.PI, 0, p.OPEN);
-          else p.arc(0, 0, r, r * yScale, 0, Math.PI, p.OPEN);
+          if (behind) p.arc(0, 0, moonOrbit,moonOrbit * yScale, Math.PI, 0, p.OPEN);
+          else p.arc(0, 0, moonOrbit, moonOrbit * yScale, 0, Math.PI, p.OPEN);
         }
 
         for (var i = 0; i < moonCount; i++) {
@@ -69,8 +84,9 @@ const GENERATORS = {
         p.noFill();
       }
 
+      
       function drawImage() {
-        let hue = 140 * p.noise(t * 0.2) + dna[4] * 400;
+        
         let img = dna.img;
         img.background(hue, 100, 20);
 
