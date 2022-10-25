@@ -1,142 +1,5 @@
 const GENERATORS = {
-  //   EXPERIMENT IN MASKING, UNDER CONSTRUCTION - KATE
-  planet: {
-    description: "circle makes circles.",
-    sliders: [
-      "size",
-      "forwardTilt",
-      "angle",
-      "hue",
-      "moonCount",
-      "moonTuning",
-      "moonHueOffset",
-    ],
-    landmarks: {
-      golfball: [0.04, 0.38, 0.8, 0.06, 0.64],
-      basketball: [0.27, 0.74, 0.04, 0.64, 0.35],
-    },
-
-    drawBackground(p) {
-      p.background(240, 20, 30);
-    },
-
-    setup(p, dna) {
-      // Give this dna (a normal array of floats)
-      // also two p5 images that it can draw with
-
-      const SUBIMAGE_SIZE = 128;
-      dna.mask = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
-      dna.mask.circle(
-        SUBIMAGE_SIZE * 0.5,
-        SUBIMAGE_SIZE * 0.5,
-        SUBIMAGE_SIZE * 0.95
-      );
-
-      dna.img = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
-      dna.img.colorMode(p.HSL, 360, 100, 100);
-    },
-
-    draw(p, t, dna) {
-      const SUBIMAGE_SIZE = 128;
-      let hue = 140 * p.noise(t * 0.2) + dna[3] * 400;
-
-      function drawMoons({ behind }) {
-        let yScale = 0.3;
-        let moonCount = Math.floor(dna[4] * 10);
-        // Parametric equation for an ellipse
-
-        let r = 70;
-
-        function drawMoon(index) {
-          // Different sized moons
-          let moonRadius = 5 + 4 * Math.sin(index);
-          let moonSpeed = 2 * p.noise(index) + 0.15;
-          let moonHue = hue;
-          let theta = t * moonSpeed + index;
-          let moonOrbit = r * (1 + index * 0.1);
-          let x = moonOrbit * Math.cos(theta);
-          let y = moonOrbit * Math.sin(theta) * yScale;
-
-          p.noFill();
-          p.stroke(100, 0, 100, 0.2);
-          //         Draw the front or back half of the arc
-          if (behind)
-            p.arc(0, 0, moonOrbit, moonOrbit * yScale, Math.PI, 0, p.OPEN);
-          else p.arc(0, 0, moonOrbit, moonOrbit * yScale, 0, Math.PI, p.OPEN);
-
-          // Only draw the circle if we are on the
-          // correct half of the cycle for this side
-          if (behind === y < 0) {
-            p.noStroke();
-            p.fill(moonHue, 100, 50);
-            p.circle(x, y, moonRadius);
-            p.fill(moonHue, 100, 70);
-            p.circle(x - 1, y - 1, moonRadius * 0.6);
-          }
-        }
-
-        for (var i = 0; i < moonCount; i++) {
-          drawMoon(i);
-        }
-
-        p.stroke(100);
-        p.noFill();
-      }
-
-      function drawImage() {
-        let img = dna.img;
-        img.background(hue, 100, 20);
-
-        img.fill(hue, 100, 80);
-        img.circle(60, 60, 110);
-
-        for (var i = 0; i < 40; i++) {
-          let x = p.noise(i * 10 + t * 0.1) * 300 - 100;
-          let y = p.noise(i * 30 + t * 0.1) * 300 - 100;
-          img.noStroke();
-
-          let hue2 = hue + 70 * p.noise(i);
-          let pastel = 30 + 80 * p.noise(i * 10);
-          hue2 % -360;
-          img.fill(hue2, 100, pastel, 0.2);
-          img.circle(x, y, 120);
-        }
-        return img.get();
-      }
-
-      let img = drawImage();
-
-      let size = dna[0] * 0.7 + 0.5;
-      let x = 0;
-      let y = 0;
-
-      p.push();
-      p.translate(0, -100);
-      p.rotate(dna[2] * 0.5 - 0.2);
-
-      // //       Show the mask
-      // p.image(dna.mask, 0, 0)
-      //       // Show the original image
-      //       p.image(img, 0, 0)
-
-      // Use the mask to clip off unwanted parts of the image
-      img.mask(dna.mask);
-
-      // Draw the part of the moons and rings *behind* the planet
-      drawMoons({ behind: true });
-
-      // Draw the newly-masked image
-      p.push();
-      p.scale(size);
-      p.image(img, -SUBIMAGE_SIZE / 2, -SUBIMAGE_SIZE / 2);
-      p.pop();
-
-      // Draw the part of the moons and rings *in front of* the planet
-      drawMoons({ behind: false });
-
-      p.pop();
-    },
-  },
+  
   circle: {
     description: "circle makes circles.",
     sliders: ["size", "aspectRatio", "angle", "hue", "brightness"],
@@ -336,6 +199,150 @@ const GENERATORS = {
       p.fill(100);
       p.circle(0.5, -1.5, 2);
       p.pop();
+
+      p.pop();
+    },
+  },
+  
+  //   EXPERIMENT IN MASKING, UNDER CONSTRUCTION - KATE
+  planet: {
+    description: "circle makes circles.",
+    sliders: [
+      "size",
+      "saturation",
+      "angle",
+      "hue",
+      "moonCount",
+      "moonTuning",
+      "moonHueOffset",
+    ],
+    landmarks: {
+      jupiter: [0.95,0.11,0.20,0.00,0.54,0.78,0.73],
+      saturn: [0.26,0.96,0.49,0.28,0.51,0.87,0.54],
+      mercury: [0.00,0.74,0.46,0.80,0.00,0.09,0.27],
+      rainbowPlanet: [0.00,1.00,0.20,0.46,1.00,0.78,1.00],
+      earth: [0.16,0.70,0.20,0.36,0.10,0.78,0.00],
+    },
+
+    drawBackground(p) {
+      p.background(240, 20, 30);
+    },
+
+    setup(p, dna) {
+      // Give this dna (a normal array of floats)
+      // also two p5 images that it can draw with
+
+      const SUBIMAGE_SIZE = 128;
+      dna.mask = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
+      dna.mask.circle(
+        SUBIMAGE_SIZE * 0.5,
+        SUBIMAGE_SIZE * 0.5,
+        SUBIMAGE_SIZE * 0.95
+      );
+
+      dna.img = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
+      dna.img.colorMode(p.HSL, 360, 100, 100);
+    },
+
+    draw(p, t, dna) {
+      const SUBIMAGE_SIZE = 128;
+      let hue = (140 * p.noise(t * 0.2) + dna[3] * 360)
+      let sat = (dna[1]*1.5)*100
+
+
+      function drawMoons({ behind }) {
+        let yScale = 0.3;
+        let moonCount = Math.floor(dna[4] * 10);
+        // Parametric equation for an ellipse
+
+        let r = 70;
+
+        function drawMoon(index) {
+          // Different sized moons
+          let moonRadius = 5 + 4 * Math.sin(index);
+          let moonSpeed = 2 * p.noise(index + dna[5]) + 0.15;
+          let moonHue = (hue + 100*dna[6]*Math.sin(index))%360;
+          let theta = t * moonSpeed + index;
+          let moonOrbit = r * (1 + index * 0.1);
+          let x = moonOrbit * Math.cos(theta);
+          let y = moonOrbit * Math.sin(theta) * yScale;
+
+          p.noFill();
+          p.stroke(100, 0, 100, 0.2);
+          //         Draw the front or back half of the arc
+          if (behind)
+            p.arc(0, 0, moonOrbit, moonOrbit * yScale, Math.PI, 0, p.OPEN);
+          else p.arc(0, 0, moonOrbit, moonOrbit * yScale, 0, Math.PI, p.OPEN);
+
+          // Only draw the circle if we are on the
+          // correct half of the cycle for this side
+          if (behind === y < 0) {
+            p.noStroke();
+            p.fill(moonHue, 100, 50);
+            p.circle(x, y, moonRadius);
+            p.fill(moonHue, 100, 70);
+            p.circle(x - 1, y - 1, moonRadius * 0.6);
+          }
+        }
+
+        for (var i = 0; i < moonCount; i++) {
+          drawMoon(i);
+        }
+
+        p.stroke(100);
+        p.noFill();
+      }
+
+      function drawImage() {
+        let img = dna.img;
+        img.background(hue, sat, 20);
+
+        img.fill(hue, 100, 80);
+        img.circle(60, 60, 110);
+
+        for (var i = 0; i < 40; i++) {
+          let x = p.noise(i * 10 + t * 0.1) * 300 - 100;
+          let y = p.noise(i * 30 + t * 0.1) * 300 - 100;
+          img.noStroke();
+
+          let hue2 = hue + 70 * p.noise(i);
+          let pastel = 70 + 80 * p.noise(i * 10) - .6*sat;
+          hue2 % -360;
+          img.fill(hue2, sat + 20*Math.sin(i), pastel, 0.2);
+          img.circle(x, y, 120);
+        }
+        return img.get();
+      }
+
+      let img = drawImage();
+
+      let size = dna[0] * 0.7 + 0.5;
+      let x = 0;
+      let y = 0;
+
+      p.push();
+      p.translate(0, -100);
+      p.rotate(dna[2] * 0.5 - 0.2);
+
+      // //       Show the mask
+      // p.image(dna.mask, 0, 0)
+      //       // Show the original image
+      //       p.image(img, 0, 0)
+
+      // Use the mask to clip off unwanted parts of the image
+      img.mask(dna.mask);
+
+      // Draw the part of the moons and rings *behind* the planet
+      drawMoons({ behind: true });
+
+      // Draw the newly-masked image
+      p.push();
+      p.scale(size);
+      p.image(img, -SUBIMAGE_SIZE / 2, -SUBIMAGE_SIZE / 2);
+      p.pop();
+
+      // Draw the part of the moons and rings *in front of* the planet
+      drawMoons({ behind: false });
 
       p.pop();
     },
