@@ -14,6 +14,8 @@ const GENERATORS = {
     },
 
     draw(p, t, dna) {
+      
+     
       let x = 0;
       let y = 0;
       
@@ -28,7 +30,7 @@ const GENERATORS = {
       
       
       // Make some cool textures
-      let msk = p.createGraphics(width,height)
+      // let msk = p.createGraphics(width,height)
       
       
       p.pop()
