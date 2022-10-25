@@ -119,12 +119,18 @@ window.addEventListener("load", function () {
           parent,
           this.mutation
         );
+        
+        // NEW: do setup for each individual
+        if (this.generator.setup) {
+          
+          this.population.forEach(individual => this.generator.setup(p, individual))
+        }
+        
         this.positions = getPositions(this.populationCount);
       },
     },
 
     mounted() {
-      this.repopulate();
       localStorage.setItem("seed", this.seed);
 
       function onscreen() {
@@ -215,7 +221,7 @@ window.addEventListener("load", function () {
         };
 
         p.doubleClicked = () => {
-          if (onscreen()) this.repopulate(this.selected);
+          if (onscreen()) this.repopulate(this.selected, p);
         };
 
         p.mouseClicked = () => {
@@ -242,6 +248,10 @@ window.addEventListener("load", function () {
       CANVAS_EL.style.width = CANVAS_WIDTH + "px";
       CANVAS_EL.style.height = CANVAS_HEIGHT + "px";
       new p5(s, CANVAS_EL);
+      
+      // Populate after creating p5
+      this.repopulate();
+      
     },
 
     computed: {

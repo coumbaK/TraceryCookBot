@@ -11,6 +11,12 @@ const GENERATORS = {
     drawBackground(p) {
       p.background(240, 20, 30);
     },
+    
+    setup(p, dna) {
+      
+      const SUBIMAGE_SIZE = 128
+      dna.mask = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
+    },
 
     draw(p, t, dna) {
       const SUBIMAGE_SIZE = 128
@@ -42,10 +48,8 @@ const GENERATORS = {
        
       }
       
-      function makeMask() {
-        const circleMask = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
-        circleMask.circle(SUBIMAGE_SIZE*.5, SUBIMAGE_SIZE*.5, SUBIMAGE_SIZE*.95);
-        return circleMask.get();
+      function drawMask() {
+        dna.mask.circle(SUBIMAGE_SIZE*.5, SUBIMAGE_SIZE*.5, SUBIMAGE_SIZE*.95);
       }
 
       function makeImage() {
