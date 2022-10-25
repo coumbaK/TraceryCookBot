@@ -1,5 +1,41 @@
 const GENERATORS = {
-  
+      planet: {
+    description:
+      "circle makes circles.",
+    sliders: ["size", "aspectRatio", "angle", "hue", "brightness"],
+    landmarks: {
+      golfball: [0.04,0.38,0.80,0.06,0.64],
+      basketball: [0.27,0.74,0.04,0.64,0.35],
+    },
+    setup(p) {},
+    
+    drawBackground(p) {
+      p.background(240, 100, 10)
+    },
+
+    draw(p, t, dna) {
+      let x = 0;
+      let y = 0;
+      
+      p.push()
+      p.translate(0, -150)
+      
+       // How to access DNA
+      let size = dna[0] // 0-1
+      size = size*30 + 10 
+      p.fill(100)
+      p.circle(0, 0, size)
+      
+      
+      // Make some cool textures
+      let msk = p.createGraphics(width,height)
+      
+      
+      p.pop()
+      
+     
+    }
+  },
   circle: {
     description:
       "circle makes circles.",
@@ -93,6 +129,9 @@ const GENERATORS = {
       p.pop();
     },
   },
+  
+
+
   
   fish: {
     description: "Fish made with polar coordinates",
