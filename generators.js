@@ -1,101 +1,102 @@
 const GENERATORS = {
-  
-//   EXPERIMENT IN MASKING, UNDER CONSTRUCTION - KATE
-      planet: {
-    description:
-      "circle makes circles.",
+  //   EXPERIMENT IN MASKING, UNDER CONSTRUCTION - KATE
+  planet: {
+    description: "circle makes circles.",
     sliders: ["size", "aspectRatio", "angle", "hue", "brightness"],
     landmarks: {
-      golfball: [0.04,0.38,0.80,0.06,0.64],
-      basketball: [0.27,0.74,0.04,0.64,0.35],
+      golfball: [0.04, 0.38, 0.8, 0.06, 0.64],
+      basketball: [0.27, 0.74, 0.04, 0.64, 0.35],
     },
-    
-    
+
     drawBackground(p) {
-      
-      p.background(240, 100, 100)
+      p.background(240, 100, 100);
     },
 
     draw(p, t, dna) {
+      const SUBIMAGE_SIZE = 128
       function makeMask() {
-        const circleMask = p.createGraphics(128, 128);
-        circleMask.circle(64, 64, 128);
-        return circleMask.get()
+        const circleMask = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
+        circleMask.circle(SUBIMAGE_SIZE*.5, SUBIMAGE_SIZE*.5, SUBIMAGE_SIZE*.95);
+        return circleMask.get();
       }
-      
+
       function makeImage() {
-        const img = p.createGraphics(128, 128);
-        let hue = (140*p.noise(t*.2) + dna[4]*400)%360
+        const img = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
+        let hue = (140 * p.noise(t * 0.2) + dna[4] * 400) 
         img.colorMode(p.HSL, 360, 100, 100);
-        img.background(hue, 100, 50)
-            
-        for (var i = 0; i < 10; i++) {
-          let x = p.noise(dna[2] + i*10)*128
-          let y = p.noise(dna[3] + i*10)*128
-          img.noStroke()
-          img.fill(hue, 100, 50, .3)
-          img.circle(x, y, 80)
+        img.background(hue, 100, 20);
+
+        img.fill(hue, 100, 80);
+        img.circle(60, 60, 110);
+
+        for (var i = 0; i < 40; i++) {
+          let x = p.noise(dna[2] + i * 10 + t * 0.1) * 300 - 100;
+          let y = p.noise(dna[3] + i * 10 + t * 0.1) * 300 - 100;
+          img.noStroke();
+          
+          let hue2 = hue + 70 * p.noise(i)
+          hue2 %- 360
+          img.fill(hue2, 100, 40 + 50 * p.noise(i * 10), 0.2);
+          img.circle(x, y, 120);
         }
-        return img.get()
+        return img.get();
       }
-      let img = makeImage()
-      let mask = makeMask()
-     
+      let img = makeImage();
+      let mask = makeMask();
+
+      let size = dna[0]*.7 + .5
       let x = 0;
       let y = 0;
-      
-      p.push()
-      p.translate(0, -150)
-      
-       // How to access DNA
+
+      p.push();
+      p.translate(0, -100)
+
+      // How to access DNA
       // let size = dna[0] // 0-1
-      // size = size*30 + 10 
+      // size = size*30 + 10
       // p.fill(100)
       // p.circle(0, 0, size)
+
+      // //       Show the mask
+      // p.image(mask, 100, 100)
+      //       // Show the original image
+      //       p.image(img, 0, 0)
       
-     
-//       Show the mask
-      img.mask(mask)
-      // Show the original image
-      p.image(img, 0, 0)
-      
-      p.image(img, 100, 0)
-      p.image(mask, 100, 100)
-      
-      
-      
-      
+      // Use the mask to clip off unwanted parts of the image
+      img.mask(mask);
+      // Draw the newly-masked image
+      p.push()
+      p.scale(size)
+      p.image(img, -SUBIMAGE_SIZE/2, -SUBIMAGE_SIZE/2);
       p.pop()
-      
-     
-    }
+
+      p.pop();
+    },
   },
   circle: {
-    description:
-      "circle makes circles.",
+    description: "circle makes circles.",
     sliders: ["size", "aspectRatio", "angle", "hue", "brightness"],
     landmarks: {
-      golfball: [0.04,0.38,0.80,0.06,0.64],
-      basketball: [0.27,0.74,0.04,0.64,0.35],
+      golfball: [0.04, 0.38, 0.8, 0.06, 0.64],
+      basketball: [0.27, 0.74, 0.04, 0.64, 0.35],
     },
     setup(p) {},
-    
+
     drawBackground(p) {
-      p.background(0, 50, 50)
+      p.background(0, 50, 50);
     },
 
     draw(p, t, dna) {
       let x = 0;
       let y = 0;
-      
-      // How to access DNA
-      let size = dna[0] // 0-1
-      size = size*30 + 10
-      p.fill(100)
-      p.circle(0, 0, size)
-    }
-  },
 
+      // How to access DNA
+      let size = dna[0]; // 0-1
+      size = size * 30 + 10;
+      p.fill(100);
+      p.circle(0, 0, size);
+    },
+  },
 
   rectangle: {
     description:
@@ -163,10 +164,7 @@ const GENERATORS = {
       p.pop();
     },
   },
-  
 
-
-  
   fish: {
     description: "Fish made with polar coordinates",
     sliders: [
@@ -187,33 +185,31 @@ const GENERATORS = {
     setup(p) {},
 
     drawBackground(p, t) {
-     
-      p.background(240, 30, 60)
-      
-      p.noStroke()
-     
-      
+      p.background(240, 30, 60);
+
+      p.noStroke();
+
       for (var j = 0; j < 5; j++) {
-         p.fill(170 + j*10, 70, 40, .3)
-        p.beginShape()
-        let y = 100
-        p.vertex(0, 0)
-        p.vertex(0, 0)
-        p.vertex(0, y)
+        p.fill(170 + j * 10, 70, 40, 0.3);
+        p.beginShape();
+        let y = 100;
+        p.vertex(0, 0);
+        p.vertex(0, 0);
+        p.vertex(0, y);
         // Ripply vertices
-        let waveCount = 10
+        let waveCount = 10;
         for (var i = 0; i < waveCount; i++) {
-          let x = (i + .5)*(p.width/waveCount)
-          let y2 = y + 100*p.noise( i, t + j*10)
-          p.curveVertex(x, y2)
+          let x = (i + 0.5) * (p.width / waveCount);
+          let y2 = y + 100 * p.noise(i, t + j * 10);
+          p.curveVertex(x, y2);
         }
-        p.vertex(p.width, y)
-        p.vertex(p.width, 0)
-        p.vertex(p.width, 0)
-        p.endShape()
+        p.vertex(p.width, y);
+        p.vertex(p.width, 0);
+        p.vertex(p.width, 0);
+        p.endShape();
       }
     },
-    
+
     draw(p, t, dna, index) {
       p.push();
 
