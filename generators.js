@@ -7,14 +7,38 @@ const GENERATORS = {
       golfball: [0.04,0.38,0.80,0.06,0.64],
       basketball: [0.27,0.74,0.04,0.64,0.35],
     },
-    setup(p) {},
+    
     
     drawBackground(p) {
+      
       p.background(240, 100, 10)
     },
 
     draw(p, t, dna) {
+      function makeMask() {
+        const circleMask = p.createGraphics(128, 128);
+        circleMask.fill('rgba(0, 0, 0, 1)');
+
+        circleMask.circle(64, 64, 128);
+        return circleMask
+      }
       
+      function makeImage() {
+        const img = p.createGraphics(128, 128);
+        img.colorMode(p.HSL, 360, 100, 100);
+            
+        for (var i = 0; i < 10; i++) {
+          let x = p.noise(dna[2] + i*10)*128
+          let y = p.noise(dna[3] + i*10)*128
+          let hue = (140*p.noise(t*.2 + i*10) + dna[4]*400)%360
+          img.noStroke()
+          img.fill(hue, 100, 50, .3)
+          img.circle(x, y, 60)
+        }
+        return img
+      }
+      let img = makeImage()
+      let mask = makeMask()
      
       let x = 0;
       let y = 0;
@@ -27,6 +51,9 @@ const GENERATORS = {
       size = size*30 + 10 
       p.fill(100)
       p.circle(0, 0, size)
+      
+      img.mask(mask);
+      p.image(img, 0, 0)
       
       
       // Make some cool textures
