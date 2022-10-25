@@ -2,7 +2,15 @@ const GENERATORS = {
   //   EXPERIMENT IN MASKING, UNDER CONSTRUCTION - KATE
   planet: {
     description: "circle makes circles.",
-    sliders: ["size", "aspectRatio", "angle", "hue", "brightness"],
+    sliders: [
+      "size",
+      "forwardTilt",
+      "angle",
+      "hue",
+      "moonCount",
+      "moonTuning",
+      "moonHueOffset",
+    ],
     landmarks: {
       golfball: [0.04, 0.38, 0.8, 0.06, 0.64],
       basketball: [0.27, 0.74, 0.04, 0.64, 0.35],
@@ -11,51 +19,59 @@ const GENERATORS = {
     drawBackground(p) {
       p.background(240, 20, 30);
     },
-    
+
     setup(p, dna) {
-      
-      const SUBIMAGE_SIZE = 128
+      // Give this dna (a normal array of floats)
+      // also two p5 images that it can draw with
+
+      const SUBIMAGE_SIZE = 128;
       dna.mask = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
+      dna.mask.circle(
+        SUBIMAGE_SIZE * 0.5,
+        SUBIMAGE_SIZE * 0.5,
+        SUBIMAGE_SIZE * 0.95
+      );
+
+      dna.img = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
+      dna.img.colorMode(p.HSL, 360, 100, 100);
     },
 
     draw(p, t, dna) {
-      const SUBIMAGE_SIZE = 128
-      
-      function drawMoons({behind}) {
-        let yScale = .3
-        let moonCount = 10
+      const SUBIMAGE_SIZE = 128;
+
+      function drawMoons({ behind }) {
+        let yScale = 0.3;
+        let moonCount = 10;
         // Parametric equation for an ellipse
-        let theta = t*1
-        let r = 100
-        let x = r*Math.cos(theta)
-        let y = r*Math.sin(theta)*yScale
-        
-        
-        p.fill(100)
-        // Only draw the circle if we are on the 
-        // correct half of the cycle for this side
-        if (behind === y < 0)
-        p.circle(x, y, 10)
-        
-        p.stroke(100)
-         p.noFill()
-        
-//         Draw the front or back half of the arc
-        if (behind) 
-          p.arc(0, 0, r, r*yScale, Math.PI, 0, p.OPEN)
-        else 
-        p.arc(0, 0, r, r*yScale, 0, Math.PI, p.OPEN)
-       
-      }
-      
-      function drawMask() {
-        dna.mask.circle(SUBIMAGE_SIZE*.5, SUBIMAGE_SIZE*.5, SUBIMAGE_SIZE*.95);
+
+        let r = 70;
+
+        function drawMoon(index) {
+          let theta = t * 1 + index;
+          let moonOrbit = r * (1 + 0.9 * Math.sin(index));
+          let x = moonOrbit * Math.cos(theta);
+          let y = moonOrbit * Math.sin(theta) * yScale;
+          p.fill(100);
+          // Only draw the circle if we are on the
+          // correct half of the cycle for this side
+          if (behind === y < 0) p.circle(x, y, 10);
+
+          //         Draw the front or back half of the arc
+          if (behind) p.arc(0, 0, r, r * yScale, Math.PI, 0, p.OPEN);
+          else p.arc(0, 0, r, r * yScale, 0, Math.PI, p.OPEN);
+        }
+
+        for (var i = 0; i < moonCount; i++) {
+          drawMoon(i);
+        }
+
+        p.stroke(100);
+        p.noFill();
       }
 
-      function makeImage() {
-        const img = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
-        let hue = (140 * p.noise(t * 0.2) + dna[4] * 400) 
-        img.colorMode(p.HSL, 360, 100, 100);
+      function drawImage() {
+        let hue = 140 * p.noise(t * 0.2) + dna[4] * 400;
+        let img = dna.img;
         img.background(hue, 100, 20);
 
         img.fill(hue, 100, 80);
@@ -65,43 +81,44 @@ const GENERATORS = {
           let x = p.noise(i * 10 + t * 0.1) * 300 - 100;
           let y = p.noise(i * 30 + t * 0.1) * 300 - 100;
           img.noStroke();
-          
-          let hue2 = hue + 70 * p.noise(i)
-          let pastel = 30 + 80 * p.noise(i * 10)
-          hue2 %- 360
+
+          let hue2 = hue + 70 * p.noise(i);
+          let pastel = 30 + 80 * p.noise(i * 10);
+          hue2 % -360;
           img.fill(hue2, 100, pastel, 0.2);
           img.circle(x, y, 120);
         }
         return img.get();
       }
-      let img = makeImage();
-      let mask = makeMask();
 
-      let size = dna[0]*.7 + .5
+      let img = drawImage();
+
+      let size = dna[0] * 0.7 + 0.5;
       let x = 0;
       let y = 0;
 
       p.push();
-      p.translate(0, -100)
+      p.translate(0, -100);
 
       // //       Show the mask
-      // p.image(mask, 100, 100)
+      // p.image(dna.mask, 0, 0)
       //       // Show the original image
       //       p.image(img, 0, 0)
-      
+
       // Use the mask to clip off unwanted parts of the image
-      img.mask(mask);
-      
-      drawMoons({behind:true})
-      
+      img.mask(dna.mask);
+
+      // Draw the part of the moons and rings *behind* the planet
+      drawMoons({ behind: true });
+
       // Draw the newly-masked image
-      p.push()
-      p.scale(size)
-      p.image(img, -SUBIMAGE_SIZE/2, -SUBIMAGE_SIZE/2);
-      p.pop()
-      
-      drawMoons({behind:false})
-      
+      p.push();
+      p.scale(size);
+      p.image(img, -SUBIMAGE_SIZE / 2, -SUBIMAGE_SIZE / 2);
+      p.pop();
+
+      // Draw the part of the moons and rings *in front of* the planet
+      drawMoons({ behind: false });
 
       p.pop();
     },
