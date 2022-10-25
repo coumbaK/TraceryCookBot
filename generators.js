@@ -38,42 +38,41 @@ const GENERATORS = {
 
     draw(p, t, dna) {
       const SUBIMAGE_SIZE = 128;
-      let hue = 140 * p.noise(t * 0.2) + dna[4] * 400;
+      let hue = 140 * p.noise(t * 0.2) + dna[3] * 400;
 
       function drawMoons({ behind }) {
         let yScale = 0.3;
-        let moonCount = Math.floor(dna[4]*10);
+        let moonCount = Math.floor(dna[4] * 10);
         // Parametric equation for an ellipse
 
         let r = 70;
-        
-        
 
         function drawMoon(index) {
-          let moonSpeed = p.noise(index) + 1
-          let moonHue = hue
+          // Different sized moons
+          let moonRadius = 5 + 4 * Math.sin(index);
+          let moonSpeed = 2 * p.noise(index) + 0.15;
+          let moonHue = hue;
           let theta = t * moonSpeed + index;
-          let moonOrbit = r * (1 + 0.3 * Math.sin(index));
+          let moonOrbit = r * (1 + index * 0.1);
           let x = moonOrbit * Math.cos(theta);
           let y = moonOrbit * Math.sin(theta) * yScale;
-          
-          
-         // Only draw the circle if we are on the
+
+          p.noFill();
+          p.stroke(100, 0, 100, 0.2);
+          //         Draw the front or back half of the arc
+          if (behind)
+            p.arc(0, 0, moonOrbit, moonOrbit * yScale, Math.PI, 0, p.OPEN);
+          else p.arc(0, 0, moonOrbit, moonOrbit * yScale, 0, Math.PI, p.OPEN);
+
+          // Only draw the circle if we are on the
           // correct half of the cycle for this side
           if (behind === y < 0) {
-           p.noStroke()
-          p.fill(moonHue, 100, 50);
-           p.circle(x, y, 10);
-             p.fill(moonHue, 100, 70);
-           p.circle(x - 2, y - 2, 7);
+            p.noStroke();
+            p.fill(moonHue, 100, 50);
+            p.circle(x, y, moonRadius);
+            p.fill(moonHue, 100, 70);
+            p.circle(x - 1, y - 1, moonRadius * 0.6);
           }
-
-
-          p.noFill()
-          p.stroke(100, 0, 100, .2)
-          //         Draw the front or back half of the arc
-          if (behind) p.arc(0, 0, moonOrbit,moonOrbit * yScale, Math.PI, 0, p.OPEN);
-          else p.arc(0, 0, moonOrbit, moonOrbit * yScale, 0, Math.PI, p.OPEN);
         }
 
         for (var i = 0; i < moonCount; i++) {
@@ -84,9 +83,7 @@ const GENERATORS = {
         p.noFill();
       }
 
-      
       function drawImage() {
-        
         let img = dna.img;
         img.background(hue, 100, 20);
 
@@ -115,6 +112,7 @@ const GENERATORS = {
 
       p.push();
       p.translate(0, -100);
+      p.rotate(dna[2] * 0.5 - 0.2);
 
       // //       Show the mask
       // p.image(dna.mask, 0, 0)
