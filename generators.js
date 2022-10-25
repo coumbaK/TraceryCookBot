@@ -1,4 +1,6 @@
 const GENERATORS = {
+  
+//   EXPERIMENT IN MASKING, UNDER CONSTRUCTION - KATE
       planet: {
     description:
       "circle makes circles.",
@@ -11,31 +13,30 @@ const GENERATORS = {
     
     drawBackground(p) {
       
-      p.background(240, 100, 10)
+      p.background(240, 100, 100)
     },
 
     draw(p, t, dna) {
       function makeMask() {
         const circleMask = p.createGraphics(128, 128);
-        circleMask.fill('rgba(0, 0, 0, 1)');
-
         circleMask.circle(64, 64, 128);
-        return circleMask
+        return circleMask.get()
       }
       
       function makeImage() {
         const img = p.createGraphics(128, 128);
+        let hue = (140*p.noise(t*.2) + dna[4]*400)%360
         img.colorMode(p.HSL, 360, 100, 100);
+        img.background(hue, 100, 50)
             
         for (var i = 0; i < 10; i++) {
           let x = p.noise(dna[2] + i*10)*128
           let y = p.noise(dna[3] + i*10)*128
-          let hue = (140*p.noise(t*.2 + i*10) + dna[4]*400)%360
           img.noStroke()
           img.fill(hue, 100, 50, .3)
-          img.circle(x, y, 60)
+          img.circle(x, y, 80)
         }
-        return img
+        return img.get()
       }
       let img = makeImage()
       let mask = makeMask()
@@ -47,17 +48,21 @@ const GENERATORS = {
       p.translate(0, -150)
       
        // How to access DNA
-      let size = dna[0] // 0-1
-      size = size*30 + 10 
-      p.fill(100)
-      p.circle(0, 0, size)
+      // let size = dna[0] // 0-1
+      // size = size*30 + 10 
+      // p.fill(100)
+      // p.circle(0, 0, size)
       
-      img.mask(mask);
+     
+//       Show the mask
+      img.mask(mask)
+      // Show the original image
       p.image(img, 0, 0)
       
+      p.image(img, 100, 0)
+      p.image(mask, 100, 100)
       
-      // Make some cool textures
-      // let msk = p.createGraphics(width,height)
+      
       
       
       p.pop()
