@@ -9,11 +9,39 @@ const GENERATORS = {
     },
 
     drawBackground(p) {
-      p.background(240, 100, 100);
+      p.background(240, 20, 30);
     },
 
     draw(p, t, dna) {
       const SUBIMAGE_SIZE = 128
+      
+      function drawMoons({behind}) {
+        let yScale = .3
+        let moonCount = 10
+        // Parametric equation for an ellipse
+        let theta = t*1
+        let r = 100
+        let x = r*Math.cos(theta)
+        let y = r*Math.sin(theta)*yScale
+        
+        
+        p.fill(100)
+        // Only draw the circle if we are on the 
+        // correct half of the cycle for this side
+        if (behind === y < 0)
+        p.circle(x, y, 10)
+        
+        p.stroke(100)
+         p.noFill()
+        
+//         Draw the front or back half of the arc
+        if (behind) 
+          p.arc(0, 0, r, r*yScale, Math.PI, 0, p.OPEN)
+        else 
+        p.arc(0, 0, r, r*yScale, 0, Math.PI, p.OPEN)
+       
+      }
+      
       function makeMask() {
         const circleMask = p.createGraphics(SUBIMAGE_SIZE, SUBIMAGE_SIZE);
         circleMask.circle(SUBIMAGE_SIZE*.5, SUBIMAGE_SIZE*.5, SUBIMAGE_SIZE*.95);
@@ -30,13 +58,14 @@ const GENERATORS = {
         img.circle(60, 60, 110);
 
         for (var i = 0; i < 40; i++) {
-          let x = p.noise(dna[2] + i * 10 + t * 0.1) * 300 - 100;
-          let y = p.noise(dna[3] + i * 10 + t * 0.1) * 300 - 100;
+          let x = p.noise(i * 10 + t * 0.1) * 300 - 100;
+          let y = p.noise(i * 30 + t * 0.1) * 300 - 100;
           img.noStroke();
           
           let hue2 = hue + 70 * p.noise(i)
+          let pastel = 30 + 80 * p.noise(i * 10)
           hue2 %- 360
-          img.fill(hue2, 100, 40 + 50 * p.noise(i * 10), 0.2);
+          img.fill(hue2, 100, pastel, 0.2);
           img.circle(x, y, 120);
         }
         return img.get();
@@ -51,12 +80,6 @@ const GENERATORS = {
       p.push();
       p.translate(0, -100)
 
-      // How to access DNA
-      // let size = dna[0] // 0-1
-      // size = size*30 + 10
-      // p.fill(100)
-      // p.circle(0, 0, size)
-
       // //       Show the mask
       // p.image(mask, 100, 100)
       //       // Show the original image
@@ -64,11 +87,17 @@ const GENERATORS = {
       
       // Use the mask to clip off unwanted parts of the image
       img.mask(mask);
+      
+      drawMoons({behind:true})
+      
       // Draw the newly-masked image
       p.push()
       p.scale(size)
       p.image(img, -SUBIMAGE_SIZE/2, -SUBIMAGE_SIZE/2);
       p.pop()
+      
+      drawMoons({behind:false})
+      
 
       p.pop();
     },
