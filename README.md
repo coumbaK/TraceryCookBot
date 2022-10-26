@@ -19,7 +19,7 @@ Test McStudent
 
 --your answer here  --
 
-## Describe the first thing this bot can respond to.  What is the expressive range of do you say in response?
+## Describe the first thing this bot can respond to.  What is the expressive range of what you say in response?
 
 --your answer here  --
 
@@ -49,6 +49,11 @@ Test McStudent
 
 --your answer here  --
 
+
+
+## What states does this bot move through? Is this a common social script? Why do the states connect like that?
+
+--your answer here  --
 
 
 
