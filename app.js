@@ -34,9 +34,14 @@ window.addEventListener("load", function () {
 
   new Vue({
     template: `<div id="app">
+      
       <section class="bot-data">
         {{name}} PAGE
         <input v-model="name" />
+        
+        <select v-model="botID" >
+          <option v-for="(bot,id) in bots">{{id}}</option>
+        </select>
       </section>
 
       <div class="chat">
@@ -70,6 +75,14 @@ window.addEventListener("load", function () {
         });
       }, 1000);
     },
+    
+    computed: {
+      
+      // The current bot
+      bot() {
+        return this.bots[this.botID]
+      }
+    },
 
     methods: {
       send() {
@@ -84,7 +97,7 @@ window.addEventListener("load", function () {
 
     data() {
       return {
-        botName: undefined,
+        botID: Object.keys(BOTS)[0],
         bots: BOTS,
         messages: [{ msg: "hello", from: "computer" }],
         name: "Kate",
