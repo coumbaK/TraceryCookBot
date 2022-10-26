@@ -1,4 +1,4 @@
-# A5: Parametric Generator
+# A6: Chatbot
 
 ## Your name
 Test McStudent
@@ -7,59 +7,49 @@ Test McStudent
 [my page](https://galaxykate-a1.glitch.me)
 
 
-## **Generator 1:** what does this generate?
+## Describe your bot's character
 
 --your answer here  --
 
-## What are the most important and interesting qualities of this kind of thing?
+## How does the user know what to say to this bot?
 
 --your answer here  --
 
-## List your 5+ sliders. Describe what each one controls, and why that is relevant to this
+## How have your styled your page to best present this character?
 
 --your answer here  --
 
-
-## List your 5+ landmarks. How are they different from each other?
-
---your answer here  --
-
-## For a generator of this type of thing, what kinds of things *can't* it generate?
-
---your answer here  --
-
-## What was hard or easy about making this generator? How did your plans change?
-
---your answer here  --
-
-## **Generator 2:** what does this generate?
-
---your answer here  --
-
-## What are the most important and interesting qualities of this kind of thing?
-
---your answer here  --
-
-## List your 5+ sliders. Describe what each one controls, and why that is relevant to this
+## Describe the first thing this bot can respond to
 
 --your answer here  --
 
 
-## List your 5+ landmarks. How are they different from each other?
+## Describe the second thing this bot can respond to
 
 --your answer here  --
 
-## For a generator of this type of thing, what kinds of things *can't* it generate?
+
+## Describe the third thing this bot can respond to
 
 --your answer here  --
 
-## What was hard or easy about making this generator? How did your plans change?
+
+
+## Describe the fourth thing this bot can respond to
 
 --your answer here  --
 
-## Which generator has a more interesting possibility space?
 
---your answer here  -
+
+
+## In what ways does your bot obey or subvert the Gricean maxims
+
+--your answer here  --
+
+## What 3 other bots did you look at? What was interesting, notable or useful about them?
+
+--your answer here  --
+
 
 ## List any resources (code, images, etc) you've used, and where you got them from
 
