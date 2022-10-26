@@ -3,7 +3,7 @@
  * Chat application with a bot
  */
 
-/* globals Vue, p5 */
+/* globals Vue, p5, BOTS */
 
 window.addEventListener("load", function () {
   //------------------------------------------------------
@@ -13,14 +13,35 @@ window.addEventListener("load", function () {
   // VUE!!!
   // Create a new vue interface
 
+  Vue.component("chat-message", {
+    template: `<div class="chatbubble-row" :class="{user:msg.fromUser}">
+        <div>{{userPfp}}</div>
+        <div class="chatbubble-row" :class="{user:msg.fromUser}">
+          {{msg.from}}:{{msg.msg}}
+        </div>
+       
+      </div>`,
+
+    computed: {
+      userPfp() {
+        // How do we display this user?
+        return "🍊"
+      },
+    },
+
+    props: ["message", "bot"],
+  });
+
   new Vue({
     template: `<div id="app">
-      {{name}} PAGE
-      <input v-model="name" />
-      
+      <section class="bot-data">
+        {{name}} PAGE
+        <input v-model="name" />
+      </section>
+
       <div class="chat">
         <section class="chat-messages">
-
+          
           <div v-for="msg in messages" class="chatbubble" :class="{user:msg.fromUser}">
             {{msg.from}}:{{msg.msg}}
           </div>
@@ -36,13 +57,12 @@ window.addEventListener("load", function () {
 
     mounted() {
       for (var i = 0; i < 40; i++) {
-          this.messages.push({
-            from: "computer",
-            msg: "hello" + i
-          });
-      
+        this.messages.push({
+          from: "computer",
+          msg: "hello" + i,
+        });
       }
-      
+
       setInterval(() => {
         this.messages.push({
           from: "computer",
@@ -53,7 +73,6 @@ window.addEventListener("load", function () {
 
     methods: {
       send() {
-        console.log("SEND MESSAGE");
         this.messages.push({
           fromUser: true,
           from: this.name,
@@ -65,6 +84,8 @@ window.addEventListener("load", function () {
 
     data() {
       return {
+        botName: undefined,
+        bots: BOTS,
         messages: [{ msg: "hello", from: "computer" }],
         name: "Kate",
         currentMsg: "",

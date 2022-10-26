@@ -1,4 +1,4 @@
-let bots = {
+const BOTS = {
   
   myBot: {
     grammar: {
