@@ -32,7 +32,12 @@ window.addEventListener("load", function () {
     </div>`,
     
     mounted() {
-      setInterval(() => )
+      setInterval(() => {
+         this.messages.push({
+          from: "computer",
+          msg: "hello"
+        })
+      }, 1000)
     },
 
     methods: {
