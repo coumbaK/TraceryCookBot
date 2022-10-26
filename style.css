@@ -60,4 +60,16 @@ button.active {
 }
 
 
+.chatbubble {
+  background: white;
+  border-radius: 10px;
+  margin: 2px;
+  text-align: right;
+/*   display: inline-block; */
+}
 
+.chatbubble.user {
+  
+  text-align: left;
+  background: hsla(100, 100%, 90%, 1);
+}

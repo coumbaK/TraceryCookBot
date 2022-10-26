@@ -19,13 +19,40 @@ window.addEventListener("load", function () {
 
   new Vue({
     template: `<div id="app">
-      MY PAGE
+      {{name}} PAGE
+      <input v-model="name" />
+      
+      
+      
+      <div v-for="msg in messages" class="chatbubble" :class="{user:msg.fromUser}">
+        {{msg.from}}:{{msg.msg}}
+      </div>
+      
+       <input v-model="currentMsg" @keyup.enter="send" />
     </div>`,
+    
+    mounted() {
+      setInterval(() => )
+    },
 
+    methods: {
+      send() {
+        console.log("SEND MESSAGE")
+        this.messages.push({
+          fromUser: true,
+          from: this.name,
+          msg: this.currentMsg
+        })
+        this.currentMsg = ""
+      }
+    },
 
     data() {
       return {
         
+        messages: [{msg:"hello", from:"computer"}],
+        name: "Kate",
+        currentMsg: ""
       };
     },
     el: "#app",
