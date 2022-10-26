@@ -59,7 +59,37 @@ button.active {
   flex-direction: row;
 }
 
+#app {
+  height: 100%;
+  flex: 1;
+  border: 10px solid cyan;
+  box-sizing: border-box;
+}
 
+/* CHAT WINDOW STYLING */
+
+.chat {
+  position: relative;
+  height: 100%;
+   border: 10px solid lime;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction:column;
+}
+
+.chat-controls {
+   border: 10px solid blue;
+  
+  height: 300px;
+  
+}
+
+.chat-messages {
+  flex: 1;
+  box-sizing: border-box;
+  overflow: scroll;
+  border: 10px solid pink;
+}
 .chatbubble {
   background: white;
   border-radius: 10px;

@@ -5,11 +5,7 @@
 
 /* globals Vue, p5 */
 
-
-
 window.addEventListener("load", function () {
-
-
   //------------------------------------------------------
   //------------------------------------------------------
   //------------------------------------------------------
@@ -22,48 +18,58 @@ window.addEventListener("load", function () {
       {{name}} PAGE
       <input v-model="name" />
       
-      
-      
-      <div v-for="msg in messages" class="chatbubble" :class="{user:msg.fromUser}">
-        {{msg.from}}:{{msg.msg}}
+      <div class="chat">
+        <section class="chat-messages">
+
+          <div v-for="msg in messages" class="chatbubble" :class="{user:msg.fromUser}">
+            {{msg.from}}:{{msg.msg}}
+          </div>
+        </section>
+        
+        <section class="chat-controls">
+          <input v-model="currentMsg" @keyup.enter="send" />
+        </section>
       </div>
       
-       <input v-model="currentMsg" @keyup.enter="send" />
+     
     </div>`,
-    
+
     mounted() {
+      for (var i = 0; i < 40; i++) {
+          this.messages.push({
+            from: "computer",
+            msg: "hello" + i
+          });
+      
+      }
+      
       setInterval(() => {
-         this.messages.push({
+        this.messages.push({
           from: "computer",
-          msg: "hello"
-        })
-      }, 1000)
+          msg: "hello",
+        });
+      }, 1000);
     },
 
     methods: {
       send() {
-        console.log("SEND MESSAGE")
+        console.log("SEND MESSAGE");
         this.messages.push({
           fromUser: true,
           from: this.name,
-          msg: this.currentMsg
-        })
-        this.currentMsg = ""
-      }
+          msg: this.currentMsg,
+        });
+        this.currentMsg = "";
+      },
     },
 
     data() {
       return {
-        
-        messages: [{msg:"hello", from:"computer"}],
+        messages: [{ msg: "hello", from: "computer" }],
         name: "Kate",
-        currentMsg: ""
+        currentMsg: "",
       };
     },
     el: "#app",
   });
-
-
 });
-
-
