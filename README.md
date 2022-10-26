@@ -11,15 +11,15 @@ Test McStudent
 
 --your answer here  --
 
-## How does the user know what to say to this bot?
+## How does the user know what to say to this bot How are you solving the blank slate problem?
 
 --your answer here  --
 
-## How have your styled your page to best present this character?
+## How have your styled your page to best present this character? What scene are you suggesting?
 
 --your answer here  --
 
-## Describe the first thing this bot can respond to
+## Describe the first thing this bot can respond to.  What is the expressive range of do you say in response?
 
 --your answer here  --
 
@@ -36,6 +36,16 @@ Test McStudent
 
 
 ## Describe the fourth thing this bot can respond to
+
+--your answer here  --
+
+
+## Describe the fifth thing this bot can respond to
+
+--your answer here  --
+
+
+## Describe the fifth thing this bot can respond to
 
 --your answer here  --
 
