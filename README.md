@@ -45,11 +45,6 @@ Test McStudent
 --your answer here  --
 
 
-## Describe the fifth thing this bot can respond to
-
---your answer here  --
-
-
 
 ## What states does this bot move through? Is this a common social script? Why do the states connect like that?
 
