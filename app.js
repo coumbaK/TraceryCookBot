@@ -27,9 +27,10 @@ window.addEventListener("load", function () {
         <div>
           <table>
             <tr v-for="sim in chatBots">
+             <td><b>State:{{sim.stateID}}</b></td>
               <td class="label">{{sim.map.title}}</td>
                    <td>Time:{{sim.timeInState.toFixed(2)}}</td>
-             <td>State:{{sim.stateID}}</td>
+            
                <td>States:{{Object.keys(sim.map).join(",")}}</td>
             </tr>
           </table>

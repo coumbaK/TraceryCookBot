@@ -5,11 +5,15 @@ const BOT_MAPS = {
     title: "Only speaks emoji",
     // exits: ["sdfasjd"],
     
+    
+    // TWO BIG THINGS: STATES, and GRAMMAR
     states: {
       origin: {
         // onTickSay: `#wait# <a href='xkcd.com'>link</a><img src="https://content.presentermedia.com/content/animsp/00022000/22814/hourglass_sand_pour_business_woman_300_wht.gif">`,
+        onTickSay: `#hello#`,
         exits: ["wait:5 ->question '#question#'"],
       },
+      
       question: {
         onEnterSay: "❓",
         onTickSay: "#emoji# #emoji# #emoji#",
@@ -30,7 +34,14 @@ const BOT_MAPS = {
         exits: ["wait:5 ->happy '#animal#'"],
       },
     },
+    
+    
+    // GRAMMAR!!!
     grammar: {
+      
+     
+      "hello": ["hi", "hello", "whats up", "👋"],
+      "story": ["#emoji# #emoji# #emoji# story"],
       "emoji": ["#animal#", "#food#", "#heart#"],
       "animal": ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
       "food": ["🍊", "🥞", "🥨", "🧀", "🌽", "🌶", "🍏"],

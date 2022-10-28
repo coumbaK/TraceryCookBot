@@ -20,7 +20,9 @@ class BotSimulator {
     if (Array.isArray(rule)) {
       rule = getRandom(rule)
     }
-    return rule
+    
+    return this.grammar.flatten(rule)
+    // return rule
   }
   
   update(time) {
