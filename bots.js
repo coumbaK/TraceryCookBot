@@ -3,6 +3,7 @@ const BOT_MAPS = {
     title: "Only speaks emoji",
     states: {
       origin: {
+        onTickSay: "⏳",
         exits: ["wait:5 ->question '#question#'"],
       },
       question: {

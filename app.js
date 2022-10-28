@@ -13,24 +13,7 @@ window.addEventListener("load", function () {
   // VUE!!!
   // Create a new vue interface
 
-  Vue.component("chat-message", {
-    template: `<div class="chatbubble-row" :class="{user:msg.fromUser}">
-        <div>{{userPfp}}</div>
-        <div class="chatbubble-row" :class="{user:msg.fromUser}">
-          {{msg.from}}:{{msg.msg}}
-        </div>
-       
-      </div>`,
 
-    computed: {
-      userPfp() {
-        // How do we display this user?
-        return "🍊"
-      },
-    },
-
-    props: ["message", "bot"],
-  });
 
   new Vue({
     template: `<div id="app">
@@ -53,18 +36,7 @@ window.addEventListener("load", function () {
         </div>
       </section>
 
-      <div class="chat">
-        <section class="chat-messages">
-          
-          <div v-for="msg in messages" class="chatbubble" :class="{user:msg.fromUser}">
-            {{msg.from}}:{{msg.msg}}
-          </div>
-        </section>
-        
-        <section class="chat-controls">
-          <input v-model="currentMsg" @keyup.enter="send" />
-        </section>
-      </div>
+     <chat :chatBots="chatBots" :messages="messages" />
       
      
     </div>`,
@@ -84,7 +56,7 @@ window.addEventListener("load", function () {
       setInterval(() => {
         let t = Date.now()
         this.chatBots.forEach(bot => bot.update(t))
-      }, 100);
+      }, 500);
     },
     
     watch: {
@@ -104,8 +76,14 @@ window.addEventListener("load", function () {
 
     methods: {
       setUser(index, mapID) {
+        let messages = this.messages
        
-           Vue.set( this.chatBots, index, new BotSimulator(this.maps[mapID]))
+           Vue.set( this.chatBots, index, new BotSimulator(this.maps[mapID], {post(text) {
+              messages.push({
+                text,
+                // from: bot.id
+              })
+           }}))
       },
       send() {
         this.messages.push({
