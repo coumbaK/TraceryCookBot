@@ -1,10 +1,10 @@
 const BOT_MAPS = {
   emojiBot: {
     title: "Only speaks emoji",
-    exits: [],
+    exits: ["sdfasjd"],
     states: {
       origin: {
-        onTickSay: "⏳",
+        // onTickSay: `#wait# <a href='xkcd.com'>link</a><img src="https://content.presentermedia.com/content/animsp/00022000/22814/hourglass_sand_pour_business_woman_300_wht.gif">`,
         exits: ["wait:5 ->question '#question#'"],
       },
       question: {

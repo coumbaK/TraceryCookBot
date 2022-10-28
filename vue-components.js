@@ -7,8 +7,8 @@
   Vue.component("chat-message", {
     template: `<div class="chat-row" :class="{user:message.fromUser}">
         <div class="pfp">{{userPfp}}</div>
-        <div class="chat-bubble" :class="{user:message.fromUser}">
-         {{message.text}}
+        <div class="chat-bubble" :class="{user:message.fromUser}" v-html="message.text">
+        
         </div>
        
       </div>`,
