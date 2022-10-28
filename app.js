@@ -3,7 +3,7 @@
  * Chat application with a bot
  */
 
-/* globals Vue, p5, BOTS */
+/* globals Vue, p5, BOT_MAPS */
 
 window.addEventListener("load", function () {
   //------------------------------------------------------
@@ -36,12 +36,14 @@ window.addEventListener("load", function () {
     template: `<div id="app">
       
       <section class="bot-data">
-        {{name}} PAGE
-        <input v-model="name" />
-        
-        <select v-model="botID" >
-          <option v-for="(bot,id) in bots">{{id}}</option>
+       
+        <select v-model="mapID" >
+          <option v-for="(map,id) in maps">{{id}}</option>
         </select>
+        
+        <div>
+          <table>
+        </div>
       </section>
 
       <div class="chat">
@@ -61,32 +63,34 @@ window.addEventListener("load", function () {
     </div>`,
 
     mounted() {
-      for (var i = 0; i < 40; i++) {
-        this.messages.push({
-          from: "computer",
-          msg: "hello" + i,
-        });
-      }
-
+//       Create a new simulated agent for this bot
+      this.chatUsers[0] = new BotSimulator(this.map)
+      
+//       for (var i = 0; i < 40; i++) {
+//         this.messages.push({
+//           from: "computer",
+//           msg: "hello" + i,
+//         });
+//       }
+  
+// 
       setInterval(() => {
-        this.messages.push({
-          from: "computer",
-          msg: "hello",
-        });
-      }, 1000);
+        this.chatUsers
+      }, 100);
     },
     
     watch: {
-      bot() {
-        console.log("Bot changed")
+      map() {
+        console.log("Map changed")
+        this.chatUsers[0] = new BotSimulator(this.map)
       }
     },
     
     computed: {
       
       // The current bot
-      bot() {
-        return this.bots[this.botID]
+      map() {
+        return this.maps[this.mapID]
       }
     },
 
@@ -103,8 +107,9 @@ window.addEventListener("load", function () {
 
     data() {
       return {
-        botID: Object.keys(BOTS)[0],
-        bots: BOTS,
+        chatUsers: [],
+        mapID: Object.keys(BOT_MAPS)[0],
+        maps: BOT_MAPS,
         messages: [{ msg: "hello", from: "computer" }],
         name: "Kate",
         currentMsg: "",

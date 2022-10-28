@@ -1,85 +1,81 @@
-const BOTS = {
-  
+const BOT_MAPS = {
   emojiBot: {
     title: "Only speaks emoji",
-     "states": {
-       "question": {
-         onEnterSay: "❓",
-         exits: [
-           "'🐨' ->animal '",
-           "'🍞' ->f '"
-         
-         ]
-       },
-       
-       "happy": {
-         "exits": [
-           "wait:5 ->♥️ '#heart#'",
-          ]
-       },
-       "animal": {
-         "exits": [
-           "wait:5 ->animal '#animal#'",
-           
-          ]
-       },
-     },
+    states: {
+      question: {
+        onEnterSay: "❓",
+        exits: ["'🐨' ->animal '", "'🍞' ->food '", "'❤️' ->happy '", "wait:5 ->question '⁉️'"],
+      },
+
+      happy: {
+        exits: ["wait:5 ->♥️ '#heart#'"],
+      },
+      animal: {
+        exits: ["wait:5 ->animal '#animal#'"],
+      },
+    },
     grammar: {
       animal: ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
       food: ["🍊", "🥞", "🥨", "🧀", "🌽", "🌶", "🍏"],
       heart: ["💕", "💜", "💙", "💔"],
-    }
-    
+    },
   },
   myBot: {
-    "title": "Cocoa-and-Therapy Bot",
-    "description": [
+    title: "Cocoa-and-Therapy Bot",
+    description: [
       "a bot for suggesting hot drinks and listening to your problems",
     ],
 
-    "states": {
-      
-      
-      "origin": {
-        "onEnterSay":
+    states: {
+      origin: {
+        onEnterSay:
           "I'm your therapeutic cocoa machine. Tell me about your problems while I make you a nice warm drink",
-        "exits": [
+        exits: [
           "'drink' ->makeDrink",
           "'drink' ->makeDrink",
           "'*' ->makeDrink",
         ],
       },
-      
-      
-      "makeDrink": {
-        "onEnterSay":
-          "I'll make you a #drink#.",
-        "exits": [
+
+      makeDrink: {
+        onEnterSay: "I'll make you a #drink#.",
+        exits: [
           "wait:5 ->origin 'Ah, not quite the right time, I see.' 'Something else maybe?'",
           "'something else' ->makeDrink 'How about something different then?'",
           "* ->listen '*SLURP*'",
         ],
       },
-      
-      "listen0": {
-        "onEnterSay":"#askAboutUser#",
-        "exits": [
+
+      listen0: {
+        onEnterSay: "#askAboutUser#",
+        exits: [
           "wait:5 ->origin 'Quiet time is good too'",
-          "'*' ->origin '#sympathy#'"
-          ]
+          "'*' ->origin '#sympathy#'",
+        ],
       },
       listen1: {
-        onEnterSay:["#sympathy#", "#askAboutUser#"],
-        
+        onEnterSay: ["#sympathy#", "#askAboutUser#"],
       },
-     
-      
+
       exits: ["'*' -> '#sympathy#'"],
     },
     grammar: {
-      askAboutUser: ["How was your day?", "What's on your mind?", "How is this week going?"],
-      listen: ["mmhmm", "tell me about it", "tell me more?", "does that happen often?"],
-      sympathy: ["that sounds #difficult#", "you've been through a lot", "it sounds like you are trying very hard"],
+      askAboutUser: [
+        "How was your day?",
+        "What's on your mind?",
+        "How is this week going?",
+      ],
+      listen: [
+        "mmhmm",
+        "tell me about it",
+        "tell me more?",
+        "does that happen often?",
+      ],
+      sympathy: [
+        "that sounds #difficult#",
+        "you've been through a lot",
+        "it sounds like you are trying very hard",
+      ],
       difficult: ["challenging", "hard", "like a tough time"],
       toppings: [
         "caramel sauce",
