@@ -1,10 +1,13 @@
 const BOT_MAPS = {
+  
+  // A different brain, this one is for EMOJI
   emojiBot: {
     title: "Only speaks emoji",
-    exits: ["sdfasjd"],
+    // exits: ["sdfasjd"],
+    
     states: {
       origin: {
-        onTickSay: `#wait# <a href='xkcd.com'>link</a><img src="https://content.presentermedia.com/content/animsp/00022000/22814/hourglass_sand_pour_business_woman_300_wht.gif">`,
+        // onTickSay: `#wait# <a href='xkcd.com'>link</a><img src="https://content.presentermedia.com/content/animsp/00022000/22814/hourglass_sand_pour_business_woman_300_wht.gif">`,
         exits: ["wait:5 ->question '#question#'"],
       },
       question: {
@@ -28,12 +31,14 @@ const BOT_MAPS = {
       },
     },
     grammar: {
-      emoji: ["#animal#", "#food#", "#heart#"],
-      animal: ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
-      food: ["🍊", "🥞", "🥨", "🧀", "🌽", "🌶", "🍏"],
-      heart: ["💕", "💜", "💙", "💔"],
+      "emoji": ["#animal#", "#food#", "#heart#"],
+      "animal": ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
+      "food": ["🍊", "🥞", "🥨", "🧀", "🌽", "🌶", "🍏"],
+      "heart": ["💕", "💜", "💙", "💔"],
     },
   },
+  
+  
   myBot: {
     title: "Cocoa-and-Therapy Bot",
     description: [
