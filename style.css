@@ -145,6 +145,10 @@ button.active {
 /*------------------------------------*/
 /* DEBUG */
 
+.bot-debug {
+  border: 1px solid white;
+}
+
 .exit-watcher {
   position: relative;
   border: 1px solid black;

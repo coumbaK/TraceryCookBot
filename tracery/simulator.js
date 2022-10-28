@@ -1,6 +1,11 @@
+let botCount = 0
+
 class BotSimulator {
-  constructor(map, {post}) {
+  constructor(mapID, map, {post}) {
+    this.idNumber = botCount++
     this.map = map
+    this.mapID = mapID
+    
     console.log("CREATING BOT", this.map.title)
     
     this.stateID = "origin"

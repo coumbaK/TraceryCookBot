@@ -1,5 +1,37 @@
 /* globals Vue */
 
+ 
+/**==================================================
+* Bot simulator debugging
+**/
+
+Vue.component("bot-chip", {
+  template:` <span class="chip bot-chip" :class="{['bot-chip-' + bot.stateID]:true}"> {{bot.}}</span> `,
+  
+  props: ["stateID"],
+})
+
+
+Vue.component("state-chip", {
+  template:` <span class="chip state-chip" :class="{['state-chip-' + stateID]:true}"> {{stateID}}</span> `,
+  
+  props: ["stateID"],
+})
+
+
+Vue.component("bot-debug", {
+  template:` <div class="panel bot-debug">
+  <header><bot-chip :bot="bot"/> running map {{bot.mapID}}  {{bot.idNumber}}</header>
+  <state-chip :stateID="bot.stateID"/><span>{{bot.timeInState}}</span>
+            <div>
+              
+            </div>
+            <exit-watcher v-for="ew in bot.exitWatchers" :ew="ew" />
+
+          </div>`,
+  
+  props: ["bot"],
+})
 
  Vue.component("exit-watcher", {
     template: `<div class="exit-watcher">

@@ -35,15 +35,10 @@ window.addEventListener("load", function () {
             </tr>
           </table>
           
-          <div v-for="bot in chatBots" class="panel">
-            <div>debug</div>
-            <div>
-              {{bot.state}}
-            </div>
-            <exit-watcher v-for="ew in bot.exitWatchers" :ew="ew" />;
->
-          </div>
+         
         </div>
+        
+        <bot-debug v-for="bot in chatBots" :bot="bot" />
       </section>
 
      <chat :chatBots="chatBots" :messages="messages" />
@@ -87,8 +82,9 @@ window.addEventListener("load", function () {
     methods: {
       setUser(index, mapID) {
         let messages = this.messages
-       
-           Vue.set( this.chatBots, index, new BotSimulator(this.maps[mapID], {post(text) {
+           
+        // Create a new bot, with this info
+           Vue.set( this.chatBots, index, new BotSimulator(mapID, this.maps[mapID], {post(text) {
               messages.push({
                 text,
                 // from: bot.id
