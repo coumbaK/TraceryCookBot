@@ -1,6 +1,7 @@
 const BOT_MAPS = {
   emojiBot: {
     title: "Only speaks emoji",
+    exits: [],
     states: {
       origin: {
         onTickSay: "⏳",
