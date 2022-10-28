@@ -88,14 +88,7 @@ window.addEventListener("load", function () {
               messages.push(message)
            }}))
       },
-      send() {
-        this.messages.push({
-          fromUser: true,
-          from: this.name,
-          msg: this.currentMsg,
-        });
-        this.currentMsg = "";
-      },
+      
     },
 
     data() {

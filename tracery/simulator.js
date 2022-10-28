@@ -35,15 +35,22 @@ class BotSimulator {
     // return rule
   }
   
-  post(msg) {
-    this.onPost(msg)
+  get id() {
+    return "Bot" + this.mapID + this.idNumber
+  }
+  
+  post(msg, type = "chat") {
+    
     if (typeof msg === "string") {
       msg = {
-        type: "chat",
+        type: type,
+        fromType: "bot",
         from: this.id,
-        
+        text: msg
       }
     }
+    this.onPost(msg)
+    
   }
   
   update(time) {
@@ -67,12 +74,11 @@ class BotSimulator {
   
   enterState(stateID) {
     this.stateID = stateID
+    
+//     Handle missing states
     if (!this.hasState(stateID)) {
-      this.post({
-        type: "error",
-        text: `No state named '${stateID}'`
+      this.post(`No state named '${stateID}'`, error)
         
-      })
       return
     }
     

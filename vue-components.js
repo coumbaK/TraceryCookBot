@@ -106,7 +106,7 @@ Vue.component("chat-message", {
  **/
 Vue.component("chat", {
   template: ` <div class="chat">
-        <section class="chat-messages">
+        <section class="chat-messages" ref="messageholder">
           
           <chat-message v-for="msg in messages" :message="msg" />
          
@@ -117,6 +117,28 @@ Vue.component("chat", {
         </section>
       </div>`,
 
+  watch: {
+    messages() {
+      console.log("MESSAGES UPDATES")
+      let messageholderEl = this.$refs.messageholder
+      // console.log(this.$refs, messageholderEl)
+      Vue.nextTick(() => {
+        messageholderEl.scrollTo({ top: messageholderEl.scrollHeight, behavior: 'smooth' })
+
+      }) 
+       
+    }
+  },
+  methods: {
+    send() {
+        this.messages.push({
+          fromUser: true,
+          from: this.name,
+          msg: this.currentMsg,
+        });
+        this.currentMsg = "";
+      },
+  },
   data() {
     return {
       currentInput: "",
