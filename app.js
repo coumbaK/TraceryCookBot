@@ -76,6 +76,12 @@ window.addEventListener("load", function () {
       }, 1000);
     },
     
+    watch: {
+      bot() {
+        console.log("Bot changed")
+      }
+    },
+    
     computed: {
       
       // The current bot

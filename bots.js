@@ -1,17 +1,49 @@
 const BOTS = {
+  
+  emojiBot: {
+    title: "Only speaks emoji",
+     "states": {
+       "question": {
+         onEnterSay: "❓",
+         exits: [
+           "'🐨' ->animal '",
+           "'🍞' ->f '"
+         
+         ]
+       },
+       
+       "happy": {
+         "exits": [
+           "wait:5 ->♥️ '#heart#'",
+          ]
+       },
+       "animal": {
+         "exits": [
+           "wait:5 ->animal '#animal#'",
+           
+          ]
+       },
+     },
+    grammar: {
+      animal: ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
+      food: ["🍊", "🥞", "🥨", "🧀", "🌽", "🌶", "🍏"],
+      heart: ["💕", "💜", "💙", "💔"],
+    }
+    
+  },
   myBot: {
-    title: "Cocoa-and-Therapy Bot",
-    description: [
+    "title": "Cocoa-and-Therapy Bot",
+    "description": [
       "a bot for suggesting hot drinks and listening to your problems",
     ],
 
-    states: {
+    "states": {
       
       
-      origin: {
-        onEnterSay:
+      "origin": {
+        "onEnterSay":
           "I'm your therapeutic cocoa machine. Tell me about your problems while I make you a nice warm drink",
-        exits: [
+        "exits": [
           "'drink' ->makeDrink",
           "'drink' ->makeDrink",
           "'*' ->makeDrink",
@@ -19,22 +51,28 @@ const BOTS = {
       },
       
       
-      makeDrink: {
-        onEnterSay:
+      "makeDrink": {
+        "onEnterSay":
           "I'll make you a #drink#.",
-        exits: [
+        "exits": [
           "wait:5 ->origin 'Ah, not quite the right time, I see.' 'Something else maybe?'",
           "'something else' ->makeDrink 'How about something different then?'",
           "* ->listen '*SLURP*'",
         ],
       },
       
-      listen0: {
-        onEnterSay:"#askAboutUser#"
+      "listen0": {
+        "onEnterSay":"#askAboutUser#",
+        "exits": [
+          "wait:5 ->origin 'Quiet time is good too'",
+          "'*' ->origin '#sympathy#'"
+          ]
       },
-      listen0: {
-        onEnterSay:["#sympathy#", "#askAboutUser#"]
+      listen1: {
+        onEnterSay:["#sympathy#", "#askAboutUser#"],
+        
       },
+     
       
       exits: ["'*' -> '#sympathy#'"],
     },
