@@ -35,7 +35,6 @@ window.addEventListener("load", function () {
           </table>
           
           <div>
-          {{chatBots[0].exitWatchers}}
             <exit-watcher v-for="ew in chatBots[0].exitWatchers" :ew="ew">
           </div>
         </div>

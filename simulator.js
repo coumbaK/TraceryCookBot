@@ -81,10 +81,13 @@ class ExitWatcher {
       
     } else {
        let conditions = pre.split(" ")
-      let [to,actions] = post.split(" ")
+      let [to,...actions] = post.split(" ")
       console.log("conditions", conditions)
       console.log("to", to)
-      console.log("actions", conditions)
+      console.log("actions", actions)
+      this.to = to
+      this.conditions = conditions
+      this.actions = actions
     }
     
    

@@ -3,11 +3,14 @@
 
  Vue.component("exit-watcher", {
     template: `<div class="exit-watcher">
-      {{ew.exit}}
-      ->{{ew.to}}
+      <pre class="minicode">{{ew.exit}}</pre>
       
-      c:{{ew.conditions}}
-      a:{{ew.actions}}
+      <span v-for="condition in ew.conditions" class="chip condition">{{condition}}</span>
+      -><span class="chip">{{ew.to}}</span>
+      <span v-for="action in ew.actions" class="chip action">{{action}}</span>
+      
+      
+     
       
       <div class="errors">
         <div class="error" v-for="e in ew.errors">{{e}}</div>
