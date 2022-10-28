@@ -84,11 +84,8 @@ window.addEventListener("load", function () {
         let messages = this.messages
            
         // Create a new bot, with this info
-           Vue.set( this.chatBots, index, new BotSimulator(mapID, this.maps[mapID], {post(text) {
-              messages.push({
-                text,
-                // from: bot.id
-              })
+           Vue.set( this.chatBots, index, new BotSimulator(mapID, this.maps[mapID], {onPost(message) {
+              messages.push(message)
            }}))
       },
       send() {

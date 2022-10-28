@@ -1,45 +1,66 @@
 /* globals Vue */
 
- 
 /**==================================================
-* Bot simulator debugging
-**/
+ * Bot simulator debugging
+ **/
 
 Vue.component("bot-chip", {
-  template:` <span class="chip bot-chip" :class="{['bot-chip-' + bot.stateID]:true}"> Bot{{bot.idNumber}}</span> `,
-  
-  props: ["bot"],
-})
+  template: ` <span class="chip bot-chip" :class="{['bot-chip-' + bot.stateID]:true}"> Bot{{bot.idNumber}}</span> `,
 
+  props: ["bot"],
+});
 
 Vue.component("state-chip", {
-  template:` <span class="chip state-chip" :class="{['state-chip-' + stateID]:true}"> {{stateID}}</span> `,
-  
-  props: ["stateID"],
-})
+  template: ` <span class="chip state-chip" :class="{['state-chip-' + stateID]:true}"> {{stateID}}</span> `,
 
+  props: ["stateID"],
+});
 
 Vue.component("bot-debug", {
-  template:` <div class="panel bot-debug">
-  <header><bot-chip :bot="bot"/> running map '{{bot.mapID}}' </header>
+  template: ` <div class="panel bot-debug">
+  <header>
+    <bot-chip :bot="bot"/> running map '{{bot.mapID}}' 
+  </header>
   <div>
     <state-chip :stateID="bot.stateID"/>
-    <span>{{bot.timeInState}}</span>
-    <select>
-      <option v-for="(stateID,state) in bot.map.states">{{stateID}}</option>
+    
+    <select v-model="selectedState">
+      <option v-for="(state,stateID) in bot.map.states">{{stateID}}</option>
     </select>
-            <div>
-              
-            </div>
-            <exit-watcher v-for="ew in bot.exitWatchers" :ew="ew" />
+    
+    <span>time in state: {{bot.timeInState}}</span>
+    
+    
+   
+    <div>
 
-          </div>`,
+    </div>
+    <exit-watcher v-for="ew in bot.exitWatchers" :ew="ew" />
+
+  </div>
+</div>`,
   
-  props: ["bot"],
-})
+  watch: {
+    selectedState() {
+      this.bot.setState(this.selectedState)  
+    },
+    "bot.state"() {
+      this.selectedState = this.bot.state
+      // this.bot.setState(this.selectedState)  
+    }
+  },
+  
+  data() {
+    return {
+      selectedState: this.bot.stateID
+    }
+  },
 
- Vue.component("exit-watcher", {
-    template: `<div class="exit-watcher">
+  props: ["bot"],
+});
+
+Vue.component("exit-watcher", {
+  template: `<div class="exit-watcher">
       <pre class="minicode">{{ew.exit}}</pre>
       
       <span v-for="condition in ew.conditions" class="chip condition" :class="{active:condition.isActive}">{{condition.template}}</span>
@@ -53,16 +74,16 @@ Vue.component("bot-debug", {
         <div class="error" v-for="e in ew.errors">{{e}}</div>
       </div>
    </div>`,
-   
-   props: ["ew"]
- })
- 
-/**==================================================
-* Chat message
-**/
 
-  Vue.component("chat-message", {
-    template: `<div class="chat-row" :class="{user:message.fromUser}">
+  props: ["ew"],
+});
+
+/**==================================================
+ * Chat message
+ **/
+
+Vue.component("chat-message", {
+  template: `<div class="chat-row" :class="{user:message.fromUser}">
         <div class="pfp">{{userPfp}}</div>
         <div class="chat-bubble" :class="{user:message.fromUser}" v-html="message.text">
         
@@ -70,19 +91,19 @@ Vue.component("bot-debug", {
        
       </div>`,
 
-    computed: {
-      userPfp() {
-        // How do we display this user?
-        return "🍊"
-      },
+  computed: {
+    userPfp() {
+      // How do we display this user?
+      return "🍊";
     },
+  },
 
-    props: ["message", "bot"],
-  });
+  props: ["message", "bot"],
+});
 
 /**==================================================
-* Chat window
-**/
+ * Chat window
+ **/
 Vue.component("chat", {
   template: ` <div class="chat">
         <section class="chat-messages">
@@ -95,13 +116,12 @@ Vue.component("chat", {
           <input v-model="currentInput" @keyup.enter="send" />
         </section>
       </div>`,
-  
+
   data() {
     return {
-      currentInput: ""
-    }
+      currentInput: "",
+    };
   },
-  
-  props:["messages", "chatBots"]
-  
-})
+
+  props: ["messages", "chatBots"],
+});

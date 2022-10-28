@@ -1,7 +1,7 @@
 let botCount = 0
 
 class BotSimulator {
-  constructor(mapID, map, {post}) {
+  constructor(mapID, map, {onPost}) {
     this.idNumber = botCount++
     this.map = map
     this.mapID = mapID
@@ -11,7 +11,7 @@ class BotSimulator {
     this.stateID = "origin"
     
     this.exitWatchers = []
-    this.post = post
+    this.onPost = onPost
     
     this.enterState("origin")
     this.timeEnteredState = Date.now()
@@ -21,6 +21,11 @@ class BotSimulator {
     
   }
   
+  setState(stateID) {
+    // TODO: should do any actions?
+    this.enterState(stateID)
+  }
+  
   expand(rule) {
     if (Array.isArray(rule)) {
       rule = getRandom(rule)
@@ -28,6 +33,17 @@ class BotSimulator {
     
     return this.grammar.flatten(rule)
     // return rule
+  }
+  
+  post(msg) {
+    this.onPost(msg)
+    if (typeof msg === "string") {
+      msg = {
+        type: "chat",
+        from: this.id,
+        
+      }
+    }
   }
   
   update(time) {
@@ -44,7 +60,22 @@ class BotSimulator {
     
   }
   
+  hasState(stateID) {
+    console.log(this.map.states, stateID)
+    return this.map.states[stateID] !== undefined
+  }
+  
   enterState(stateID) {
+    this.stateID = stateID
+    if (!this.hasState(stateID)) {
+      this.post({
+        type: "error",
+        text: `No state named '${stateID}'`
+        
+      })
+      return
+    }
+    
     this.timeEnteredState = Date.now()
     console.log("Entering state", stateID)
     
