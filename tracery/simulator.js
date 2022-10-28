@@ -80,14 +80,16 @@ class ExitWatcher {
       this.errors.push(`Can't parse '${this.exit}', missing "->"?`)
       
     } else {
-       let conditions = pre.split(" ")
-      let [to,...actions] = post.split(" ")
-      console.log("conditions", conditions)
-      console.log("to", to)
-      console.log("actions", actions)
+       let conditions = pre.trim().split(/\s+/);
+      let [to,...actions] = post.trim().split(/\s+/);
+     
       this.to = to
-      this.conditions = conditions
-      this.actions = actions
+      this.conditions = conditions.map(c => {
+        return {template: c, isActive: false}
+      })
+      this.actions = this.actions = conditions.map(c => {
+        return {template: c, isActive: false}
+      })
     }
     
    

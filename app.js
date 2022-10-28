@@ -34,8 +34,12 @@ window.addEventListener("load", function () {
             </tr>
           </table>
           
-          <div>
-            <exit-watcher v-for="ew in chatBots[0].exitWatchers" :ew="ew">
+          <div v-for="bot in chatBots">
+            <div>debug</div>
+            <div>
+              bot.state
+            </div>
+            <exit-watcher v-for="ew in bot.exitWatchers" :ew="ew">
           </div>
         </div>
       </section>

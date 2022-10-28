@@ -5,9 +5,9 @@
     template: `<div class="exit-watcher">
       <pre class="minicode">{{ew.exit}}</pre>
       
-      <span v-for="condition in ew.conditions" class="chip condition">{{condition}}</span>
+      <span v-for="condition in ew.conditions" class="chip condition" :class="{active:condition.isActive}">{{condition.template}}</span>
       -><span class="chip">{{ew.to}}</span>
-      <span v-for="action in ew.actions" class="chip action">{{action}}</span>
+      <span v-for="action in ew.actions" class="chip action" :class="{active:action.isActive}">{{action.template}}</span>
       
       
      

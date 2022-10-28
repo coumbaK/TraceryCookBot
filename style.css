@@ -154,7 +154,7 @@ button.active {
 }
 
 .chip {
-  background
+  background-color: white;
   padding: 1px 3px;
   margin: 2px;
   display: inline-block;
