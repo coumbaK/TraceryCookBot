@@ -2,19 +2,31 @@ const BOT_MAPS = {
   emojiBot: {
     title: "Only speaks emoji",
     states: {
+      origin: {
+        exits: ["wait:5 ->question '#question#'"],
+      },
       question: {
         onEnterSay: "❓",
-        exits: ["'🐨' ->animal '", "'🍞' ->food '", "'❤️' ->happy '", "wait:5 ->question '⁉️'"],
+        onTickSay: "#emoji# #emoji# #emoji#",
+        exits: [
+          "'🐨' ->animal '",
+          "'🍞' ->food '",
+          "'❤️' ->happy '",
+          "wait:5 ->question '⁉️'",
+        ],
       },
 
       happy: {
-        exits: ["wait:5 ->♥️ '#heart#'"],
+        onTickSay: "#heart# #emoji# #heart#",
+        exits: ["wait:5 ->animal '#heart#'"],
       },
       animal: {
-        exits: ["wait:5 ->animal '#animal#'"],
+        onTickSay: "#animal# #animal# #animal#",
+        exits: ["wait:5 ->happy '#animal#'"],
       },
     },
     grammar: {
+      emoji: ["#animal#", "#food#", "#heart#"],
       animal: ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
       food: ["🍊", "🥞", "🥨", "🧀", "🌽", "🌶", "🍏"],
       heart: ["💕", "💜", "💙", "💔"],

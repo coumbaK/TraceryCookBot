@@ -3,7 +3,7 @@
  * Chat application with a bot
  */
 
-/* globals Vue, p5, BOT_MAPS */
+/* globals Vue, p5, BOT_MAPS, BotSimulator */
 
 window.addEventListener("load", function () {
   //------------------------------------------------------
@@ -43,6 +43,13 @@ window.addEventListener("load", function () {
         
         <div>
           <table>
+            <tr v-for="sim in chatBots">
+              <td class="label">{{sim.map.title}}</td>
+                   <td>Time:{{sim.timeInState.toFixed(2)}}</td>
+             <td>State:{{sim.stateID}}</td>
+               <td>States:{{Object.keys(sim.map).join(",")}}</td>
+            </tr>
+          </table>
         </div>
       </section>
 
@@ -64,7 +71,7 @@ window.addEventListener("load", function () {
 
     mounted() {
 //       Create a new simulated agent for this bot
-      this.chatUsers[0] = new BotSimulator(this.map)
+     this.setUser(0, this.mapID)
       
 //       for (var i = 0; i < 40; i++) {
 //         this.messages.push({
@@ -75,14 +82,15 @@ window.addEventListener("load", function () {
   
 // 
       setInterval(() => {
-        this.chatUsers
+        let t = Date.now()
+        this.chatBots.forEach(bot => bot.update(t))
       }, 100);
     },
     
     watch: {
       map() {
         console.log("Map changed")
-        this.chatUsers[0] = new BotSimulator(this.map)
+        this.setUser(0, this.mapID)
       }
     },
     
@@ -95,6 +103,10 @@ window.addEventListener("load", function () {
     },
 
     methods: {
+      setUser(index, mapID) {
+       
+           Vue.set( this.chatBots, index, new BotSimulator(this.maps[mapID]))
+      },
       send() {
         this.messages.push({
           fromUser: true,
@@ -107,7 +119,7 @@ window.addEventListener("load", function () {
 
     data() {
       return {
-        chatUsers: [],
+        chatBots: [],
         mapID: Object.keys(BOT_MAPS)[0],
         maps: BOT_MAPS,
         messages: [{ msg: "hello", from: "computer" }],

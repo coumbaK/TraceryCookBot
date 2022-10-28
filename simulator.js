@@ -3,7 +3,7 @@ class BotSimulator {
     this.map = map
     console.log("CREATING BOT", this.map.title)
     
-    this.stateID = origin
+    this.stateID = "origin"
     
     this.enterState("origin")
     this.timeEnteredState = Date.now()
