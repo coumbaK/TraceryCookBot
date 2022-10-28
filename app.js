@@ -34,12 +34,13 @@ window.addEventListener("load", function () {
             </tr>
           </table>
           
-          <div v-for="bot in chatBots">
+          <div v-for="bot in chatBots" class="panel">
             <div>debug</div>
             <div>
-              bot.state
+              {{bot.state}}
             </div>
-            <exit-watcher v-for="ew in bot.exitWatchers" :ew="ew">
+            <exit-watcher v-for="ew in bot.exitWatchers" :ew="ew" />;
+>
           </div>
         </div>
       </section>
@@ -64,7 +65,7 @@ window.addEventListener("load", function () {
       setInterval(() => {
         let t = Date.now()
         this.chatBots.forEach(bot => bot.update(t))
-      }, 500);
+      }, 900);
     },
     
     watch: {

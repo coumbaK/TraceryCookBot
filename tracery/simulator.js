@@ -12,6 +12,7 @@ class BotSimulator {
     this.timeEnteredState = Date.now()
     this.timeInState = 0
     
+    this.grammar = tracery.createGrammar(this.map.grammar)
     
   }
   
