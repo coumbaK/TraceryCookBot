@@ -33,6 +33,11 @@ window.addEventListener("load", function () {
                <td>States:{{Object.keys(sim.map).join(",")}}</td>
             </tr>
           </table>
+          
+          <div>
+          {{chatBots[0].exitWatchers}}
+            <exit-watcher v-for="ew in chatBots[0].exitWatchers" :ew="ew">
+          </div>
         </div>
       </section>
 

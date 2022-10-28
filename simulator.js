@@ -5,13 +5,14 @@ class BotSimulator {
     
     this.stateID = "origin"
     
+    this.exitWatchers = []
     this.post = post
     
     this.enterState("origin")
     this.timeEnteredState = Date.now()
     this.timeInState = 0
     
-    this.exitWatchers = []
+    
   }
   
   expand(rule) {
@@ -40,7 +41,7 @@ class BotSimulator {
     console.log("Entering state", stateID)
     
     // Set up all the exit watchers
-    this.exitWatchers = []
+    this.exitWatchers.splice(0, this.exitWatchers.length)
     // Add them all for this state
     // Also add any global exits
     if (this.map.exits)
@@ -51,6 +52,8 @@ class BotSimulator {
       this.state.exits.forEach(ex => {
         this.exitWatchers.push(new ExitWatcher(this, ex))
       })
+    
+    console.log("MADE EXIT WATCHERS", this.exitWatchers)
   }
   
   get state() {
@@ -64,13 +67,27 @@ function getRandom(arr) {
 
 class ExitWatcher {
   constructor(bot, exit) {
-    console.log(`New exit watcher for "${exit}"`)
+    console.log(`****New exit watcher for "${exit}"`)
     this.exit = exit
-    this.bot = bot
+    this.conditions = []
+    this.actions = []
+    this.errors = []
+    // this.bot = bot
     
     // Rudimentary parsing
     let [pre,post] = exit.split("->")
-    console.log(pre, post)
+    if (post == undefined) {
+      this.errors.push(`Can't parse '${this.exit}', missing "->"?`)
+      
+    } else {
+       let conditions = pre.split(" ")
+      let [to,actions] = post.split(" ")
+      console.log("conditions", conditions)
+      console.log("to", to)
+      console.log("actions", conditions)
+    }
+    
+   
   }
 }
 

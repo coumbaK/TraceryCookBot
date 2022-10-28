@@ -1,5 +1,22 @@
 /* globals Vue */
 
+
+ Vue.component("exit-watcher", {
+    template: `<div class="exit-watcher">
+      {{ew.exit}}
+      ->{{ew.to}}
+      
+      c:{{ew.conditions}}
+      a:{{ew.actions}}
+      
+      <div class="errors">
+        <div class="error" v-for="e in ew.errors">{{e}}</div>
+      </div>
+   </div>`,
+   
+   props: ["ew"]
+ })
+ 
 /**==================================================
 * Chat message
 **/
