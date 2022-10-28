@@ -6,9 +6,9 @@
 **/
 
 Vue.component("bot-chip", {
-  template:` <span class="chip bot-chip" :class="{['bot-chip-' + bot.stateID]:true}"> {{bot.}}</span> `,
+  template:` <span class="chip bot-chip" :class="{['bot-chip-' + bot.stateID]:true}"> Bot{{bot.idNumber}}</span> `,
   
-  props: ["stateID"],
+  props: ["bot"],
 })
 
 
@@ -21,8 +21,13 @@ Vue.component("state-chip", {
 
 Vue.component("bot-debug", {
   template:` <div class="panel bot-debug">
-  <header><bot-chip :bot="bot"/> running map {{bot.mapID}}  {{bot.idNumber}}</header>
-  <state-chip :stateID="bot.stateID"/><span>{{bot.timeInState}}</span>
+  <header><bot-chip :bot="bot"/> running map '{{bot.mapID}}' </header>
+  <div>
+    <state-chip :stateID="bot.stateID"/>
+    <span>{{bot.timeInState}}</span>
+    <select>
+      <option v-for="(stateID,state) in bot.map.states">{{stateID}}</option>
+    </select>
             <div>
               
             </div>

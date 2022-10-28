@@ -88,7 +88,9 @@ class ExitWatcher {
       this.errors.push(`Can't parse '${this.exit}', missing "->"?`)
       
     } else {
-       let conditions = pre.trim().split(/\s+/);
+      let conditions = pre.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/g);
+   
+      
       let [to,...actions] = post.trim().split(/\s+/);
      
       this.to = to
