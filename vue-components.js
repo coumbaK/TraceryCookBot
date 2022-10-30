@@ -19,7 +19,7 @@ Vue.component("state-chip", {
 Vue.component("bot-debug", {
   template: ` <div class="panel bot-debug">
   <header>
-    <bot-chip :bot="bot"/> running map '{{bot.mapID}}' 
+    <h3><bot-chip :bot="bot"/> running map '{{bot.mapID}}' </h3>
   </header>
   <div>
     <state-chip :stateID="bot.stateID"/>
@@ -35,6 +35,8 @@ Vue.component("bot-debug", {
     <div>
 
     </div>
+    
+    <h4>exits</h4>
     <exit-watcher v-for="ew in bot.exitWatchers" :ew="ew" />
 
   </div>

@@ -10,8 +10,10 @@ const BOT_MAPS = {
     states: {
       origin: {
         // onTickSay: `#wait# <a href='xkcd.com'>link</a><img src="https://content.presentermedia.com/content/animsp/00022000/22814/hourglass_sand_pour_business_woman_300_wht.gif">`,
-        onTickSay: `#hello#`,
-        exits: ["wait:5 ->question '#question#'"],
+        // onTickSay: `#hello#`,
+        exits: ["wait:5 ->question '#question#'", 
+               "'hi' ->question 'add one' x+1",
+               "'*' ->@ 'said something'"],
       },
       
       question: {

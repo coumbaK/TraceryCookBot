@@ -68,7 +68,12 @@ class BotSimulator {
   }
   
   update(time) {
-    this.timeInState = time - this.timeEnteredState
+    /**
+    * Time has passed.... see if there are any exits opened or closed
+    */
+    
+    this.currentTime = time
+    this.timeInState = this.currentTime - this.timeEnteredState
     
     if (this.state.onTickSay) {
       this.post(this.expand(this.state.onTickSay))
@@ -91,7 +96,7 @@ class BotSimulator {
     
 //     Handle missing states
     if (!this.hasState(stateID)) {
-      this.post(`No state named '${stateID}'`, error)
+      this.post(`No state named '${stateID}'`, "error")
         
       return
     }
@@ -139,7 +144,7 @@ class ExitWatcher {
       this.errors.push(`Can't parse '${this.exit}', missing "->"?`)
       
     } else {
-      let conditions = pre.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/g);
+      let conditions = pre.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/g).filter(s=>s.length > 0);
    
       
       let [to,...actions] = post.trim().split(/\s+/);
