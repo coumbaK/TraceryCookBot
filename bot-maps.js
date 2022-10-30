@@ -11,7 +11,7 @@ const BOT_MAPS = {
       origin: {
         // onTickSay: `#wait# <a href='xkcd.com'>link</a><img src="https://content.presentermedia.com/content/animsp/00022000/22814/hourglass_sand_pour_business_woman_300_wht.gif">`,
         // onTickSay: `#hello#`,
-        exits: ["wait:5 ->question '#question#'", 
+        exits: ["wait:5 ->question '#question#' (x += y - 1 + z['x+1'])", 
                "'hi' ->question 'add one' x+1",
                "'*' ->@ 'said something'"],
       },

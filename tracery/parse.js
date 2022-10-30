@@ -34,10 +34,10 @@
         subgroups[subgroups.length - 1].push(s);
       }
     }
-    return subgroups.map((s) => {
+    return subgroups.filter(s => s.length !== 0).map((s) => {
       if (s.length == 1) return s[0];
       else return s;
-    });
+    }).filter(s => s.length !== 0);
   }
 
   function parseExit(exitRaw) {
@@ -56,8 +56,10 @@
     // console.log(parsed)
     let s2 = groupBySplitter("->", parsed.children)
     let conditionSections = groupBySplitter(" ", s2[0])
-    let [target, ...actionSections] = groupBySplitter(" ", s2[1])
+    let [targetSections, ...actionSections] = groupBySplitter(" ", s2[1])
     console.log("conditionSections", conditionSections)
+    console.log("targetSections", targetSections)
+    console.log("actionSections", actionSections)
     
     
     return {
