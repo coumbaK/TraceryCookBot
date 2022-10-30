@@ -16,8 +16,11 @@ class BotSimulator {
     this.enterState("origin")
     this.timeEnteredState = Date.now()
     this.timeInState = 0
+    this.currentTime = 0
     
     this.grammar = tracery.createGrammar(this.map.grammar)
+    
+    
     
   }
   
@@ -39,7 +42,18 @@ class BotSimulator {
     return "Bot" + this.mapID + this.idNumber
   }
   
+  get cooldownPct() {
+    if (this.cooldown)
+      return (this.time - this.cooldown.start)
+  }
+  
   post(msg, type = "chat") {
+    
+//     Add a cooldown
+    this.cooldown =  {
+      start:  this.currentTime,
+      length : (msg.length*.1 + 1)*(this.map.postingRate || 1)
+    }
     
     if (typeof msg === "string") {
       msg = {
