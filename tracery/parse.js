@@ -64,9 +64,20 @@
     
     return {
       raw: exit,
-      type: "exit"
+      type: "exit",
+      actions: actionSections.map(sections => parseActCon(sections, true)),
+      target: targetSections.text, // TODO: ???
+      conditions: conditionSections.map(sections => parseActCon(sections, false))
     }
   }
+  
+  function parseActCon(sections, isAction) {
+//     What is this?
+    // If last is (), its probably a fxn
+    // 
+    
+  }
+  
   const CLOSE_CHARS = {
     "{": "}",
     "[": "]",
