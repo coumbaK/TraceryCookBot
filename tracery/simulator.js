@@ -144,16 +144,17 @@ class ExitWatcher {
       this.errors.push(`Can't parse '${this.exit}', missing "->"?`)
       
     } else {
+      // regex from...stack overflow?
       let conditions = pre.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/g).filter(s=>s.length > 0);
    
       
-      let [to,...actions] = post.trim().split(/\s+/);
+      let [to,...actions] = post.trim().split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/g).filter(s=>s.length > 0);
      
       this.to = to
       this.conditions = conditions.map(c => {
         return {template: c, isActive: false}
       })
-      this.actions = this.actions = conditions.map(c => {
+      this.actions = actions.map(c => {
         return {template: c, isActive: false}
       })
     }
