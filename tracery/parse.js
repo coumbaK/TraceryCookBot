@@ -13,30 +13,53 @@
     module.exports = factory(require("b"));
   } else {
     // Browser globals (root is window)
-    root.tracery = factory(root.b);
+    root.chancery = factory(root.b);
   }
 })(typeof self !== "undefined" ? self : this, function (b) {
   // Use b in some fashion.
 
   function groupBySplitter(splitter, sections) {
-    let subgroups = [{ children: [] }];
+    if (typeof splitter !== 'string') {
+      throw(`Wrong splitter type: ${splitter}`)
+    }
+    if (!Array.isArray(sections)) {
+      throw(`Wrong sections type: ${sections}`)
+    }
+    let subgroups = [[]];
     for (var i in sections) {
       let s = sections[i];
       if (s.splitter === splitter) {
-        subgroups.push({ children: [] });
+        subgroups.push([]);
       } else {
-        subgroups[subgroups.length - 1].children.push(s);
+        subgroups[subgroups.length - 1].push(s);
       }
     }
     return subgroups.map((s) => {
-      if (s.children.length == 1) return s.children[0];
+      if (s.length == 1) return s[0];
       else return s;
     });
   }
 
-  function parseExit(exit) {
+  function parseExit(exitRaw) {
+    if (typeof exitRaw !== "string") {
+      throw(`Non-string exit to parse: ${exitRaw}`)
+    }
+    let exit = {
+      errors: [],
+      target: undefined,
+      actions: [],
+      conditions: [],
+      raw: exitRaw
+    }
     // Given an exit, process it
-    let parsed = parse("exit", exit);
+    let parsed = parse("exit", exitRaw);
+    // console.log(parsed)
+    let s2 = groupBySplitter("->", parsed.children)
+    let conditionSections = groupBySplitter(" ", s2[0])
+    let [target, ...actionSections] = groupBySplitter(" ", s2[1])
+    console.log("conditionSections", conditionSections)
+    
+    
     return {
       raw: exit,
       type: "exit"
@@ -142,10 +165,9 @@
     if (typeof s !== "string") throw "non-string to parse" + s.toString();
 
     let root = {
-      s: s,
       type: "context",
-      start: 0,
-      end: s.length,
+      // start: 0,
+      // end: s.length,
       errors: [],
       contextID: contextID,
       children: [],
@@ -171,9 +193,9 @@
       // Add a text section
       let textSection = {
         type: "text",
-        s: s,
-        start: textStart,
-        end: i,
+        text: s.substring(textStart, i),
+        // start: textStart,
+        // end: i,
       };
       // Skip empty strings
       if (i > textStart) section.children.push(textSection);
@@ -192,8 +214,8 @@
       let newSection = {
         type: "context",
         openChar: c,
-        s: s,
-        start: i,
+        // s: s,
+        // start: i,
         // errors: [],
         contextID: newContextID,
         children: [],
@@ -228,7 +250,7 @@
               addText(i);
               section.children.push({
                 type: "splitter",
-                start: i,
+                // start: i,
                 splitter: splitter,
               });
               textStart = i + splitter.length;

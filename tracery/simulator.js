@@ -132,6 +132,8 @@ function getRandom(arr) {
 class ExitWatcher {
   constructor(bot, exit) {
     console.log(`****New exit watcher for "${exit}"`)
+    
+    let parsed = chancery.parseExit(exit)
     this.exit = exit
     this.conditions = []
     this.actions = []
