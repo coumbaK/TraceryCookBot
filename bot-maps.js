@@ -59,7 +59,7 @@ const BOT_MAPS = {
 
     states: {
       origin: {
-        onEnterSay: ["You are in a spooky house, you hear scary sounds to the east", ""],
+        onEnterSay: ["You are in a spooky house, you hear scary sounds to the east", 'some music starts <iframe width="560" height="315" src="https://www.youtube.com/embed/Z6ylGHfLrdI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'],
         
         exits: ["wait:20 ->died",
                "'N' ->room 'You explore north'",
