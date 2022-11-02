@@ -8,6 +8,8 @@ const BOT_MAPS = {
     chips: ["😸", "🍞"],
     
     // TWO BIG THINGS: STATES, and GRAMMAR
+    
+    // Our Finite State Machine
     states: {
       origin: {
         onEnterSay: ["#hello#"],
