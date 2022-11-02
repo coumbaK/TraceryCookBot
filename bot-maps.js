@@ -3,49 +3,62 @@ const BOT_MAPS = {
   // A different brain, this one is for EMOJI
   emojiBot: {
     title: "Only speaks emoji",
-    // exits: ["sdfasjd"],
-    
+    botPfp: "😬",
+    humanPfp: "🌶",
     
     // TWO BIG THINGS: STATES, and GRAMMAR
     states: {
       origin: {
-        // onTickSay: `#wait# <a href='xkcd.com'>link</a><img src="https://content.presentermedia.com/content/animsp/00022000/22814/hourglass_sand_pour_business_woman_300_wht.gif">`,
-        // onTickSay: `#hello#`,
-        exits: ["wait:5 ->question '#question#' (x += y - 1 + z['x+1'])", 
-               "'hi' ->question 'add one' x+1",
-               "'*' ->@ 'said something'"],
+        onEnterSay: ["#emoji#"],
+        exits: [
+          // "wait:random(1,2) ->@",
+          "wait:random(1,2) ->animal",
+          "'hi' ->@"
+          
+        ],
+         
+        onExitSay: ["Good luck!"],
       },
       
-      question: {
-        onEnterSay: "❓",
-        onTickSay: "#emoji# #emoji# #emoji#",
+      animal: {
+        onEnterSay: ["Think of an animal....", "No, not that one"],
         exits: [
-          "'🐨' ->animal '",
-          "'🍞' ->food '",
-          "'❤️' ->happy '",
-          "wait:5 ->question '⁉️'",
+          "wait:random(1,2) ->@ 'Was is #animal.a#?",
+          "wait:random(1,2) ->color",
+
+          
         ],
+         
       },
 
-      happy: {
-        onTickSay: "#heart# #emoji# #heart#",
-        exits: ["wait:5 ->animal '#heart#'"],
-      },
-      animal: {
-        onTickSay: "#animal# #animal# #animal#",
-        exits: ["wait:5 ->happy '#animal#'"],
+       color: {
+        onEnterSay: ["Lets give it a color"],
+        exits: [
+          "wait:random(1,2) ->animal 'Oh, a different animal",
+          "wait:random(1,2) ->origin '#color.capitalize#? Perfect! lets play again'",
+        ],
+         
+        onExitSay: ["Good luck!"],
       },
     },
     
     
     // GRAMMAR!!!
     grammar: {
-      
+      "greeting": ["nihao", "hi", "hello", "bonjour", "ciao"],
+  "animal": ["cat","okapi", "capybara", "emu", "narwhal", "coyote"],
+  "color": ["pink", "green", "aqua", "silver"],
+  "mood": ["happy", "elated", "morose", "sleepy", "enigmatic"],
+
+  origin: [
+  "#color.a.capitalize# #animal# was #color#, and said <b>#greeting.capitalize#</b>", 
+  "[myObj:#object#][myColor:#color#]#myColor.a.capitalize# #myObj# was in #place.a#. It was #objAdj# for #myObj.a#"],
+
      
       "hello": ["hi", "hello", "whats up", "👋"],
       "story": ["#emoji# #emoji# #emoji# story"],
       "emoji": ["#animal#", "#food#", "#heart#"],
-      "animal": ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
+      // "animal": ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
       "food": ["🍊", "🥞", "🥨", "🧀", "🌽", "🌶", "🍏"],
       "heart": ["💕", "💜", "💙", "💔"],
     },
