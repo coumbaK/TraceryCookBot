@@ -1,17 +1,15 @@
 const BOT_MAPS = {
-  
   // A different brain, this one is for EMOJI
   emojiBot: {
     title: "Only speaks emoji",
     botPfp: "😬",
     humanPfp: "🌶",
-    chips: ["😸", "🍞"],
-    
+    chips: ["😸", "🍞", "👋"],
+
     // TWO BIG THINGS: STATES, and GRAMMAR
-    
+
     // Our Finite State Machine
     states: {
-      
       // The state we start at
       origin: {
         // When we enter the state say this
@@ -19,38 +17,82 @@ const BOT_MAPS = {
         exits: [
           // Exits have three things: conditions ->target actions
           // "wait:random(5,7) ->@ '#emoji##emoji##emoji#'",
-          
+
           // Under what conditions can I take this exit?
           // 'stuff' take this exit if the user says "stuff"
           // '*' or says ANYTHING
           // Target: name of a state, or "@" go back in here
           // "'*' ->@ 'OOPs'",
-          
+
           // Wait 2 seconds
-           "wait:2 ->conversation '⏳ going to conversation mode'"
+          "wait:2 ->conversation '⏳ going to conversation mode'",
         ],
-         
+
         // onExitSay: ["Good luck!"],
       },
-      
+
       conversation: {
-        exits: [ "'*' ->@ '#emoji#'",]
-      }
-      
+        exits: ["'👋' ->end '😭'", "'*' ->@ '#emoji#'"],
+      },
+
+      end: {
+        onEnterSay: ["the end"],
+      },
     },
-    
+
     // GRAMMAR!!!
     grammar: {
-      "hello": ["👋", "😀"],
-      "story": ["#emoji# #emoji# #emoji# story"],
-      "emoji": ["#animal#", "#food#", "#heart#"],
-      "animal": ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
-      "food": ["🍊", "🥞", "🥨", "🧀", "🌽", "🌶", "🍏"],
-      "heart": ["💕", "💜", "💙", "💔"],
+      hello: ["👋", "😀"],
+      story: ["#emoji# #emoji# #emoji# story"],
+      emoji: ["#animal#", "#food#", "#heart#"],
+      animal: ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
+      food: ["🍊", "🥞", "🥨", "🧀", "🌽", "🌶", "🍏"],
+      heart: ["💕", "💜", "💙", "💔"],
     },
   },
-  
-  
+
+  hauntedHouse: {
+    title: "Only speaks emoji",
+    botPfp: "🏚",
+    humanPfp: "😬",
+    chips: ["N", "E", "W", "S"],
+
+    states: {
+      origin: {
+        onEnterSay: "You are in a spooky house",
+        
+        exits: ["wait:20 ->died",
+               "'N' ->room 'You explore north'",
+               "'E' ->room 'You explore east'",
+               "'W' ->room 'You explore west'",
+               "'S' ->room 'You explore south'",
+               ]
+      },
+      
+       
+      room: {
+        onEnterSay: ["You are in a #roomAdjective# #roomType#"],
+        exits: [
+           "'N' ->room 'You explore north'",
+               "'E' ->room 'You explore east'",
+               "'W' ->room 'You explore west'",
+               "'S' ->room 'You explore south'",
+              "'look' ->@ '#spookyDiscovery#'"
+        ]
+      },
+      
+      died: {
+        onEnterSay: ["You died", "☠️"],
+      }
+    },
+    
+    grammar: {
+      spookyDiscovery: ["something scary"],
+      roomType: ["living room", "bedroom", "conservatory", "cemetary", "kitchen"],
+      roomAdjective: ["dusty", "abandoned", "blood-soaked", "ominous", "suspiciously normal"]
+    },
+  },
+
   myBot: {
     title: "Cocoa-and-Therapy Bot",
     description: [
