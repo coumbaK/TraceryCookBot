@@ -122,7 +122,11 @@ button.active {
 /*------------------------------------*/
 /* CHAT WINDOW STYLING */
 
+
+/* applies to everything in the chat */
 .chat {
+  
+ 
   max-width: 600px;
   position: relative;
   flex:  1;
@@ -140,6 +144,8 @@ button.active {
   
 }
 
+
+/* Where the chat appears */
 .chat-messages {
   
   box-shadow: inset 1px 2px 10px rgba(0, 0, 0, .4);
@@ -148,7 +154,7 @@ button.active {
   overflow: scroll;
   margin:  3px;
   border-radius: 10px;
-  background-color: hsla(100, 0%, 80%, 1);
+  background-color: hsla(100, 0%, 50%, 1);
   /*border: 1px solid pink;*/
 }
 
@@ -164,11 +170,31 @@ button.active {
   
 }
 
+/* Bot voice */
 .chat-row.msg-bot {
   flex-direction: row-reverse;
-
 }
 
+/*-------------------------------------------*/
+/* TODO: YOU CHANGE THE CHAT STYLE */
+
+/* only bot message in the hauntedHouse */
+.bot-hauntedHouse .chat-row.msg-bot {
+  color: red;
+}
+
+/* only human message in the hauntedHouse */
+.bot-hauntedHouse .chat-row.msg-human {
+  color: blue;
+}
+
+/* chat holder the hauntedHouse */
+.bot-hauntedHouse .chat-messages {
+   background-color: hsla(100, 0%, 0%, 1);
+}
+
+
+/*-------------------------------------------*/
 
 .msg-system .chat-bubble {
    font-style: italic;

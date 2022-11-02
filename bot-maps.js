@@ -59,7 +59,7 @@ const BOT_MAPS = {
 
     states: {
       origin: {
-        onEnterSay: "You are in a spooky house",
+        onEnterSay: ["You are in a spooky house, you hear scary sounds to the east", ""],
         
         exits: ["wait:20 ->died",
                "'N' ->room 'You explore north'",
@@ -74,11 +74,18 @@ const BOT_MAPS = {
         onEnterSay: ["You are in a #roomAdjective# #roomType#"],
         exits: [
            "'N' ->room 'You explore north'",
-               "'E' ->room 'You explore east'",
+               "'E' ->fight 'You see a #monster#'",
                "'W' ->room 'You explore west'",
                "'S' ->room 'You explore south'",
               "'look' ->@ '#spookyDiscovery#'"
         ]
+      },
+      
+       fight: {
+        onEnterSay: ["You lose the fight"],
+         exits: [
+          "wait:2 ->died",
+          ]
       },
       
       died: {
@@ -87,7 +94,10 @@ const BOT_MAPS = {
     },
     
     grammar: {
-      spookyDiscovery: ["something scary"],
+      object: ["kettle", "table", "chair", "desk", "lamp", "vase", "urn", "candelabra", "lantern", "idol", "orb", "book", "basket", "hammer", "flowerpot", "bicycle", "paintbrush", "goblet", "bottle", "jar", "toaster", "teacup", "teapot", "rug","basket", "thimble", "ottoman", "cushion", "pen", "pencil", "mug","egg", "chair", "sun", "cloud", "bell", "bucket", "lemon", "glove", "moon", "star", "seed", "card", "pancake", "waffle", "car", "train", "spoon", "fork", "potato"],
+	  objAdj: ["wooden","old","vintage","woven", "antique","broken","tiny", "giant", "little", "upside-down","dented","imaginary","glowing","curséd","glittery","organic", "rusty", "multi-layered", "complicated", "ornate", "dusty", "gleaming", "fresh", "ancient", "forbidden", "milky", "upholstered", "comfortable", "dynamic", "solar-powered", "coal-fired", "warm", "cold", "frozen", "melted", "boxy", "well-polished", "vivid", "painted", "embroidered", "enhanced", "embellished", "collapsible", "simple", "demure"],
+	
+      spookyDiscovery: ["You find something scary:#objAdj# #object#"],
       roomType: ["living room", "bedroom", "conservatory", "cemetary", "kitchen"],
       roomAdjective: ["dusty", "abandoned", "blood-soaked", "ominous", "suspiciously normal"]
     },

@@ -27,7 +27,7 @@ window.addEventListener("load", function () {
 				<bot-debug v-for="bot in chatBots" :bot="bot" />
 			</section>
 
-		 <chat :chatBots="chatBots" :messages="messages"  />
+		 <chat :chatBots="chatBots" :messages="messages" :class="{['bot-' + mapID]:true}" />
 			
 		 
 		</div>`,
