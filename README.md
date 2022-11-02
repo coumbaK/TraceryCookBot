@@ -19,7 +19,7 @@ Test McStudent
 
 --your answer here  --
 
-## Describe the first thing this bot can respond to.  What is the expressive range of what you say in response?
+## Describe the first state, and what this bot can respond to in that state?.  What is the expressive range of what you say in response?
 
 --your answer here  --
 
@@ -30,17 +30,6 @@ Test McStudent
 
 
 ## Describe the third thing this bot can respond to
-
---your answer here  --
-
-
-
-## Describe the fourth thing this bot can respond to
-
---your answer here  --
-
-
-## Describe the fifth thing this bot can respond to
 
 --your answer here  --
 
