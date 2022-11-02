@@ -314,7 +314,8 @@ Vue.component("chat", {
 		},
 		chips() {
 			// chatBots[0]
-			return ["a", "b", "hi"]
+      return this.bot.map.chips || ["hi"]
+			// return ["a", "b", "hi"]
 		}
 	},
 	methods: {

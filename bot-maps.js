@@ -5,41 +5,22 @@ const BOT_MAPS = {
     title: "Only speaks emoji",
     botPfp: "😬",
     humanPfp: "🌶",
+    chips: ["😸", "🍞"],
     
     // TWO BIG THINGS: STATES, and GRAMMAR
     states: {
       origin: {
         onEnterSay: ["#hello#"],
         exits: [
-          "wait:random(5,7) ->@",
+          "wait:random(5,7) ->@ '#emoji##emoji##emoji#'",
+          "'*' ->@ '#emoji#'",
          
         ],
          
         // onExitSay: ["Good luck!"],
       },
       
-      animal: {
-        onEnterSay: ["Think of an animal....", "No, not that one"],
-        exits: [
-          "wait:random(1,2) ->@ 'Was is #animal.a#?",
-          "wait:random(1,2) ->color",
-
-          
-        ],
-         
-      },
-
-       color: {
-        onEnterSay: ["Lets give it a color"],
-        exits: [
-          "wait:random(1,2) ->animal 'Oh, a different animal",
-          "wait:random(1,2) ->origin '#color.capitalize#? Perfect! lets play again'",
-        ],
-         
-        onExitSay: ["Good luck!"],
-      },
     },
-    
     
     // GRAMMAR!!!
     grammar: {
