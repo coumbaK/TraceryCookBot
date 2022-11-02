@@ -11,16 +11,31 @@ const BOT_MAPS = {
     
     // Our Finite State Machine
     states: {
+      
+      // The state we start at
       origin: {
-        onEnterSay: ["#hello#"],
+        // When we enter the state say this
+        onEnterSay: ["I'm a bot #hello#"],
         exits: [
-          "wait:random(5,7) ->@ '#emoji##emoji##emoji#'",
-          "'*' ->@ '#emoji#'",
-         
+          // Exits have three things: conditions ->target actions
+          // "wait:random(5,7) ->@ '#emoji##emoji##emoji#'",
+          
+          // Under what conditions can I take this exit?
+          // 'stuff' take this exit if the user says "stuff"
+          // '*' or says ANYTHING
+          // Target: name of a state, or "@" go back in here
+          // "'*' ->@ 'OOPs'",
+          
+          // Wait 2 seconds
+           "wait:2 ->conversation '⏳ going to conversation mode'"
         ],
          
         // onExitSay: ["Good luck!"],
       },
+      
+      conversation: {
+        exits: [ "'*' ->@ '#emoji#'",]
+      }
       
     },
     
