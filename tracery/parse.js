@@ -507,6 +507,7 @@
 	 * Heroic parse function
 	 */
 	 function parse(contextID, s) {
+     let context = undefined
 		// Go through each character in s
 		// If it is the close symbol of our current context, close this context
 		// Else if it is the open symbol of a context, open a new context
@@ -641,6 +642,8 @@
 
 	class TraceryNode {
 		constructor(context, template) {
+      if (context == undefined || template === undefined)
+        console.warn("No context?", template, context)
 			this.finished = undefined
 			// console.log(`New ${template.type} node`, template)
 			this.template = template
@@ -685,6 +688,11 @@
 					// Get the ruleset
 					this.key = this.keyNode.finished
 					// console.log("GET RULESET FOR", this.key)
+          if (this.context.grammar === undefined) {
+            console.warn("Missing grammar?", this.context)
+            this.finished = "--NO GRAMMAR--"
+            return
+          }
 					this.ruleSet = this.context.grammar[this.key]
 					if (this.ruleSet == undefined) {
 						// WHOOPS no rules
@@ -694,7 +702,7 @@
 
 
 						// console.log(this.ruleSet, this.rule)
-						this.ruleNode = new TraceryNode(context, parseRule(this.rule))
+						this.ruleNode = new TraceryNode(this.context, parseRule(this.rule))
 						this.ruleNode.expand()
 						this.finishedRule = this.ruleNode.finished
 

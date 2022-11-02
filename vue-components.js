@@ -339,12 +339,12 @@ Vue.component("chat", {
 	},
 
 	mounted() {
-		this.send("sda")
-		this.send("sda")
-		this.send("sda")
-		this.send("sdaf sda I cannot agree with you, papa; you know I cannot. Mr. Weston is such a good-humoured, pleasant, excellent man, that he thoroughly deserves a good wife;--and you would not have had Miss Taylor live with us for ever, and bear all my odd humours, when she might have a house of her own?")
+// 		this.send("sda")
+// 		this.send("sda")
+// 		this.send("sda")
+// 		this.send("sdaf sda I cannot agree with you, papa; you know I cannot. Mr. Weston is such a good-humoured, pleasant, excellent man, that he thoroughly deserves a good wife;--and you would not have had Miss Taylor live with us for ever, and bear all my odd humours, when she might have a house of her own?")
 
-		console.log(this.messages)
+// 		console.log(this.messages)
 	},
 	data() {
 		return {

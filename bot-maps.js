@@ -9,15 +9,13 @@ const BOT_MAPS = {
     // TWO BIG THINGS: STATES, and GRAMMAR
     states: {
       origin: {
-        onEnterSay: ["#emoji#"],
+        onEnterSay: ["#hello#"],
         exits: [
-          // "wait:random(1,2) ->@",
-          "wait:random(1,2) ->animal",
-          "'hi' ->@"
-          
+          "wait:random(5,7) ->@",
+         
         ],
          
-        onExitSay: ["Good luck!"],
+        // onExitSay: ["Good luck!"],
       },
       
       animal: {
@@ -45,20 +43,10 @@ const BOT_MAPS = {
     
     // GRAMMAR!!!
     grammar: {
-      "greeting": ["nihao", "hi", "hello", "bonjour", "ciao"],
-  "animal": ["cat","okapi", "capybara", "emu", "narwhal", "coyote"],
-  "color": ["pink", "green", "aqua", "silver"],
-  "mood": ["happy", "elated", "morose", "sleepy", "enigmatic"],
-
-  origin: [
-  "#color.a.capitalize# #animal# was #color#, and said <b>#greeting.capitalize#</b>", 
-  "[myObj:#object#][myColor:#color#]#myColor.a.capitalize# #myObj# was in #place.a#. It was #objAdj# for #myObj.a#"],
-
-     
-      "hello": ["hi", "hello", "whats up", "👋"],
+      "hello": ["👋", "😀"],
       "story": ["#emoji# #emoji# #emoji# story"],
       "emoji": ["#animal#", "#food#", "#heart#"],
-      // "animal": ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
+      "animal": ["🐧", "🐈", "🦒", "🐕", "🐿", "🐓", "🐁"],
       "food": ["🍊", "🥞", "🥨", "🧀", "🌽", "🌶", "🍏"],
       "heart": ["💕", "💜", "💙", "💔"],
     },
