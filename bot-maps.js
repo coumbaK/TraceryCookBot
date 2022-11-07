@@ -123,7 +123,7 @@ const BOT_MAPS = {
       makeDrink: {
         onEnterSay: "I'll make you a #drink#.",
         exits: [
-          "wait:5 ->origin 'Ah, not quite the right time, I see.' 'Something else maybe?'",
+          "wait:5 ->listen0",
           "'something else' ->makeDrink 'How about something different then?'",
           "* ->listen '*SLURP*'",
         ],
