@@ -216,9 +216,9 @@ const BOT_MAPS = {
         ],
       },
       tellPoem: {
-        onEnterSay: "mmmh amazing ,  ",
+        onEnterSay: "I can make you #adjectives# #pasta# or #adjectives# #pasta#, #cooked# and or #cooked#, you choose.",
         exits: [
-          "wait:5 ->tellPoem",
+          
           "'something else' ->makeDrink 'How about something different then?'",
           "* ->listen '*SLURP*'",
         ],
@@ -234,13 +234,26 @@ const BOT_MAPS = {
         "What's on your mind?",
         "How is this week going?",
       ],
+      cooked:[
+        "soft",
+        "tender",
+        "al dente"
+      ],
+      
+      adjectives: [
+        "creamy",
+        "cheesy",
+        "buttery"
+      ],
        
       pasta: [
         "spaghetti",
         "fettucine",
         "farfalle",
         "penne",
-        "ravioli"
+        "ravioli",
+        "canneloni",
+        "tortelli"
        
       ]
     },
