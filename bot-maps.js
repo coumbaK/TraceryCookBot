@@ -193,6 +193,7 @@ const BOT_MAPS = {
           "I will make you food for dinner and tell you poems. What are you craving tonight?",
         exits: [
           "'pasta' ->makeFood",
+          "'mac and cheese'-> upset", 
           "#coffeeType#->makeDrink",
           
         ],
@@ -201,8 +202,8 @@ const BOT_MAPS = {
         onEnterSay:
           "Mamma Mia! Terrible choice... I only make authentic Italiano pasta",
         exits: [
-          "'pasta' ->makeFood",
-          "#coffeeType#->makeDrink",]
+          "wait:5 -> origin"
+          ]
       },
       
 
