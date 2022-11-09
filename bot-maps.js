@@ -197,16 +197,16 @@ const BOT_MAPS = {
           
         ],
       },
+      upset :{
+        onEnterSay:
+          "Mamma Mia! Terrible choice... I only make authentic Italiano pasta",
+        exits: [
+          "'pasta' ->makeFood",
+          "#coffeeType#->makeDrink",]
+      },
       
 
-      makeDrink: {
-        onEnterSay: "I'll make you a #coffeeType#.",
-        exits: [
-          "wait:5 ->listen0",
-          "'something else' ->makeDrink 'How about something different then?'",
-          "* ->listen '*SLURP*'",
-        ],
-      },
+
        makeFood: {
         onEnterSay: "mmh amazing choice",
         exits: [
@@ -234,7 +234,25 @@ const BOT_MAPS = {
         "What's on your mind?",
         "How is this week going?",
       ],
-      
+      sauce: [
+        "alfredo",
+        "bolognese",
+        "pesto",
+        "marinara",
+        "carbonara",
+        "  "
+        
+      ],
+      tasty: [
+      "italian",
+        "piquant",
+        "tasty",
+        "delicous",
+        "sweet",
+        "garlic",
+        "sumptuous"
+      ]
+      ,
       cooked:[
         "soft",
         "fully soft",
