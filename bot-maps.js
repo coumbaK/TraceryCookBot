@@ -192,7 +192,7 @@ const BOT_MAPS = {
         onEnterSay:
           "I will make you food for dinner and tell you poems. What are you craving tonight?",
         exits: [
-          "'##' ->makeFood",
+          "#food# ->makeFood",
           "'drink' ->makeDrink",
           
         ],
