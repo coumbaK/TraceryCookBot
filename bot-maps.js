@@ -193,7 +193,7 @@ const BOT_MAPS = {
           "I will make you food for dinner and tell you poems. What are you craving tonight?",
         exits: [
           "#food# ->makeFood",
-          "'drink' ->makeDrink",
+          "#coffeeType#->makeDrink",
           
         ],
       },
