@@ -216,7 +216,7 @@ const BOT_MAPS = {
         ],
       },
       tellPoem: {
-        onEnterSay: "I can make you #adjectives# #pasta# or #adjectives# #pasta#, #cooked# and or #cooked#, you choose.",
+      onEnterSay: "I can make you #adjectives# #pasta# ,#moreadjectives# and #cooked#, .",
         exits: [
           
           "'something else' ->makeDrink 'How about something different then?'",
@@ -234,10 +234,24 @@ const BOT_MAPS = {
         "What's on your mind?",
         "How is this week going?",
       ],
+      
       cooked:[
         "soft",
+        "fully soft",
         "tender",
-        "al dente"
+        "al dente",
+        "perfectly cooked",
+        "squishy"
+        
+      ],
+      moreadjectives:[
+        "fresh",
+        "handmade",
+        "thin",
+        "rich",
+        "fine"
+        
+        
       ],
       
       adjectives: [
