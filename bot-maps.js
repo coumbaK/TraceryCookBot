@@ -194,7 +194,8 @@ const BOT_MAPS = {
         exits: [
           "'pasta' ->makeFood",
           "'mac and cheese'-> upset", 
-          "#coffeeType#->makeDrink",
+          "'*' ->suggest 'mmmh I don`t know how to make that '"
+         
           
         ],
       },
@@ -203,6 +204,13 @@ const BOT_MAPS = {
           "Mamma Mia! Terrible choice... I only make authentic Italiano pasta",
         exits: [
           "wait:5 -> origin"
+          ]
+      },
+      suggest:{
+         onEnterSay:
+          "how about italiano pasta?",
+        exits: [
+           "wait:5 ->tellPoem"
           ]
       },
       
