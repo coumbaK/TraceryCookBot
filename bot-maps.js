@@ -225,11 +225,11 @@ const BOT_MAPS = {
         ],
       },
       tellPoem: {
-      onEnterSay: "I can make you #quality# and #adjectives# #pasta# ,#cooked# in a #tasty# #sauce#, hungry yet?",
+      onEnterSay: "I can make you #quality# and #adjectives# #pasta# ,#cooked# in a #tasty# #sauce# sauce, topped with #cheese# and #herbs#,hungry yet?",
         exits: [
           
-          "'yes' ->",
-          "* ->listen '*SLURP*'",
+          "'yes'->'let's start cooking'",
+          "'*' ->makeFood 'no worries, I have a better idea'",
         ],
       }
       
@@ -250,6 +250,16 @@ const BOT_MAPS = {
         "marinara",
         "carbonara",
         "  "
+        
+      ],
+      cheese: [
+        "Parmigiano-Reggiano",
+        "Ricotta",
+        "Ricotta Salata",
+        "Feta",
+        "Mozzarella",
+        "Gorgonzola"
+        
         
       ],
       tasty: [
@@ -285,6 +295,13 @@ const BOT_MAPS = {
         "creamy",
         "cheesy",
         "buttery"
+      ],
+      herbs:[
+        "rosemary",
+        "parsley",
+        "basil",
+        "thyme",
+        "sage"
       ],
        
       pasta: [
