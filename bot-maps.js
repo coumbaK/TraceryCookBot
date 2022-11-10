@@ -225,10 +225,10 @@ const BOT_MAPS = {
         ],
       },
       tellPoem: {
-      onEnterSay: "I can make you #adjectives# #pasta# ,#moreadjectives# and #cooked#, .",
+      onEnterSay: "I can make you #quality# and #adjectives# #pasta# ,#cooked# in a #tasty# #sauce#, hungry yet?",
         exits: [
           
-          "'something else' ->makeDrink 'How about something different then?'",
+          "'yes' ->",
           "* ->listen '*SLURP*'",
         ],
       }
@@ -268,10 +268,10 @@ const BOT_MAPS = {
         "tender",
         "al dente",
         "perfectly cooked",
-        "squishy"
+        "slowly cooked"
         
       ],
-      moreadjectives:[
+      quality:[
         "fresh",
         "handmade",
         "thin",
