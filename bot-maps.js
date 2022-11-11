@@ -234,23 +234,23 @@ const BOT_MAPS = {
       },
        music : {
       onEnterSay: "<iframe src='https://www.youtube.com/embed/_26BhViw28s' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
-        exits: [ "wait:10 -> chatting 'yum can you smell the garlic , food is almost ready!'"  
+        exits: [ "wait:10 -> chatting 'yum can you smell the #aromatic# , food is almost ready!'"  
         ],
       },
       chatting:{
         onEnterSay: "#askAboutUser#",
         exits: [
-          "'*'->  listen 'oh that sounds #difficult#'" ,
-          "wait:10 -> music 'you don't need talk , you can just relax and enjoy the music. "
+          "'*'->  listen 'oh that sounds #difficult#' " ,
+          "wait:10 -> music 'we don`t have to talk, let`s listen to music and relax.'" 
           
         ]},
        listen:{
          onEnterSay: "#askMore#",
         exits: [
-          "'*'-> 'mamma mia! have a taste of this pasta and your day will be better.'"  ,
+          "'*'-> eating 'mamma mia! have a taste of this pasta and your day will be better.'"  ,
            "wait:20-> eating"
         ]},
-       },
+     
         eating:{
           onEnterSay: "Let me know what you think of the food! is it tasty?",
           exits: [
@@ -262,13 +262,14 @@ const BOT_MAPS = {
         },
       
         ciao : {
-          onEnterSay: "Ciao Bella",
+          onEnterSay: "um I think it's time rest for the night. It was a pleasure cooking for you",
         exits: [
-          "'thanks' -> 'Ciao Bella'",
-          "'*' -> 'Ciao Bella'"
+          "'thanks' -> origin 'Ciao Bella'",
+          "'*' -> origin 'Ciao Bella'"
           
         ]
         }
+    
       
     
 
@@ -361,7 +362,8 @@ const BOT_MAPS = {
         "canneloni",
         "tortelli"
        
-      ]
+      ],
+      aromatic: ["garlic","spices","thyme","peppers","onions","parsley"]
     },
   }
 };
