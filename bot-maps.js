@@ -235,20 +235,16 @@ const BOT_MAPS = {
       cooking : {
       onEnterSay: "Perfecto! I am on it! Do you have a song request while I cook? ",
         exits: [
-          "wait:1 -> playsong 'nothing? I think you will like this song.'"
-    
-          
-          
-          
-         
-          
+          "wait:1 -> music 'nothing? I think you will like this song.'"  
         ],
       },
-      playsong:{
-        onEnterSay: "<iframe width="560" height="315" src="https://www.youtube.com/embed/Z6ylGHfLrdI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"
-        exits : []
-      }
-    
+       music : {
+      onEnterSay: " <iframe src="" ",
+        exits: [
+          "wait:1 ->'bella ciao'"  
+        ],
+      },
+
       
 
       
