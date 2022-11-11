@@ -240,19 +240,29 @@ const BOT_MAPS = {
       chatting:{
         onEnterSay: "#askAboutUser#",
         exits: [
-          "'*'-> 'mamma mia! have a taste of this pasta and your day will be better'" ,
-          "wait:10 -> 'you don't need to talk , let's py"
+          "'*'->  listen 'oh that sounds #difficult#'" ,
+          "wait:10 -> music 'you don't need talk , you can just relax and enjoy the music. "
           
         ]},
        listen:{
          onEnterSay: "#askMore#",
         exits: [
-          "'*'-> 'mamma mia! have a taste of this pasta and your day will be better'"  
+          "'*'-> 'mamma mia! have a taste of this pasta and your day will be better.'"  ,
+           "wait:20-> eating"
         ]},
        },
+        eating:{
+          onEnterSay: "Let me know what you think of the food! is it tasty?",
+          exits: [
+          "'yes'-> ciao 'I`m glad you like it!Don`t ask for the recipe, it`s a family secret!"  ,
+           "'no'-> ciao 'Oh No! I am really sad you don`t like it!'",
+          "'*'-> 'I will make something different next time!'"
+        ]
+          
+        },
       
         ciao : {
-          onEnterSay: "I see you really liked my pasta! Don't ask for the recipe, it's a family secret! ",
+          onEnterSay: "Ciao Bella",
         exits: [
           "'thanks' -> 'Ciao Bella'",
           "'*' -> 'Ciao Bella'"
@@ -274,6 +284,13 @@ const BOT_MAPS = {
         "How is this week going?",
       
       ],
+      askMore:[
+        "mmhmm",
+        "tell me about it",
+        "tell me more?",
+        "does that happen often?"
+      ],
+      difficult: ["challenging", "hard", "like a tough time" ,"like a lot", "complicated"],
       sauce: [
         "alfredo",
         "bolognese",
