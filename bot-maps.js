@@ -214,7 +214,7 @@ const BOT_MAPS = {
           ]
       },
        makeFood: {
-        onEnterSay: "mmh amazing choice",
+        onEnterSay: "Bellissimo",
         exits: [
           "wait:5 ->tellPoem",
           "'something else' ->makeDrink 'How about something different then?'",
@@ -224,14 +224,26 @@ const BOT_MAPS = {
       tellPoem: {
       onEnterSay: "I can make you #quality# and #adjectives# #pasta# ,#cooked# in a #tasty# #sauce# sauce, topped with #cheese# and #herbs#,hungry yet?",
         exits: [
-          "'yes' ->'start cooking'",
+          "'yes' ->cooking",
           
           "'*' -> tellPoem 'no worries i have a better idea '",
           "wait:10 -> origin 'take your time bella'"
          
           
         ],
-      }
+      },
+      cooking : {
+      onEnterSay: "Perfecto! I am on it! Do you have a song request while I cook? ",
+        exits: [
+          "'yes' ->cooking",
+          
+          "'*' -> tellPoem 'no worries i have a better idea '",
+          "wait:10 -> origin 'take your time bella'"
+         
+          
+        ],
+      },
+    }
       
 
       
