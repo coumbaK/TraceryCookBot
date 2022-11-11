@@ -210,7 +210,8 @@ const BOT_MAPS = {
          onEnterSay:
           "how about italiano pasta? It's my specialty!",
         exits: [
-           "wait:5 ->tellPoem"
+            "'okay' -> Food",
+           "wait:5 -> Food"
           ]
       },
        Food: {
@@ -219,7 +220,7 @@ const BOT_MAPS = {
           "'yes' ->cooking",
           
           "'*' -> Food 'no worries i have a better idea '",
-          "wait:30 -> @ 'take your time bella'"
+          "wait:30 -> origin 'take your time bella'"
          
           
         ]
@@ -233,10 +234,16 @@ const BOT_MAPS = {
       },
        music : {
       onEnterSay: "<iframe src='https://www.youtube.com/embed/_26BhViw28s' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
-        exits: [
-          "wait:1 ->'bella ciao'"  
+        exits: [ "wait:10 -> chatting 'yum can you smell the garlic , food is almost ready!'"  
         ],
       },
+      chatting:{
+        onEnterSay: "#askAboutUser#",
+        exits: [
+          ""  
+        ],
+      
+    }
 
       
 
@@ -248,14 +255,16 @@ const BOT_MAPS = {
         "How was your day?",
         "What's on your mind?",
         "How is this week going?",
+        ""
+        ,
       ],
       sauce: [
         "alfredo",
         "bolognese",
         "pesto",
         "marinara",
-        "carbonara",
-        "  "
+        "carbonara"
+        
         
       ],
       cheese: [
