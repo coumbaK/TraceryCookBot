@@ -240,10 +240,27 @@ const BOT_MAPS = {
       chatting:{
         onEnterSay: "#askAboutUser#",
         exits: [
-          ""  
-        ],
+          "'*'-> 'mamma mia! have a taste of this pasta and your day will be better'" ,
+          "wait:10 -> 'you don't need to talk , let's py"
+          
+        ]},
+       listen:{
+         onEnterSay: "#askMore#",
+        exits: [
+          "'*'-> 'mamma mia! have a taste of this pasta and your day will be better'"  
+        ]},
+       },
       
-    }
+        ciao : {
+          onEnterSay: "I see you really liked my pasta! Don't ask for the recipe, it's a family secret! ",
+        exits: [
+          "'thanks' -> 'Ciao Bella'",
+          "'*' -> 'Ciao Bella'"
+          
+        ]
+        }
+      
+    
 
       
 
@@ -255,8 +272,7 @@ const BOT_MAPS = {
         "How was your day?",
         "What's on your mind?",
         "How is this week going?",
-        ""
-        ,
+      
       ],
       sauce: [
         "alfredo",
