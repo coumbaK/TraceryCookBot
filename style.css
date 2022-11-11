@@ -13,6 +13,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+  
 
 }
 
@@ -135,6 +136,7 @@ button.active {
   display: flex;
   flex-direction:column;
   overflow: hidden;
+
 }
 
 .chat-controls {

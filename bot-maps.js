@@ -182,9 +182,9 @@ const BOT_MAPS = {
     },
   },
   Homiebot: {
-    title: "Food and Poetry Bot",
+    title: "Italian Pasta Bot",
     description: [
-      "a bot for suggesting food and composing poems",
+      "a bot that makes italian pasta and asks about your day",
     ],
 
     states: {
@@ -234,7 +234,7 @@ const BOT_MAPS = {
       },
        music : {
       onEnterSay: "<iframe src='https://www.youtube.com/embed/_26BhViw28s' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
-        exits: [ "wait:10 -> chatting 'yum can you smell the #aromatic# , food is almost ready!'"  
+        exits: [ "wait:10 -> chatting 'yum, can you smell the #aromatic#?, food is almost ready!'"  
         ],
       },
       chatting:{
