@@ -235,11 +235,11 @@ const BOT_MAPS = {
       cooking : {
       onEnterSay: "Perfecto! I am on it! Do you have a song request while I cook? ",
         exits: [
-          "wait:1 -> music 'nothing? I think you will like this.'"  
+          "'*' -> music 'huh! I can't find that on Sbotify!"  
         ],
       },
        music : {
-      onEnterSay: "<iframe src='https://www.youtube.com/embed/_26BhViw28s' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
+      onEnterSay: "I think you will like this.<iframe src='https://www.youtube.com/embed/_26BhViw28s' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
         exits: [ "wait:10 -> chatting 'yum, can you smell the #aromatic#?, food is almost ready!'"  
         ],
       },
