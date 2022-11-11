@@ -192,7 +192,7 @@ const BOT_MAPS = {
         onEnterSay:
           "I will make you food for dinner and tell you poems. What are you craving tonight?",
         exits: [
-          "'pasta' ->makeFood",
+          "'pasta' ->Food",
           "'mac and cheese'-> upset", 
           "'*' ->suggest 'mmmh I don`t know how to make that '"
          
@@ -208,38 +208,31 @@ const BOT_MAPS = {
       },
       suggest:{
          onEnterSay:
-          "how about italiano pasta?",
+          "how about italiano pasta? It's my specialty!",
         exits: [
            "wait:5 ->tellPoem"
           ]
       },
-       makeFood: {
-        onEnterSay: "Bellissimo",
-        exits: [
-          "wait:1 ->tellPoem",
-          "'something else' ->makeDrink 'How about something different then?'",
-          "* ->listen '*SLURP*'",
-        ],
-      },
-      tellPoem: {
-      onEnterSay: "I can make you #quality# and #adjectives# #pasta# ,#cooked# in a #tasty# #sauce# sauce, topped with #cheese# and #herbs#,hungry yet?",
+       Food: {
+        onEnterSay: "Bellissimo.I can make you #quality# and #adjectives# #pasta# ,#cooked# in a #tasty# #sauce# sauce, topped with #cheese# and #herbs#,hungry yet?",
         exits: [
           "'yes' ->cooking",
           
-          "'*' -> tellPoem 'no worries i have a better idea '",
-          "wait:30 -> origin 'take your time bella'"
+          "'*' -> Food 'no worries i have a better idea '",
+          "wait:30 -> @ 'take your time bella'"
          
           
-        ],
+        ]
       },
+     
       cooking : {
       onEnterSay: "Perfecto! I am on it! Do you have a song request while I cook? ",
         exits: [
-          "wait:1 -> music 'nothing? I think you will like this song.'"  
+          "wait:1 -> music 'nothing? I think you will like this.'"  
         ],
       },
        music : {
-      onEnterSay: " <iframe src="" ",
+      onEnterSay: "<iframe src='https://www.youtube.com/embed/_26BhViw28s' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
         exits: [
           "wait:1 ->'bella ciao'"  
         ],
