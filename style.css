@@ -136,6 +136,7 @@ button.active {
   display: flex;
   flex-direction:column;
   overflow: hidden;
+  background-image:url(https://cdn.glitch.global/311f24e3-8a3d-4030-a628-2117a74f379b/c1cbdda2-e211-439c-894b-328140ed488d.image.png?v=1668144259534)
 
 }
 
@@ -156,7 +157,7 @@ button.active {
   overflow: scroll;
   margin:  3px;
   border-radius: 10px;
-  background-color: hsla(100, 0%, 50%, 1);
+  
   /*border: 1px solid pink;*/
 }
 

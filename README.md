@@ -4,20 +4,20 @@
 Test McStudent
 
 ## Your Glitch link
-[my page](https://galaxykate-a1.glitch.me)
+[my page](https://coumbak-a6.glitch.me)
 
 
 ## Describe your bot's character
 
---your answer here  --
+I made an italian bot that can only cook Authentic pasta and hates Mac and Cheese. He will also talk to you and ask about your day.
 
 ## How does the user know what to say to this bot How are you solving the blank slate problem?
 
---your answer here  --
+My questions are very specific or close-ended.
 
 ## How have your styled your page to best present this character? What scene or mood are you suggesting?
 
---your answer here  --
+the scene I chose is a picture of street with house in Italy.
 
 ## Describe the first thing this bot can respond to.  What is the expressive range of what you say in response?
 

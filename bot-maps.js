@@ -184,16 +184,22 @@ const BOT_MAPS = {
   Homiebot: {
     title: "Italian Pasta Bot",
     description: [
-      "a bot that makes italian pasta and asks about your day",
+      "a bot that makes italian pasta and asks about your day.not a big fan of mac and cheese!",
     ],
 
     states: {
       origin: {
         onEnterSay:
-          "I will make you food for dinner and tell you poems. What are you craving tonight?",
+          "Ciao! I will make you food for dinner and tell you poems. What are you craving tonight?",
         exits: [
           "'pasta' ->Food",
-          "'mac and cheese'-> upset", 
+          "'mac and cheese'-> upset",
+           "'ciao'-> @ ",
+          "'hi'-> @ ",
+          "'hello'-> @ ",
+           
+          
+          
           "'*' ->suggest 'mmmh I don`t know how to make that '"
          
           
