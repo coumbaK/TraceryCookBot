@@ -216,7 +216,7 @@ const BOT_MAPS = {
        makeFood: {
         onEnterSay: "Bellissimo",
         exits: [
-          "wait:5 ->tellPoem",
+          "wait:1 ->tellPoem",
           "'something else' ->makeDrink 'How about something different then?'",
           "* ->listen '*SLURP*'",
         ],
@@ -227,7 +227,7 @@ const BOT_MAPS = {
           "'yes' ->cooking",
           
           "'*' -> tellPoem 'no worries i have a better idea '",
-          "wait:10 -> origin 'take your time bella'"
+          "wait:30 -> origin 'take your time bella'"
          
           
         ],
@@ -235,15 +235,20 @@ const BOT_MAPS = {
       cooking : {
       onEnterSay: "Perfecto! I am on it! Do you have a song request while I cook? ",
         exits: [
-          "'yes' ->cooking",
+          "wait:1 -> playsong 'nothing? I think you will like this song.'"
+    
           
-          "'*' -> tellPoem 'no worries i have a better idea '",
-          "wait:10 -> origin 'take your time bella'"
+          
+          
          
           
         ],
       },
-    }
+      playsong:{
+        onEnterSay: "<iframe width="560" height="315" src="https://www.youtube.com/embed/Z6ylGHfLrdI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"
+        exits : []
+      }
+    
       
 
       
