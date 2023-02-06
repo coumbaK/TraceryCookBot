@@ -59,7 +59,7 @@ my bot follows the maxim of quantity when it comes to describing the pasta it is
 
 https://botwiki.org/bot/pancakerybot/,
 https://botwiki.org/bot/i_luv_recipes/,
-
+https://botwiki.org/bot/hydratebot/
 
 
 ## List any resources (code, images, etc) you've used, and where you got them from
